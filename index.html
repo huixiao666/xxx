@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>皮卡皮卡仓库 · 图标本地缓存版</title>
+    <title>皮卡皮卡仓库</title>
     <!-- Font Awesome 6 图标库 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -358,6 +358,73 @@
         @media (min-width: 780px) {
             .app-container { padding: 0 1.2rem; }
         }
+
+        /* ---------- 首次访问小提示 (浮层) ---------- */
+        .tip-toast {
+            position: fixed;
+            top: 90px;                 /* 距离顶部一定距离，避开状态栏/顶部栏 */
+            left: 50%;
+            transform: translateX(-50%);
+            width: auto;
+            max-width: 360px;
+            background-color: var(--surface);
+            color: var(--text-primary);
+            padding: 12px 20px;
+            border-radius: 60px;        /* 大圆角可爱风格 */
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15), 0 0 0 1px var(--border-light);
+            border: 1px solid var(--accent-soft);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 9999;
+            font-weight: 530;
+            font-size: 1rem;
+            backdrop-filter: blur(4px);
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+            visibility: hidden;
+            opacity: 0;
+            pointer-events: auto;       /* 可点击关闭按钮，但点击穿透区域无妨 */
+        }
+        .tip-toast.show {
+            visibility: visible;
+            opacity: 1;
+        }
+        .tip-toast span {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .tip-close {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.3rem;
+            cursor: pointer;
+            padding: 0 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s, transform 0.1s;
+            line-height: 1;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+        }
+        .tip-close:hover {
+            color: var(--accent);
+            background: var(--accent-soft);
+            transform: scale(1.1);
+        }
+        /* 手机小屏调整 */
+        @media (max-width: 480px) {
+            .tip-toast {
+                top: 70px;
+                max-width: 300px;
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -395,6 +462,9 @@
             <span class="nav-link" data-cat="AI">AI</span>
             <span class="nav-link" data-cat="浏览器">浏览器</span>
             <span class="nav-link" data-cat="网盘">网盘</span>
+            <span class="nav-link" data-cat="网络">网络</span>
+            <span class="nav-link" data-cat="代理">代理</span>
+            <span class="nav-link" data-cat="搜图">搜图</span>
         </nav>
 
         <!-- 应用列表 (每个卡片都有 data-category 和 data-download 图标) -->
@@ -916,6 +986,162 @@
                 </div>
             </a>
             
+            <a href="https://www.pbcdci.cn/userguide/index.html" class="app-card" data-category="支付">
+                <div class="card-row">
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000004618.jpg" alt="数字人民币图标"></div>
+                    <div class="info">
+                        <div class="title">数字人民币 · 2.0.2.4</div>
+                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 3.9亿次下载</span><span>141.3MB</span></div>
+                        <div class="desc"><span class="tag" style="background:#ffd966; color:#1e1e1e;">TOP1</span> 中央·独家·安全</div>
+                    </div>
+                    <div class="download-icon"><i class="fas fa-arrow-down"></i></div>
+                </div>
+            </a>
+            
+            <a href="http://777.372164885.xyz:8081/stream/51?hash=76d7ec" class="app-card" data-category="网络">
+                <div class="card-row">
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000004663.jpg" alt="旋风图标"></div>
+                    <div class="info">
+                        <div class="title">旋风 · 8.86496.63943</div>
+                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 320万次下载</span><span>20.49MB</span></div>
+                        <div class="desc"><span class="tag">工具</span> 限时·独家·免费</div>
+                    </div>
+                    <div class="download-icon"><i class="fas fa-arrow-down"></i></div>
+                </div>
+            </a>
+            
+            <a href="http://777.372164885.xyz:8081/stream/52?hash=8e8bcd" class="app-card" data-category="网络">
+                <div class="card-row">
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000004666.jpg" alt="雷霆图标"></div>
+                    <div class="info">
+                        <div class="title">雷霆 · 5.17652.72024</div>
+                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 220万次下载</span><span>23.34MB</span></div>
+                        <div class="desc"><span class="tag">工具</span> 限时·独家·免费</div>
+                    </div>
+                    <div class="download-icon"><i class="fas fa-arrow-down"></i></div>
+                </div>
+            </a>
+            
+            <a href="http://777.372164885.xyz:8081/stream/53?hash=d8b3d3" class="app-card" data-category="网络">
+                <div class="card-row">
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000004669.jpg" alt="黑洞图标"></div>
+                    <div class="info">
+                        <div class="title">黑洞 · 5.17649.63535</div>
+                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 120万次下载</span><span>27.08MB</span></div>
+                        <div class="desc"><span class="tag">工具</span> 限时·独家·免费</div>
+                    </div>
+                    <div class="download-icon"><i class="fas fa-arrow-down"></i></div>
+                </div>
+            </a>
+            
+            <a href="http://777.372164885.xyz:8081/stream/54?hash=efe576" class="app-card" data-category="网络">
+                <div class="card-row">
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/Screenshot_2026-02-25-22-21-28-509_1772029375773edit.jpg" alt="快连图标"></div>
+                    <div class="info">
+                        <div class="title">快连 · 2.28.2</div>
+                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 500万次下载</span><span>32.5MB</span></div>
+                        <div class="desc"><span class="tag">工具</span> 限时·独家·免费</div>
+                    </div>
+                    <div class="download-icon"><i class="fas fa-arrow-down"></i></div>
+                </div>
+            </a>
+            
+            <a href="http://777.372164885.xyz:8081/stream/55?hash=1d226d" class="app-card" data-category="网络">
+                <div class="card-row">
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000004730.jpg" alt="魔方图标"></div>
+                    <div class="info">
+                        <div class="title">魔方 · 3.1.39</div>
+                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 60万次下载</span><span>57.94MB</span></div>
+                        <div class="desc"><span class="tag">工具</span> 限时·独家·免费</div>
+                    </div>
+                    <div class="download-icon"><i class="fas fa-arrow-down"></i></div>
+                </div>
+            </a>
+            
+            <a href="http://777.372164885.xyz:8081/stream/56?hash=aa526b" class="app-card" data-category="网络">
+                <div class="card-row">
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000004733.jpg" alt="安易图标"></div>
+                    <div class="info">
+                        <div class="title">安易 · 1.6</div>
+                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 900万次下载</span><span>33.48MB</span></div>
+                        <div class="desc"><span class="tag">工具</span> 限时·独家·免费</div>
+                    </div>
+                    <div class="download-icon"><i class="fas fa-arrow-down"></i></div>
+                </div>
+            </a>
+            
+            <a href="http://777.372164885.xyz:8081/stream/57?hash=8e5b23" class="app-card" data-category="网络">
+                <div class="card-row">
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000004736.jpg" alt="起飞图标"></div>
+                    <div class="info">
+                        <div class="title">起飞 · 4.5.1</div>
+                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 32万次下载</span><span>41.74MB</span></div>
+                        <div class="desc"><span class="tag">工具</span> 限时·独家·免费</div>
+                    </div>
+                    <div class="download-icon"><i class="fas fa-arrow-down"></i></div>
+                </div>
+            </a>
+            
+            <a href="http://777.372164885.xyz:8081/stream/58?hash=d7b0d4" class="app-card" data-category="网络">
+                <div class="card-row">
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000004739.jpg" alt="海鸥图标"></div>
+                    <div class="info">
+                        <div class="title">海鸥 · 7.3.6</div>
+                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 30万次下载</span><span>35.17MB</span></div>
+                        <div class="desc"><span class="tag">工具</span> 限时·独家·免费</div>
+                    </div>
+                    <div class="download-icon"><i class="fas fa-arrow-down"></i></div>
+                </div>
+            </a>
+            
+            <a href="http://777.372164885.xyz:8081/stream/59?hash=fbc127" class="app-card" data-category="网络">
+                <div class="card-row">
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000004742.jpg" alt="小牛图标"></div>
+                    <div class="info">
+                        <div class="title">小牛 · 1.0.7.0</div>
+                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 3万次下载</span><span>23.31MB</span></div>
+                        <div class="desc"><span class="tag">工具</span> 限时·独家·免费</div>
+                    </div>
+                    <div class="download-icon"><i class="fas fa-arrow-down"></i></div>
+                </div>
+            </a>
+            
+            <a href="http://777.372164885.xyz:8081/stream/60?hash=623a37" class="app-card" data-category="网络">
+                <div class="card-row">
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/Screenshot_2026-02-25-23-09-32-788_1772032207089edit.jpg" alt="快柠檬图标"></div>
+                    <div class="info">
+                        <div class="title">快柠檬 · 1.09.0148</div>
+                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 3200万次下载</span><span>112.9MB</span></div>
+                        <div class="desc"><span class="tag">工具</span> 限时·独家·免费</div>
+                    </div>
+                    <div class="download-icon"><i class="fas fa-arrow-down"></i></div>
+                </div>
+            </a>
+            
+            <a href="http://777.372164885.xyz:8081/stream/61?hash=c0c025" class="app-card" data-category="网络">
+                <div class="card-row">
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000004748.jpg" alt="菜鸟图标"></div>
+                    <div class="info">
+                        <div class="title">菜鸟 · 3.0.0</div>
+                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 2万次下载</span><span>30.25MB</span></div>
+                        <div class="desc"><span class="tag">工具</span> 限时·独家·免费</div>
+                    </div>
+                    <div class="download-icon"><i class="fas fa-arrow-down"></i></div>
+                </div>
+            </a>
+            
+            <a href="http://777.372164885.xyz:8081/stream/62?hash=bf797c" class="app-card" data-category="网络">
+                <div class="card-row">
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000004750.jpg" alt="nthlink图标"></div>
+                    <div class="info">
+                        <div class="title">nthlink · 6.8.3</div>
+                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 5万次下载</span><span>104.84MB</span></div>
+                        <div class="desc"><span class="tag">工具</span> 限时·独家·免费</div>
+                    </div>
+                    <div class="download-icon"><i class="fas fa-arrow-down"></i></div>
+                </div>
+            </a>
+            
         </main>
 
         <footer class="footer-note">
@@ -924,7 +1150,13 @@
         </footer>
     </div>
 
-    <!-- 脚本：日夜切换 + 搜索/分类 + 拖拽 + 独立下载 + Service Worker 注册 -->
+    <!-- 首次访问提示小窗 (默认隐藏) -->
+    <div class="tip-toast" id="firstVisitToast">
+        <span>下载🚀速度20-200kb/s</span>
+        <button class="tip-close" id="tipClose" aria-label="关闭"><i class="fas fa-times"></i></button>
+    </div>
+
+    <!-- 脚本：日夜切换 + 搜索/分类 + 拖拽 + 独立下载 + Service Worker 注册 + 首次弹窗 -->
     <script>
         (function() {
             // 日夜主题模块
@@ -1056,6 +1288,36 @@
                 });
             } else {
                 console.log('当前浏览器不支持 Service Worker');
+            }
+
+            // ---------- 首次访问小窗提示 (3秒自动关闭) ----------
+            const toast = document.getElementById('firstVisitToast');
+            const closeBtn = document.getElementById('tipClose');
+
+            if (toast && closeBtn) {
+                // 检查是否已经显示过提示 (用 localStorage 记录)
+                const tipShown = localStorage.getItem('firstTip');
+                if (!tipShown) {
+                    // 显示浮层
+                    toast.classList.add('show');
+                    // 记录已提示
+                    localStorage.setItem('firstTip', '1');
+
+                    // 3秒后自动关闭
+                    let timer = setTimeout(() => {
+                        toast.classList.remove('show');
+                    }, 5000);
+
+                    // 手动关闭按钮事件
+                    closeBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();   // 防止冒泡
+                        toast.classList.remove('show');
+                        clearTimeout(timer);    // 清除定时器
+                    });
+                } else {
+                    // 如果已经显示过，确保隐藏 (以防万一)
+                    toast.classList.remove('show');
+                }
             }
         })();
     </script>
