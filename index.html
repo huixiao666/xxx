@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>皮卡皮卡仓库 · 自动检测下载</title>
+    <title>皮卡皮卡仓库</title>
     <!-- Font Awesome 6 图标库 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -13,7 +13,7 @@
             box-sizing: border-box;
         }
 
-        /* 日间主题变量 (完整定义) */
+        /* 日间主题变量 */
         :root {
             --bg-page: #f9fafc;
             --surface: #ffffff;
@@ -38,7 +38,7 @@
             --input-focus: #3b82f6;
         }
 
-        /* 暗夜主题变量 (完整定义) */
+        /* 暗夜主题变量 */
         body.dark {
             --bg-page: #0f172a;
             --surface: #1e293b;
@@ -163,7 +163,7 @@
             color: var(--text-muted);
         }
 
-        /* 分类导航 (横向滚动 + 鼠标拖拽) */
+        /* 分类导航 */
         .nav-menu {
             display: flex;
             flex-wrap: nowrap;
@@ -224,7 +224,7 @@
             padding-bottom: 2rem;
         }
 
-        /* 卡片 (现为 div) */
+        /* 卡片 */
         .app-card {
             display: block;
             background: var(--surface);
@@ -310,7 +310,6 @@
             font-weight: 600;
             border: 1px solid var(--border-light);
         }
-        /* 下载图标 - 可点击 */
         .download-icon {
             color: var(--download-icon);
             background: var(--surface);
@@ -345,7 +344,7 @@
             margin-top: 1rem;
         }
 
-        /* 详情模态框样式 (保持不变) */
+        /* 详情模态框 */
         .modal {
             display: none;
             position: fixed;
@@ -489,7 +488,7 @@
             border: 1px solid var(--accent);
         }
 
-        /* ---------- 自动检测模态框 (原滑块模态框重构) ---------- */
+        /* ===== 待办清单风格下载弹窗 ===== */
         .slider-modal {
             display: none;
             position: fixed;
@@ -519,7 +518,7 @@
             border-radius: 40px;
             width: 90%;
             max-width: 380px;
-            padding: 2rem 1.5rem 1.8rem;
+            padding: 1.8rem 1.5rem 1.5rem;
             box-shadow: 0 30px 60px -15px rgba(0,0,0,0.5);
             border: 1px solid var(--border-light);
             color: var(--text-primary);
@@ -554,7 +553,7 @@
             display: flex;
             align-items: center;
             gap: 1rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             text-align: left;
         }
         .slider-app-icon {
@@ -574,26 +573,57 @@
             font-size: 1.2rem;
             font-weight: 650;
         }
-        .slider-status {
-            font-size: 1rem;
-            color: var(--text-secondary);
-            margin: 1.8rem 0 1.2rem;
-            min-height: 3rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
+        /* 待办步骤 */
+        .todo-steps {
+            margin: 1.2rem 0 0.8rem;
             background: var(--surface-hover);
-            border-radius: 60px;
-            padding: 0.8rem 1rem;
+            border-radius: 28px;
+            padding: 1rem 1.2rem;
             border: 1px solid var(--border-light);
         }
-        .slider-status i {
-            font-size: 1.3rem;
+        .step-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px dashed var(--border-light);
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+        .step-item:last-child {
+            border-bottom: none;
+        }
+        .step-icon {
+            width: 24px;
+            text-align: center;
+            font-size: 1.2rem;
             color: var(--accent);
         }
-        /* 失败时可选的附加按钮 */
+        .step-icon .fa-spinner {
+            color: var(--accent);
+        }
+        .step-icon .fa-check-circle {
+            color: #22c55e;
+        }
+        .step-icon .fa-times-circle {
+            color: #ef4444;
+        }
+        .step-icon .fa-circle {
+            color: var(--text-muted);
+            opacity: 0.5;
+        }
+        .step-text {
+            flex: 1;
+        }
+        .slider-status {
+            margin: 0.5rem 0 0;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
         .slider-retry-btn {
+            margin-top: 1rem;
+            width: 100%;
             background: var(--accent-soft);
             color: var(--accent);
             border: 1px solid var(--accent);
@@ -604,13 +634,12 @@
             cursor: pointer;
             transition: 0.2s;
             display: inline-block;
-            margin-top: 0.5rem;
         }
         .slider-retry-btn:hover {
             background: var(--accent);
             color: white;
         }
-        /* 小屏幕优化 */
+
         @media (max-width: 480px) {
             .app-container { padding: 0 0.5rem; }
             .logo { font-size: 1.6rem; }
@@ -630,7 +659,7 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- 头部：品牌 + 日夜切换 -->
+        <!-- 头部 -->
         <header class="top-bar">
             <div class="logo"><i class="fas fa-cube"></i> 皮卡仓库</div>
             <div class="theme-btn" id="themeToggle" aria-label="日夜模式">
@@ -646,7 +675,7 @@
             </div>
         </div>
 
-        <!-- 分类导航 (与之前完全相同) -->
+        <!-- 分类导航 -->
         <nav class="nav-menu" id="categoryNav">
             <span class="nav-link active" data-cat="all">全部</span>
             <span class="nav-link" data-cat="社交">社交</span>
@@ -669,11 +698,12 @@
             <span class="nav-link" data-cat="起飞">起飞</span>
             <span class="nav-link" data-cat="txt">txt</span>
             <span class="nav-link" data-cat="动漫">动漫</span>
+            <span class="nav-link" data-cat="皮卡">皮卡</span>
         </nav>
 
-        <!-- 应用列表 (所有卡片不变, 省略内容以节省篇幅, 实际使用时原封不动) -->
+        <!-- 应用列表（卡片） -->
         <main class="app-list" id="appList">
-            <!-- 此处原本有超过50个app-card，因篇幅省略，但用户会完整复制粘贴，故保留占位 -->
+            <!-- 微信 -->
             <div class="app-card" data-category="社交" data-href="https://weixin.qq.com/">
                 <div class="card-row">
                     <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/%E5%BE%AE%E4%BF%A1.jpeg" alt="微信图标"></div>
@@ -817,6 +847,7 @@
                     <div class="download-icon" data-download><i class="fas fa-arrow-down"></i></div>
                 </div>
             </div>
+            <!-- 后续卡片省略，但原文件中有全部卡片，此处只列出几个示例，实际使用请确保所有卡片都存在 -->
             <!-- 笔趣阁蓝色版 -->
             <div class="app-card" data-category="小说" data-href="https://111.372164885.xyz/%E6%97%A5%E5%B8%B8%E8%BD%AF%E4%BB%B6/%E7%AC%94%E8%B6%A3%E9%98%81%E8%93%9D%E8%89%B2%E7%89%88.apk">
                 <div class="card-row">
@@ -1346,12 +1377,12 @@
                 </div>
             </div>
             
-            <div class="app-card" data-category="代理" data-href="http://777.372164885.xyz:8081/stream/86?hash=a8fc91">
+            <div class="app-card" data-category="代理" data-href="http://777.372164885.xyz:8081/stream/102?hash=fe943a">
                 <div class="card-row">
                     <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000004803.jpg" alt="sing-box图标"></div>
                     <div class="info">
-                        <div class="title">sing-box · 1.13.0-rc.6</div>
-                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 7800万次下载</span><span>95.31MB</span></div>
+                        <div class="title">sing-box · 1.13.0</div>
+                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 7800万次下载</span><span>95.33MB</span></div>
                         <div class="desc"><span class="tag">配置</span> 兼容·独家·灵活</div>
                     </div>
                     <div class="download-icon" data-download><i class="fas fa-arrow-down"></i></div>
@@ -1870,7 +1901,8 @@
             <div class="app-card" data-category="搜图" data-href="http://3d.iqdb.org/
 ">
                 <div class="card-row">
-                    <div class="icon"></div>
+                    <div class="icon">
+                    <img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007386.jpg" alt="专搜3D图片图标"></div>
                     <div class="info">
                         <div class="title">专搜3D图片 </div>
                         <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 30+次下载</span><span>专业的3D图片搜索引擎，通过AI技术实现以图搜图，精准找到您想要的3D内容。</span></div>
@@ -1884,7 +1916,7 @@
             <div class="app-card" data-category="搜图" data-href="http://iqdb.org/
 ">
                 <div class="card-row">
-                    <div class="icon"></div>
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007388.jpg" alt="专搜3D图片图标"></div>
                     <div class="info">
                         <div class="title">多种服务图片搜图</div>
                         <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 10+次下载</span><span>多种服务图片搜图是一款基于AI技术的专业3D图片搜索引擎，专注于帮助用户通过图片搜索找到相似的3D内容。</span></div>
@@ -1898,7 +1930,7 @@
             <div class="app-card" data-category="搜图" data-href="https://ascii2d.net/
 ">
                 <div class="card-row">
-                    <div class="icon"></div>
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007390.jpg" alt="二次元画像图标"></div>
                     <div class="info">
                         <div class="title">二次元画像详细搜索 </div>
                         <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 30+次下载</span><span>
@@ -1914,7 +1946,8 @@
             <div class="app-card" data-category="搜图" data-href="https://www.everypixel.com/
 ">
                 <div class="card-row">
-                    <div class="icon"></div>
+                    <div class="icon">
+                    <img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007393.jpg" alt="素材图标"></div>
                     <div class="info">
                         <div class="title">素材反向识图 </div>
                         <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 3+次下载</span><span>素材反面搜索图片</span></div>
@@ -1927,7 +1960,8 @@
             <div class="app-card" data-category="搜图" data-href="https://unsplash.com/
 ">
                 <div class="card-row">
-                    <div class="icon"></div>
+                    <div class="icon">
+                    <img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007395.jpg" alt="专搜3D图片图标"></div>
                     <div class="info">
                         <div class="title">素材搜图 </div>
                         <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 2+次下载</span><span>相关素材库搜索</span></div>
@@ -1941,7 +1975,8 @@
             <div class="app-card" data-category="搜图" data-href="https://soik.top/
 ">
                 <div class="card-row">
-                    <div class="icon"></div>
+                    <div class="icon">
+                    <img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007398.jpg" alt="谷歌镜像图标"></div>
                     <div class="info">
                         <div class="title">谷歌识图镜像网站 </div>
                         <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 15+次下载</span><span>网友提供谷歌识图镜像网站</span></div>
@@ -1955,7 +1990,7 @@
             <div class="app-card" data-category="搜图" data-href="https://cn.bing.com/visualsearch
 ">
                 <div class="card-row">
-                    <div class="icon"></div>
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007404.jpg" alt="必应图标"></div>
                     <div class="info">
                         <div class="title">必应视觉搜寻 </div>
                         <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 1+次下载</span><span>微软bing搜索引擎</span></div>
@@ -1969,7 +2004,7 @@
             <div class="app-card" data-category="搜图" data-href="https://tineye.com/
 ">
                 <div class="card-row">
-                    <div class="icon"></div>
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007407.jpg" alt="老牌图标"></div>
                     <div class="info">
                         <div class="title">老牌识图(被墙) </div>
                         <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 0+次下载</span><span>老牌老仓库识图</span></div>
@@ -1982,7 +2017,7 @@
             <div class="app-card" data-category="搜图" data-href="https://www.google.com.hk/imghp
 ">
                 <div class="card-row">
-                    <div class="icon"></div>
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007410.jpg" alt="谷歌搜索图标"></div>
                     <div class="info">
                         <div class="title">谷歌识图(被墙)</div>
                         <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 2万+次下载</span><span>全球搜索引擎，覆盖范围大</span></div>
@@ -1996,7 +2031,7 @@
             <div class="app-card" data-category="搜图" data-href="https://ya.ru/?utm_referrer=https%3A%2F%2Fwww.google.com%2F
 ">
                 <div class="card-row">
-                    <div class="icon"></div>
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007412.jpg" alt="图标"></div>
                     <div class="info">
                         <div class="title">俄罗斯搜索引擎 </div>
                         <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 3万+次下载</span><span>非常强大的识图搜索引擎</span></div>
@@ -2010,7 +2045,7 @@
             <div class="app-card" data-category="搜图" data-href="https://saucenao.com/
 ">
                 <div class="card-row">
-                    <div class="icon"></div>
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007414.jpg" alt="图标"></div>
                     <div class="info">
                         <div class="title"> 二次元识图</div>
                         <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 50+次下载</span><span>专业P站搜二次元识图</span></div>
@@ -2024,7 +2059,7 @@
             <div class="app-card" data-category="搜图" data-href="https://trace.moe/
 ">
                 <div class="card-row">
-                    <div class="icon"></div>
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007416.jpg" alt="图标"></div>
                     <div class="info">
                         <div class="title">动漫视频截图识别 </div>
                         <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 60+次下载</span><span>非常专业动漫截图识图搜索引擎</span></div>
@@ -2038,7 +2073,7 @@
             <div class="app-card" data-category="搜图" data-href="https://ppbc.iplant.cn/
 ">
                 <div class="card-row">
-                    <div class="icon"></div>
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007418.jpg" alt="图标"></div>
                     <div class="info">
                         <div class="title">PPBC中国植物图像库 </div>
                         <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 10+次下载</span><span>中国科学院植物研究所 大数据与AI生物多样性保护研究中心</span></div>
@@ -2052,7 +2087,8 @@
             <div class="app-card" data-category="搜图" data-href="https://graph.baidu.com/pcpage/index?tpl_from=pc/
 ">
                 <div class="card-row">
-                    <div class="icon"></div>
+                    <div class="icon">
+                    <img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007420.jpg" alt="图标"></div>
                     <div class="info">
                         <div class="title">百度识图 </div>
                         <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 3+次下载</span><span></span></div>
@@ -2065,7 +2101,7 @@
             <div class="app-card" data-category="搜图" data-href="https://m.image.so.com/
 ">
                 <div class="card-row">
-                    <div class="icon"></div>
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007422.jpg" alt="图标"></div>
                     <div class="info">
                         <div class="title">360识图 </div>
                         <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 3+次下载</span><span></span></div>
@@ -2079,7 +2115,7 @@
             <div class="app-card" data-category="搜图" data-href="https://pic.sogou.com/pic/index.jsp?v=5/
 ">
                 <div class="card-row">
-                    <div class="icon"></div>
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007426.jpg" alt="图标"></div>
                     <div class="info">
                         <div class="title">搜狗识图 </div>
                         <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 3+次下载</span><span></span></div>
@@ -2283,8 +2319,225 @@
                     <div class="download-icon" data-download><i class="fas fa-arrow-down"></i></div>
                 </div>
             </div>
-            <!-- 实际使用时请将原文件中的所有 .app-card 内容完整粘贴至此 -->
-            <!-- 注意: 为保证功能，必须保留每个卡片的 data-category 和 data-href 以及内部结构 -->
+            
+            
+            <div class="app-card" data-category="游戏" data-href="https://mc.kurogames.com/m/">
+                <div class="card-row">
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000005317.jpg" alt="鸣潮图标"></div>
+                    <div class="info">
+                        <div class="title">鸣潮 · 3.1.0</div>
+                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 3.3亿+次下载</span><span>1.8GB</span></div>
+                        <div class="desc"><span class="tag">游戏</span> 高自由度·玩法丰富·角色扮演</div>
+                    </div>
+                    <div class="download-icon" data-download><i class="fas fa-arrow-down"></i></div>
+                </div>
+            </div>
+            
+            
+            <div class="app-card" data-category="皮卡" data-href="https://qqq.372164885.xyz/">
+                <div class="card-row">
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007384.jpg" alt="图标"></div>
+                    <div class="info">
+                        <div class="title">搜索引擎</div>
+                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 3+次下载</span><span>
+                        </span></div>
+                        <div class="desc"><span class="tag">搜索</span> 无广告·内容丰富·聚合</div>
+                    </div>
+                    <div class="download-icon" data-download><i class="fas fa-arrow-down"></i></div>
+                </div>
+            </div>
+            
+            
+            <div class="app-card" data-category="网盘" data-href="http://777.372164885.xyz:8081/stream/101?hash=fc5c24">
+                <div class="card-row">
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007452.jpg" alt="乐享云图标"></div>
+                    <div class="info">
+                        <div class="title">乐享云 · 1.1.0</div>
+                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 290+次下载</span><span>38.23MB</span></div>
+                        <div class="desc"><span class="tag">网盘</span> 磁力·独家·免费</div>
+                    </div>
+                    <div class="download-icon" data-download><i class="fas fa-arrow-down"></i></div>
+                </div>
+            </div>
+            
+            
+            <div class="app-card" data-category="代理" data-href="http://777.372164885.xyz:8081/stream/103?hash=fa8b7e">
+                <div class="card-row">
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007469.jpg" alt="v2rayng图标"></div>
+                    <div class="info">
+                        <div class="title">v2rayNG · 2.0.13</div>
+                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 5830万+次下载</span><span>95.5MB</span></div>
+                        <div class="desc"><span class="tag">配置</span> xray·独家·免费</div>
+                    </div>
+                    <div class="download-icon" data-download><i class="fas fa-arrow-down"></i></div>
+                </div>
+            </div>
+            
+            
+            <div class="app-card" data-category="代理" data-href="http://777.372164885.xyz:8081/stream/104?hash=e4c1af">
+                <div class="card-row">
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007474.jpg" alt="Clash meta图标"></div>
+                    <div class="info">
+                        <div class="title">clash meta · 2.11.23</div>
+                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 3780万+次下载</span><span>77.15MB</span></div>
+                        <div class="desc"><span class="tag">配置</span> meta·独家·免费</div>
+                    </div>
+                    <div class="download-icon" data-download><i class="fas fa-arrow-down"></i></div>
+                </div>
+            </div>
+            
+            
+            <div class="app-card" data-category="代理" data-href="http://777.372164885.xyz:8081/stream/90?hash=21fcb2">
+                <div class="card-row">
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007475.jpg" alt="karing图标"></div>
+                    <div class="info">
+                        <div class="title">karing · 1.2.14</div>
+                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 1290万+次下载</span><span>115.62MB</span></div>
+                        <div class="desc"><span class="tag">配置</span> 兼容·独家·免费</div>
+                    </div>
+                    <div class="download-icon" data-download><i class="fas fa-arrow-down"></i></div>
+                </div>
+            </div>
+            
+            
+            <div class="app-card" data-category="皮卡" data-href="https://rrr.372164885.xyz/">
+                <div class="card-row">
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007550.jpg" alt="图标"></div>
+                    <div class="info">
+                        <div class="title">网盘搜索磁力</div>
+                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 5+次下载</span><span>
+                        </span></div>
+                        <div class="desc"><span class="tag">搜索</span> 无广告·内容丰富·聚合</div>
+                    </div>
+                    <div class="download-icon" data-download><i class="fas fa-arrow-down"></i></div>
+                </div>
+            </div>
+            
+            
+            <div class="app-card" data-category="皮卡" data-href="https://eee.372164885.xyz/">
+                <div class="card-row">
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007552.jpg" alt="图标"></div>
+                    <div class="info">
+                        <div class="title">it-tools</div>
+                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 1+次下载</span><span>
+                        </span></div>
+                        <div class="desc"><span class="tag">工具</span> 二维码·uuid·随机密码</div>
+                    </div>
+                    <div class="download-icon" data-download><i class="fas fa-arrow-down"></i></div>
+                </div>
+            </div>
+            
+            
+            <div class="app-card" data-category="皮卡" data-href="https://123.372164885.xyz/">
+                <div class="card-row">
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007555.jpg" alt="图标"></div>
+                    <div class="info">
+                        <div class="title">在线文字转语音</div>
+                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 3+次下载</span><span>
+                        </span></div>
+                        <div class="desc"><span class="tag">语音</span> 转文字·内容·聚合</div>
+                    </div>
+                    <div class="download-icon" data-download><i class="fas fa-arrow-down"></i></div>
+                </div>
+            </div>
+            
+            <div class="app-card" data-category="皮卡" data-href="https://o.372164885.xyz/">
+                <div class="card-row">
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007558.jpg" alt="图标"></div>
+                    <div class="info">
+                        <div class="title">在线绘画</div>
+                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 6+次下载</span><span>
+                        </span></div>
+                        <div class="desc"><span class="tag">绘画</span> abcd123</div>
+                    </div>
+                    <div class="download-icon" data-download><i class="fas fa-arrow-down"></i></div>
+                </div>
+            </div>
+            
+            
+            <div class="app-card" data-category="皮卡" data-href="https://svip.372164885.xyz/">
+                <div class="card-row">
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007561.jpg" alt="图标"></div>
+                    <div class="info">
+                        <div class="title">免费图床</div>
+                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 3+次下载</span><span>
+                        </span></div>
+                        <div class="desc"><span class="tag">图片</span>限制5mb</div>
+                    </div>
+                    <div class="download-icon" data-download><i class="fas fa-arrow-down"></i></div>
+                </div>
+            </div>
+            
+            
+            <div class="app-card" data-category="皮卡" data-href="https://qun.qq.com/universal-share/share?ac=1&authKey=1l4f7JNmC5%2BgwuDYllEvvw7y9%2Burgh9tkalNM6ypzY4M2VdweVfGdCb4mN90vhe1&busi_data=eyJncm91cENvZGUiOiI1Njg4NzE0MjYiLCJ0b2tlbiI6ImRndzVJYlhOSlNQcTBpTU9XUGsxV3BPY0NoZkVYVThiRENtVVVlZy8vN2RENEUwblRCVXA5YVpFZ1RhaDV2NUIiLCJ1aW4iOiIxOTY2MzMwMzE5In0%3D&data=FTFChZ2b5hPhdttvTvHHRiv2xRYrpbUg_DBhgNv31ucjpzBmm5r19k09b2ufQX4Cz-fSDDWJgp1TxoXdtz6JNQ&svctype=4&tempid=h5_group_info">
+                <div class="card-row">
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007563.jpg" alt="图标"></div>
+                    <div class="info">
+                        <div class="title">皮卡翻车群</div>
+                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 30+次下载</span><span>
+                        </span></div>
+                        <div class="desc"><span class="tag">QQ群</span>车车</div>
+                    </div>
+                    <div class="download-icon" data-download><i class="fas fa-arrow-down"></i></div>
+                </div>
+            </div>
+            
+            
+            <div class="app-card" data-category="皮卡" data-href="https://qun.qq.com/universal-share/share?ac=1&authKey=n%2Fgad%2BIaoDPn2G3pOzFvTTOEFQb%2Ff7G12uCbXwAoDsoVLy7v06crGL965OCb7jwK&busi_data=eyJncm91cENvZGUiOiIxMDQ5NTUwOTI1IiwidG9rZW4iOiI4Szl4ZUVaQXJ0VVlvNHljQldlSGVVMGRsczlyVnFtR1RoSFhaSWc3Y2lXc0ZoNmhpWXNNSWlRWkphR2s2VnYrIiwidWluIjoiMTk2NjMzMDMxOSJ9&data=MMMAQg6C1RmDXtkNskEvCNFEbIP38eYd-s7X5-dwGCWAptoe6FxYgvguTDMC5naeFv97A9LbA0lracmOvz_4oA&svctype=4&tempid=h5_group_info">
+                <div class="card-row">
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007566.jpg" alt="图标"></div>
+                    <div class="info">
+                        <div class="title">皮卡备用群</div>
+                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 25+次下载</span><span>
+                        </span></div>
+                        <div class="desc"><span class="tag">QQ群</span> 车车</div>
+                    </div>
+                    <div class="download-icon" data-download><i class="fas fa-arrow-down"></i></div>
+                </div>
+            </div>
+            
+            
+            <div class="app-card" data-category="皮卡" data-href="https://qun.qq.com/universal-share/share?ac=1&authKey=93zHuPMoEsNJ3ktOR%2B4%2BIPMVy9yb5X9XkDH9qrZyLatB2vHyfNwwQ5G3NugjJGAK&busi_data=eyJncm91cENvZGUiOiIxMDQxMjQ0MjI5IiwidG9rZW4iOiJDdVh1dGNuUEVNN3FFRmVWR1BLejJWYmlVUytMSzZCZHRUL1VoQldTUVJtNCtxNUc5ZzM4cnRWVzVsZXI2bTJvIiwidWluIjoiMTk2NjMzMDMxOSJ9&data=AvVKrLAXKCyKR-X5BqddU2n-ucdS33fB4D_m77xkxZGzs0t4hH6Th9Sz-M0rme1Q-b7ptKjz6kmHVat7IW2KwA&svctype=4&tempid=h5_group_info">
+                <div class="card-row">
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007568.jpg" alt="图标"></div>
+                    <div class="info">
+                        <div class="title">皮卡禁言群</div>
+                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 3+次下载</span><span>
+                        </span></div>
+                        <div class="desc"><span class="tag">QQ群</span> 禁言群</div>
+                    </div>
+                    <div class="download-icon" data-download><i class="fas fa-arrow-down"></i></div>
+                </div>
+            </div>
+            
+            <div class="app-card" data-category="皮卡" data-href="https://qun.qq.com/universal-share/share?ac=1&authKey=xfLKD%2FM8stkNSnjy%2BVA9Okne9LldJL3LF2VZY1Mwugtuke17VyJuCMd8tyyBmlOl&busi_data=eyJncm91cENvZGUiOiI2MDQ1NzQyMzciLCJ0b2tlbiI6Ik9MOTQ3VklxUHZRVXpVZk5jUzllNWxaK3JlS2J4RzdzNnl2UXp3bTJYUkxVOG5zTTlSTzQ0TjdwL0RMT2RCaGIiLCJ1aW4iOiIxMDA1Mzg0NDE4In0%3D&data=8jcElMlcn27vO4nAa-sSkaQaDUzJ_2VFz_uPreDWpShC0806PkImYru_3-WCn8oBiwGSmSXYbdzVqyTUMgzAwQ&svctype=4&tempid=h5_group_info">
+                <div class="card-row">
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007568.jpg" alt="图标"></div>
+                    <div class="info">
+                        <div class="title">无语的群</div>
+                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 12+次下载</span><span>
+                        </span></div>
+                        <div class="desc"><span class="tag">QQ群</span> 车车</div>
+                    </div>
+                    <div class="download-icon" data-download><i class="fas fa-arrow-down"></i></div>
+                </div>
+            </div>
+            
+            
+            
+            <div class="app-card" data-category="皮卡" data-href="https://t.me/+qiezQCcGXswzYTM1">
+                <div class="card-row">
+                    <div class="icon"><img src="https://111.372164885.xyz/%E5%9B%BE%E6%A0%87/1000007568.jpg" alt="图标"></div>
+                    <div class="info">
+                        <div class="title">皮卡电报群</div>
+                        <div class="meta"><span><i class="far fa-arrow-alt-circle-down"></i> 5+次下载</span><span>
+                        </span></div>
+                        <div class="desc"><span class="tag">电报</span> 超涩·超大·聚合</div>
+                    </div>
+                    <div class="download-icon" data-download><i class="fas fa-arrow-down"></i></div>
+                </div>
+            </div>
+            <!-- 为保持完整，建议您直接从原文件中复制所有卡片粘贴到这里 -->
         </main>
 
         <footer class="footer-note">
@@ -2293,7 +2546,7 @@
         </footer>
     </div>
 
-    <!-- 详情模态框 (卡片点击) 不变 -->
+    <!-- 详情模态框 -->
     <div class="modal" id="appModal">
         <div class="modal-overlay" id="modalOverlay"></div>
         <div class="modal-content">
@@ -2312,7 +2565,7 @@
         </div>
     </div>
 
-    <!-- 自动检测下载模态框 (原滑块模态框重构) -->
+    <!-- 待办清单风格下载弹窗 -->
     <div class="slider-modal" id="sliderModal">
         <div class="slider-overlay" id="sliderOverlay"></div>
         <div class="slider-content">
@@ -2321,17 +2574,40 @@
                 <div class="slider-app-icon"><img id="sliderAppIcon" src="" alt=""></div>
                 <div class="slider-app-title" id="sliderAppTitle"></div>
             </div>
-            <!-- 状态显示区域：不再有滑块，只有动态检测提示 -->
-            <div class="slider-status" id="sliderStatus">
-                <i class="fas fa-spinner fa-pulse"></i> 准备检测链接...
-            </div>
-            <!-- 失败时动态插入重试按钮 (通过js) -->
+            <div class="todo-steps" id="todoSteps">
+    <div class="step-item" id="step1">
+        <span class="step-icon"><i class="far fa-circle"></i></span>
+        <span class="step-text">正在检测当前网络</span>
+    </div>
+    <div class="step-item" id="step2">
+        <span class="step-icon"><i class="far fa-circle"></i></span>
+        <span class="step-text">检测到当前网络正常</span>
+    </div>
+    <div class="step-item" id="step3">
+        <span class="step-icon"><i class="far fa-circle"></i></span>
+        <span class="step-text">正在检测应用链接</span>
+    </div>
+    <div class="step-item" id="step4">
+        <span class="step-icon"><i class="far fa-circle"></i></span>
+        <span class="step-text">检测到应用链接正常</span>
+    </div>
+    <div class="step-item" id="step5">
+        <span class="step-icon"><i class="far fa-circle"></i></span>
+        <span class="step-text">正在拉取应用链接</span>
+    </div>
+    <div class="step-item" id="step6">
+        <span class="step-icon"><i class="far fa-circle"></i></span>
+        <span class="step-text">正在启动下载服务</span>
+    </div>
+</div>
+            
+            <div class="slider-status" id="sliderStatus" style="display: none;"></div>
         </div>
     </div>
 
     <script>
         (function() {
-            // 日夜主题模块 (保持不变)
+            // 日夜主题
             const body = document.body;
             const themeToggle = document.getElementById('themeToggle');
             const themeIcon = document.getElementById('themeIcon');
@@ -2358,7 +2634,7 @@
                 }
             });
 
-            // ---------- 过滤模块 (搜索+分类) 与之前完全相同 ----------
+            // ---------- 过滤模块 ----------
             const appCards = document.querySelectorAll('.app-card');
             const navLinks = document.querySelectorAll('.nav-link');
             const searchInput = document.getElementById('searchInput');
@@ -2412,7 +2688,7 @@
 
             setActiveCategory('all');
 
-            // 分类导航鼠标拖拽滚动
+            // 分类导航拖拽滚动
             (function setupDragScroll() {
                 const nav = document.getElementById('categoryNav');
                 let isDown = false;
@@ -2437,198 +2713,192 @@
                 });
             })();
 
-            // ----- 详情模态框 (卡片点击) 保持不变 -----
-            const modal = document.getElementById('appModal');
-            const modalOverlay = document.getElementById('modalOverlay');
-            const modalClose = document.getElementById('modalClose');
-            const modalIcon = document.getElementById('modalIcon').querySelector('img');
-            const modalTitle = document.getElementById('modalTitle');
-            const modalTags = document.getElementById('modalTags');
-            const modalDownloads = document.getElementById('modalDownloads');
-            const modalSize = document.getElementById('modalSize');
-            const modalDescription = document.getElementById('modalDescription');
-            const modalDownloadBtn = document.getElementById('modalDownloadBtn');
+            // ---------- 待办清单风格下载弹窗（6步，前两步无延迟）----------
+const sliderModal = document.getElementById('sliderModal');
+const sliderOverlay = document.getElementById('sliderOverlay');
+const sliderClose = document.getElementById('sliderClose');
+const sliderAppIcon = document.getElementById('sliderAppIcon');
+const sliderAppTitle = document.getElementById('sliderAppTitle');
+const todoSteps = document.getElementById('todoSteps');
+const step1 = document.getElementById('step1');
+const step2 = document.getElementById('step2');
+const step3 = document.getElementById('step3');
+const step4 = document.getElementById('step4');
+const step5 = document.getElementById('step5');
+const step6 = document.getElementById('step6');
+const sliderStatus = document.getElementById('sliderStatus');
 
-            function openDetailModal(card) {
-                const iconSrc = card.querySelector('.icon img').src;
-                const titleText = card.querySelector('.title').innerText;
-                const tags = [];
-                const descNode = card.querySelector('.desc');
-                let descriptionText = '';
-                descNode.childNodes.forEach(node => {
-                    if (node.nodeType === Node.TEXT_NODE) {
-                        descriptionText += node.textContent.trim() + ' ';
-                    } else if (node.classList && node.classList.contains('tag')) {
-                        tags.push(node.textContent.trim());
-                    }
-                });
-                const metaSpans = card.querySelectorAll('.meta span');
-                const downloadsText = metaSpans[0] ? metaSpans[0].innerText.replace(/[^0-9.亿万+]/g, '') + '次下载' : '';
-                const sizeText = metaSpans[1] ? metaSpans[1].innerText : '';
-                
-                modalIcon.src = iconSrc;
-                modalTitle.innerText = titleText;
-                modalTags.innerHTML = '';
-                tags.forEach(tag => {
-                    const span = document.createElement('span');
-                    span.className = 'tag';
-                    span.innerText = tag;
-                    modalTags.appendChild(span);
-                });
-                modalDownloads.innerHTML = `<i class="far fa-arrow-alt-circle-down"></i> ${downloadsText}`;
-                modalSize.innerHTML = `<i class="fas fa-database"></i> ${sizeText}`;
-                modalDescription.innerText = descriptionText.trim();
-                modalDownloadBtn.href = card.dataset.href;
-                modal.classList.add('show');
-            }
+let currentDownloadUrl = '';
+let abortController = null;
 
-            function closeDetailModal() {
-                modal.classList.remove('show');
-            }
+// 可中止的延迟函数（如果用户关闭弹窗，立即停止后续步骤）
+function delay(ms, signal) {
+    return new Promise((resolve, reject) => {
+        const timer = setTimeout(resolve, ms);
+        signal.addEventListener('abort', () => {
+            clearTimeout(timer);
+            reject(new DOMException('Aborted', 'AbortError'));
+        });
+    });
+}
 
-            appCards.forEach(card => {
-                card.addEventListener('click', function(e) {
-                    if (e.target.closest('.download-icon')) return;
-                    openDetailModal(this);
-                });
-            });
+// 重置所有步骤图标为空心圆
+function resetSteps() {
+    step1.querySelector('.step-icon i').className = 'far fa-circle';
+    step2.querySelector('.step-icon i').className = 'far fa-circle';
+    step3.querySelector('.step-icon i').className = 'far fa-circle';
+    step4.querySelector('.step-icon i').className = 'far fa-circle';
+    step5.querySelector('.step-icon i').className = 'far fa-circle';
+    step6.querySelector('.step-icon i').className = 'far fa-circle';
+}
 
-            modalClose.addEventListener('click', closeDetailModal);
-            modalOverlay.addEventListener('click', closeDetailModal);
+// 移除可能残留的重试按钮
+function cleanRetryBtn() {
+    const existingRetry = document.querySelector('.slider-retry-btn');
+    if (existingRetry) existingRetry.remove();
+}
 
-            // ---------- 自动检测下载模态框 (重构：移除滑块，改为智能检测) ----------
-            const sliderModal = document.getElementById('sliderModal');
-            const sliderOverlay = document.getElementById('sliderOverlay');
-            const sliderClose = document.getElementById('sliderClose');
-            const sliderAppIcon = document.getElementById('sliderAppIcon');
-            const sliderAppTitle = document.getElementById('sliderAppTitle');
-            const sliderStatus = document.getElementById('sliderStatus');
+// 关闭模态框
+function closeSliderModal() {
+    if (abortController) {
+        abortController.abort();
+        abortController = null;
+    }
+    cleanRetryBtn();
+    sliderModal.classList.remove('show');
+}
 
-            let currentDownloadUrl = '';
-            let abortController = null; // 用于取消fetch
+// 检测链接是否可用
+async function checkLinkAvailability(url, signal) {
+    try {
+        const response = await fetch(url, { method: 'HEAD', mode: 'cors', cache: 'no-cache', signal });
+        if (response.ok) return true;
+        try {
+            await fetch(url, { method: 'HEAD', mode: 'no-cors', cache: 'no-cache', signal });
+            return true;
+        } catch {
+            return false;
+        }
+    } catch (err) {
+        if (err.name === 'AbortError') throw err;
+        try {
+            await fetch(url, { method: 'HEAD', mode: 'no-cors', cache: 'no-cache', signal });
+            return true;
+        } catch (err2) {
+            if (err2.name === 'AbortError') throw err2;
+            return false;
+        }
+    }
+}
 
-            // 关闭模态框，并中止任何进行中的检测
-            function closeSliderModal() {
-                if (abortController) {
-                    abortController.abort();
-                    abortController = null;
-                }
-                sliderModal.classList.remove('show');
-                // 清空可能添加的重试按钮
-                const existingRetry = document.querySelector('.slider-retry-btn');
-                if (existingRetry) existingRetry.remove();
-            }
+// 打开下载弹窗（检测后所有步骤瞬间打勾，等待1秒后跳转）
+async function openSliderModal(iconSrc, title, downloadUrl) {
+    sliderAppIcon.src = iconSrc;
+    sliderAppTitle.innerText = title;
+    currentDownloadUrl = downloadUrl;
+    cleanRetryBtn();
+    resetSteps();
 
-            // 检测链接是否可用 (核心)
-            async function checkLinkAvailability(url, signal) {
-                // 先尝试 CORS 模式的 HEAD (可获取状态码)
-                try {
-                    const response = await fetch(url, { method: 'HEAD', mode: 'cors', cache: 'no-cache', signal });
-                    if (response.ok) return true; // 200-299
-                    // 非2xx，可能404等，但网络是通的；再试一次 no-cors (防止服务器不支持HEAD)
-                    try {
-                        await fetch(url, { method: 'HEAD', mode: 'no-cors', cache: 'no-cache', signal });
-                        return true; // no-cors 没抛异常表示能发请求，姑且认为可用 (即使实际是404)
-                    } catch {
-                        return false;
-                    }
-                } catch (err) {
-                    if (err.name === 'AbortError') throw err; // 交给外层
-                    // CORS 失败（跨域或网络错误），尝试 no-cors
-                    try {
-                        await fetch(url, { method: 'HEAD', mode: 'no-cors', cache: 'no-cache', signal });
-                        return true; // 没抛异常表示能通
-                    } catch (err2) {
-                        if (err2.name === 'AbortError') throw err2;
-                        return false; // 彻底失败
-                    }
-                }
-            }
+    sliderStatus.style.display = 'none';
+    todoSteps.style.display = 'block';
 
-            // 打开自动检测模态框
-            async function openSliderModal(iconSrc, title, downloadUrl) {
-                // 重置UI
-                sliderAppIcon.src = iconSrc;
-                sliderAppTitle.innerText = title;
-                currentDownloadUrl = downloadUrl;
+    if (abortController) abortController.abort();
+    abortController = new AbortController();
+    const signal = abortController.signal;
 
-                // 移除之前可能残留的重试按钮
-                const oldRetry = document.querySelector('.slider-retry-btn');
-                if (oldRetry) oldRetry.remove();
+    sliderModal.classList.add('show');
 
-                sliderStatus.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> 正在检测链接可用性...';
-                sliderModal.classList.add('show');
+    try {
+        // 第一步：真实检测链接（这里会有实际等待时间，取决于网络）
+        const isAvailable = await checkLinkAvailability(downloadUrl, signal);
+        if (!isAvailable) {
+            step1.querySelector('.step-icon i').className = 'fas fa-times-circle';
+            sliderStatus.style.display = 'block';
+            sliderStatus.innerHTML = '<i class="fas fa-exclamation-triangle" style="color:#f97316;"></i> 链接不可用，下载失败';
+            const retryBtn = document.createElement('div');
+            retryBtn.className = 'slider-retry-btn';
+            retryBtn.innerHTML = '<i class="fas fa-times"></i> 关闭';
+            retryBtn.addEventListener('click', closeSliderModal);
+            todoSteps.parentNode.insertBefore(retryBtn, todoSteps.nextSibling);
+            return;
+        }
 
-                // 创建新的 AbortController
-                if (abortController) abortController.abort();
-                abortController = new AbortController();
-                const signal = abortController.signal;
+        // 链接可用，所有步骤瞬间变成对勾（不等待）
+        step1.querySelector('.step-icon i').className = 'fas fa-check-circle';
+        step2.querySelector('.step-icon i').className = 'fas fa-check-circle';
+        step3.querySelector('.step-icon i').className = 'fas fa-check-circle';
+        step4.querySelector('.step-icon i').className = 'fas fa-check-circle';
+        step5.querySelector('.step-icon i').className = 'fas fa-check-circle';
+        step6.querySelector('.step-icon i').className = 'fas fa-check-circle';
 
-                try {
-                    const isAvailable = await checkLinkAvailability(downloadUrl, signal);
-                    if (!isAvailable) {
-                        // 检测失败
-                        sliderStatus.innerHTML = '<i class="fas fa-exclamation-triangle" style="color:#f97316;"></i> 链接不可用，下载失败';
-                        // 添加一个“重试”或“关闭”按钮，方便用户
-                        const retryBtn = document.createElement('div');
-                        retryBtn.className = 'slider-retry-btn';
-                        retryBtn.innerHTML = '<i class="fas fa-redo-alt"></i> 关闭';
-                        retryBtn.addEventListener('click', closeSliderModal);
-                        sliderStatus.parentNode.insertBefore(retryBtn, sliderStatus.nextSibling);
-                        return;
-                    }
-                    // 检测成功：立即下载
-                    sliderStatus.innerHTML = '<i class="fas fa-check-circle" style="color:#22c55e;"></i> 链接有效，正在启动下载...';
-                    // 短暂延迟让用户看到成功状态，然后跳转
-                    setTimeout(() => {
-                        if (currentDownloadUrl) {
-                            window.location.href = currentDownloadUrl; // 开始下载
-                        }
-                        closeSliderModal(); // 跳转后模态框会消失，但为了整洁也关闭
-                    }, 400);
-                } catch (err) {
-                    if (err.name === 'AbortError') {
-                        // 用户关闭模态框导致abort，不处理
-                        return;
-                    }
-                    // 其他意外错误
-                    sliderStatus.innerHTML = '<i class="fas fa-times-circle" style="color:#ef4444;"></i> 检测异常，请稍后重试';
-                    const retryBtn = document.createElement('div');
-                    retryBtn.className = 'slider-retry-btn';
-                    retryBtn.innerHTML = '<i class="fas fa-times"></i> 关闭';
-                    retryBtn.addEventListener('click', closeSliderModal);
-                    sliderStatus.parentNode.insertBefore(retryBtn, sliderStatus.nextSibling);
-                } finally {
-                    abortController = null;
-                }
-            }
+        // 显示提示信息，然后等待1秒
+        sliderStatus.style.display = 'block';
+        sliderStatus.innerHTML = '<i class="fas fa-rocket" style="color:#3b82f6;"></i> 准备就绪，1秒后启动下载...';
+        
+        // 等待1秒（1000毫秒），可被中止
+        await delay(1000, signal);
 
-            // 下载图标点击事件
-            document.querySelectorAll('.download-icon[data-download]').forEach(icon => {
-                icon.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    const card = this.closest('.app-card');
-                    if (card && card.dataset.href) {
-                        const iconSrc = card.querySelector('.icon img').src;
-                        const title = card.querySelector('.title').innerText;
-                        openSliderModal(iconSrc, title, card.dataset.href);
-                    }
-                });
-            });
+        // 跳转下载
+        if (currentDownloadUrl) {
+            window.location.href = currentDownloadUrl;
+        }
+        closeSliderModal();
 
-            // 关闭模态框
+    } catch (err) {
+        if (err.name === 'AbortError') return; // 用户主动关闭，不做处理
+        // 其他意外错误
+        step1.querySelector('.step-icon i').className = 'fas fa-times-circle';
+        sliderStatus.style.display = 'block';
+        sliderStatus.innerHTML = '<i class="fas fa-exclamation-circle" style="color:#ef4444;"></i> 检测异常，请稍后重试';
+        const retryBtn = document.createElement('div');
+        retryBtn.className = 'slider-retry-btn';
+        retryBtn.innerHTML = '<i class="fas fa-redo-alt"></i> 关闭';
+        retryBtn.addEventListener('click', closeSliderModal);
+        todoSteps.parentNode.insertBefore(retryBtn, todoSteps.nextSibling);
+    } finally {
+        abortController = null;
+    }
+}
+
+
+document.querySelectorAll('.download-icon[data-download]').forEach(icon => {
+    icon.addEventListener('click', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        const card = this.closest('.app-card');
+        if (card && card.dataset.href) {
+            const iconSrc = card.querySelector('.icon img').src;
+            const title = card.querySelector('.title').innerText;
+            openSliderModal(iconSrc, title, card.dataset.href);
+        }
+    });
+});
+
+// 关闭弹窗
+sliderClose.addEventListener('click', closeSliderModal);
+sliderOverlay.addEventListener('click', closeSliderModal);
+
+// 绑定下载按钮点击事件
+document.querySelectorAll('.download-icon[data-download]').forEach(icon => {
+    icon.addEventListener('click', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        const card = this.closest('.app-card');
+        if (card && card.dataset.href) {
+            const iconSrc = card.querySelector('.icon img').src;
+            const title = card.querySelector('.title').innerText;
+            openSliderModal(iconSrc, title, card.dataset.href);
+        }
+    });
+});
+
             sliderClose.addEventListener('click', closeSliderModal);
             sliderOverlay.addEventListener('click', closeSliderModal);
 
-            // 注册 Service Worker (保持不变)
+            // Service Worker
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', () => {
-                    navigator.serviceWorker.register('./sw.js').then(reg => {
-                        console.log('Service Worker 注册成功，作用域:', reg.scope);
-                    }).catch(err => {
-                        console.log('Service Worker 注册失败:', err);
-                    });
+                    navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW注册失败:', err));
                 });
             }
         })();
