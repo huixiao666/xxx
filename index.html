@@ -322,6 +322,9 @@ body.nav-hidden .theme-btn {
     <button class="app-chip" data-cat="社交">社交</button>
     <button class="app-chip" data-cat="工具">工具</button>
     <button class="app-chip" data-cat="搜图">搜图</button>
+    <button class="app-chip" data-cat="群友">群友</button>
+    <button class="app-chip" data-cat="网络">网络</button>
+    <button class="app-chip" data-cat="iOS">iOS</button>
     </div></div>
     <div class="app-pinned-wrap" id="pinnedWrap"><div class="app-pinned-label">常用应用</div><div class="apps-grid" id="pinnedGrid"></div></div>
     <div class="apps-grid" id="appsGrid"></div>
@@ -440,7 +443,16 @@ const APP_DATA = [
 { name:"PPBC中国植物图像库",icon:"fas fa-search-plus",color:"#2869e6",bg:"#edf2ff",url:"https://ppbc.iplant.cn/",tag:"搜图" },
 { name:"百度识图",icon:"fas fa-cloud",color:"#2869e6",bg:"#edf2ff",url:"https://graph.baidu.com/pcpage/index?tpl_from=pc/",tag:"搜图" },
 { name:"360识图",icon:"fas fa-image",color:"#2869e6",bg:"#edf2ff",url:"https://m.image.so.com/",tag:"搜图" },
-{ name:"搜狗识图",icon:"fas fa-image",color:"#2869e6",bg:"#edf2ff",url:"https://pic.sogou.com/pic/index.jsp?v=5/",tag:"搜图" }
+{ name:"搜狗识图",icon:"fas fa-image",color:"#2869e6",bg:"#edf2ff",url:"https://pic.sogou.com/pic/index.jsp?v=5/",tag:"搜图" },
+{ name:"皮卡备用群",icon:"fas fa-comments",color:"#2869e6",bg:"#edf2ff",url:"https://qun.qq.com/universal-share/share?ac=1&authKey=Xld9l791HF7rsivEh%2FQHOCq3T%2FkUGp84QYDKZOliUcQUAlBccjL4VOJ98PRana%2F3&busi_data=eyJncm91cENvZGUiOiIxMDQ5NTUwOTI1IiwidG9rZW4iOiJvOUdkcDZ1OFRua3Z4Wmg5WVkzRjRoTURjcHR3ZldsRm85QzJRYXdxWjIrNTRUUGpvbzRyaGw2OXlCRWRXNnFRIiwidWluIjoiMTk2NjMzMDMxOSJ9&data=NlQKjt4AzXJQU8zoFaDXBWB-L-26e5lVnjpw_c0e-FGQDu1oMf4Yv0HMaXn3yVX-0w6KMFZXo_NSCsZILOMHwg&svctype=4&tempid=h5_group_info",tag:"群友" },
+{ name:"皮卡翻车群",icon:"fas fa-comments",color:"#2869e6",bg:"#edf2ff",url:"https://qun.qq.com/universal-share/share?ac=1&authKey=1H7F1EMVtmdMrv1CzYxKwFEJpRQEtXWYo5NymTsfD60RgqfmcLAqYx2kJUBpVeta&busi_data=eyJncm91cENvZGUiOiI1Njg4NzE0MjYiLCJ0b2tlbiI6Im1YMjg3YnBncU9ibEx0cktmTHdMNGY5OE5nMWVjTDRsZkpMdTZwM2N5cElFdExEa3I5MUROSVZsTjJQTEl1SVkiLCJ1aW4iOiIxOTY2MzMwMzE5In0%3D&data=2kh6zsaP4Doa-Jl-KccfFc19LCpsFI1NTPlynFYqUPLj3RgonL8BEg2mEtGGU7CzqwSN6bdHq_SWD9hijXZ9dQ&svctype=4&tempid=h5_group_info",tag:"群友" },
+{ name:"皮卡禁言群",icon:"fas fa-users",color:"#2869e6",bg:"#edf2ff",url:"https://qun.qq.com/universal-share/share?ac=1&authKey=CfKOKp6Sc7CP%2BH6hZZ9PpeveC%2FNcfE7iSGwVsMSpfhCGCWOuPjeswNS7Cv5vtCGA&busi_data=eyJncm91cENvZGUiOiIxMDQxMjQ0MjI5IiwidG9rZW4iOiJYb2lqRHQrQ2Y4L2xyMEt5Z2dFNkphT3BONHhPLy92bUNJYjBLeWFNMjJ5WmNlSFU2ZFJ6YkpxLy9nSHg4b0poIiwidWluIjoiMTk2NjMzMDMxOSJ9&data=1UsMWD3H0fkwy-X2lVTwriyc_Va_4M76mJvFSw2HfpmpjSdtsGEybhi3JGw7tTopgZYXPVcyes6wiUHd1eznSw&svctype=4&tempid=h5_group_info",tag:"群友" },
+{ name:"皮卡电报群",icon:"fas fa-users",color:"#2869e6",bg:"#edf2ff",url:"https://t.me/+qiezQCcGXswzYTM1",tag:"群友" },
+{ name:"无语群",icon:"fas fa-comments",color:"#2869e6",bg:"#edf2ff",url:"https://qun.qq.com/universal-share/share?ac=1&authKey=1MapCqFxxqy%2BOOXbkM6%2Fz3ZC3G%2BIe%2BOHkXURAf8Zy3yRH8MzazejEb3mGPY7C64m&busi_data=eyJncm91cENvZGUiOiI2MDQ1NzQyMzciLCJ0b2tlbiI6InFyMHVScWw3QzlCbzVNM1VHaEVyVDlQNDRiMThUVVJIcWtJalprOTh3Zjc3S015czdOYTVjK2k4WjhobG91T3AiLCJ1aW4iOiIxMDA1Mzg0NDE4In0%3D&data=mkN0qLE6LehMHkAdQSgjzbHFi20B9fGIKuy2jhRKEIOUD5XFikhrZwZ4UNK-PB-uCwiQicXzFFbTVn8tYHkCLg&svctype=4&tempid=h5_group_info",tag:"群友" },
+{ name:"cloudflare-one",icon:"fas fa-cloud",color:"#2869e6",bg:"#edf2ff",url:"https://ddd.372164885.xyz:8443/stream/134?hash=470d04",tag:"网络" },
+{ name:"QQ-9.1.60",icon:"fas fa-comment-alt",color:"#2869e6",bg:"#edf2ff",url:"https://ddd.372164885.xyz:8443/stream/135?hash=38417d",tag:"社交" },
+{ name:"旋风加速器",icon:"fas fa-wind",color:"#2869e6",bg:"#edf2ff",url:"https://apps.apple.com/cn/app/testflight/id899247664",tag:"iOS" },
+{ name:"旋风加速器",icon:"fas fa-wind",color:"#2869e6",bg:"#edf2ff",url:"https://ddd.372164885.xyz:8443/stream/136?hash=567e2b",tag:"网络" }
 ];
 const VIDEO_DATA = [ { title:"", desc:"", views:"", meta:"", videoUrl:"https://ddd.372164885.xyz:8443/stream/130?hash=62f469", coverUrl:"https://svip.372164885.xyz/file/AgACAgUAAyEGAASy0sHyAAOSacyZFW4EZL2btBwNhWRkkCNUJjMAAv8OaxuSV2BWxMzs0iPanBABAAMCAAN5AAM6BA.jpg", linkUrl:"https://www.bilibili.com" },
 { title:"", desc:"", views:"", meta:"", videoUrl:"https://ddd.372164885.xyz:8443/stream/131?hash=810ddd", coverUrl:"https://svip.372164885.xyz/file/AgACAgUAAyEGAASy0sHyAAOTacyblN88Sym8Qc0mMvhJAqUpWjsAAiQPaxuSV2BW8x-l-5vMlbYBAAMCAAN3AAM6BA.jpg", linkUrl:"https://www.bilibili.com" },
