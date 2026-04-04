@@ -329,6 +329,9 @@ body.nav-hidden .theme-btn {
     <button class="app-chip" data-cat="起飞">起飞</button>
     <button class="app-chip" data-cat="AI">AI</button>
     <button class="app-chip" data-cat="漫画">漫画</button>
+    <button class="app-chip" data-cat="动漫">动漫</button>
+    <button class="app-chip" data-cat="影视">影视</button>
+    <button class="app-chip" data-cat="海外">海外</button>
     </div></div>
     <div class="app-pinned-wrap" id="pinnedWrap"><div class="app-pinned-label">常用应用</div><div class="apps-grid" id="pinnedGrid"></div></div>
     <div class="apps-grid" id="appsGrid"></div>
@@ -579,13 +582,70 @@ const APP_DATA = [
 { name:"漫客栈", icon:"fas fa-umbrella", color:"#F39C12", bg:"#FFF5E6", url:"https://www.mankezhan.com", tag:"漫画" },
 { name:"VIZ", icon:"fas fa-bookmark", color:"#E74C3C", bg:"#FFE6E6", url:"https://www.viz.com", tag:"漫画" },
 { name:"MangaPlus", icon:"fas fa-bolt", color:"#F1C40F", bg:"#FFF9E6", url:"https://mangaplus.shueisha.co.jp", tag:"漫画" },
-{ name:"刺猬猫", icon:"fas fa-cat", color:"#9B59B6", bg:"#F6E6FF", url:"https://www.ciweimao.com", tag:"漫画" }
+{ name:"刺猬猫", icon:"fas fa-cat", color:"#9B59B6", bg:"#F6E6FF", url:"https://www.ciweimao.com", tag:"漫画" },
+{ name:"哔哩哔哩",icon:"fas fa-tv",color:"#FB7299",bg:"#FFF0F6",url:"https://www.bilibili.com",tag:"动漫" },
+{ name:"腾讯动漫",icon:"fas fa-fire",color:"#009FE8",bg:"#E6F7FF",url:"https://ac.qq.com",tag:"动漫" },
+{ name:"樱花动漫",icon:"fas fa-film",color:"#FF5C7F",bg:"#FFE6EA",url:"https://www.yhdm.so",tag:"动漫" },
+{ name:"AGE动漫",icon:"fas fa-play",color:"#FF7D00",bg:"#FFF2E6",url:"https://www.agedm.org",tag:"动漫" },
+{ name:"动漫之家",icon:"fas fa-book",color:"#3B9EFF",bg:"#E6F4FF",url:"https://www.dmzj.com",tag:"漫画" },
+{ name:"快看漫画",icon:"fas fa-heart",color:"#FF4F88",bg:"#FFE6F0",url:"https://www.kuaikanmanhua.com",tag:"漫画" },
+{ name:"咚漫",icon:"fas fa-comments",color:"#36D399",bg:"#E6FFFA",url:"https://www.dongmanmanhua.cn",tag:"漫画" },
+{ name:"Anime1",icon:"fas fa-video",color:"#1E88E5",bg:"#E6F4FF",url:"https://anime1.me",tag:"动漫" },
+{ name:"爱奇艺动漫",icon:"fas fa-tv",color:"#00A7E1",bg:"#E6F7FF",url:"https://www.iqiyi.com/dongman",tag:"动漫" },
+{ name:"优酷动漫",icon:"fas fa-play",color:"#00BFFF",bg:"#E6F9FF",url:"https://dongman.youku.com",tag:"动漫" },
+{ name:"芒果动漫",icon:"fas fa-film",color:"#FF3388",bg:"#FFE6F2",url:"https://www.mgtv.com/dongman",tag:"动漫" },
+{ name:"漫画人",icon:"fas fa-user",color:"#FF8C00",bg:"#FFF2E6",url:"https://www.manhuaren.com",tag:"漫画" },
+{ name:"PODO漫画",icon:"fas fa-star",color:"#FF6F61",bg:"#FFE6E6",url:"https://www.podoacg.com",tag:"漫画" },
+{ name:"动漫岛",icon:"fas fa-palm-tree",color:"#20B2AA",bg:"#E6FFFA",url:"https://www.dmd3.com",tag:"动漫" },
+{ name:"新世界动漫",icon:"fas fa-globe-asia",color:"#FF4500",bg:"#FFE6E0",url:"https://www.xsjdm.com",tag:"动漫" },
+{ name:"腾讯视频",icon:"fas fa-video",color:"#1677FF",bg:"#E6F7FF",url:"https://v.qq.com",tag:"影视" },
+{ name:"爱奇艺",icon:"fas fa-film",color:"#FF4D4F",bg:"#FFF2F2",url:"https://www.iqiyi.com",tag:"影视" },
+{ name:"优酷",icon:"fas fa-play",color:"#1088EE",bg:"#E6F7FF",url:"https://www.youku.com",tag:"影视" },
+{ name:"芒果TV",icon:"fas fa-tv",color:"#FF6A00",bg:"#FFF7E6",url:"https://www.mgtv.com",tag:"影视" },
+{ name:"1905电影网",icon:"fas fa-clapperboard",color:"#005A9E",bg:"#E6F7FF",url:"https://www.1905.com",tag:"影视" },
+{ name:"咪咕视频",icon:"fas fa-wifi",color:"#0087DE",bg:"#E6F7FF",url:"https://www.miguvideo.com",tag:"影视" },
+{ name:"西瓜视频",icon:"fas fa-water",color:"#FF6A00",bg:"#FFF7E6",url:"https://www.ixigua.com",tag:"影视" },
+{ name:"央视网",icon:"fas fa-tower-broadcast",color:"#D9272E",bg:"#FDEDED",url:"https://tv.cctv.com",tag:"影视" },
+{ name:"学习强国",icon:"fas fa-book-open",color:"#D9272E",bg:"#FDEDED",url:"https://www.xuexi.cn",tag:"影视" },
+{ name:"Netflix",icon:"fas fa-play-circle",color:"#E50914",bg:"#FFE6E6",url:"https://www.netflix.com",tag:"海外" },
+{ name:"Disney+",icon:"fas fa-star",color:"#1A1A1A",bg:"#F0F0F0",url:"https://www.disneyplus.com",tag:"海外" },
+{ name:"Amazon Prime Video",icon:"fas fa-shopping-cart",color:"#FF9900",bg:"#FFF7E6",url:"https://primevideo.com",tag:"海外" },
+{ name:"Apple TV+",icon:"fas fa-apple",color:"#000000",bg:"#F0F0F0",url:"https://tv.apple.com",tag:"海外" },
+{ name:"Max",icon:"fas fa-w",color:"#FF0000",bg:"#FDEDED",url:"https://www.max.com",tag:"海外" },
+{ name:"Hulu",icon:"fas fa-h",color:"#1D70A4",bg:"#E6F7FF",url:"https://www.hulu.com",tag:"海外" },
+{ name:"Peacock",icon:"fas fa-peacock",color:"#00A3FF",bg:"#E6F7FF",url:"https://www.peacocktv.com",tag:"海外" },
+{ name:"Pluto TV",icon:"fas fa-tv",color:"#007AFF",bg:"#E6F7FF",url:"https://pluto.tv",tag:"免费" },
+{ name:"Tubi",icon:"fas fa-film",color:"#00A3FF",bg:"#E6F7FF",url:"https://tubitv.com",tag:"免费" },
+{ name:"BBC iPlayer",icon:"fas fa-b",color:"#B30094",bg:"#FDEDED",url:"https://www.bbc.co.uk/iplayer",tag:"海外" },
+{ name:"Vimeo",icon:"fas fa-vimeo-v",color:"#1AB7E4",bg:"#E6F7FF",url:"https://vimeo.com",tag:"影视" },
+{ name:"Gitee（码云）",icon:"fas fa-code-branch",color:"#C50000",bg:"#FCEEEE",url:"https://gitee.com",tag:"工具" },
+{ name:"开源中国OSCHINA",icon:"fas fa-globe",color:"#4CAF50",bg:"#E8F5E9",url:"https://www.oschina.net",tag:"工具" },
+{ name:"清华开源镜像站",icon:"fas fa-database",color:"#0052D9",bg:"#E8F0FF",url:"https://mirrors.tuna.tsinghua.edu.cn",tag:"工具" },
+{ name:"阿里云开源镜像",icon:"fas fa-cloud",color:"#FF6A00",bg:"#FFF7E6",url:"https://developer.aliyun.com/mirror",tag:"工具" },
+{ name:"腾讯云软件源",icon:"fas fa-server",color:"#00C1DE",bg:"#E6F7FF",url:"https://mirrors.cloud.tencent.com",tag:"工具" },
+{ name:"华为开源镜像站",icon:"fas fa-microchip",color:"#C41E3A",bg:"#FCE8EC",url:"https://mirrors.huaweicloud.com",tag:"工具" },
+{ name:"网易开源镜像",icon:"fas fa-inbox",color:"#FF4500",bg:"#FFF0E6",url:"http://mirrors.163.com",tag:"工具" },
+{ name:"中科大开源镜像",icon:"fas fa-university",color:"#6C5CE7",bg:"#F0F0FF",url:"https://mirrors.ustc.edu.cn",tag:"工具" },
+{ name:"GitCode",icon:"fas fa-code",color:"#0084FF",bg:"#E6F7FF",url:"https://gitcode.com",tag:"工具" },
+{ name:"Halo",icon:"fas fa-blog",color:"#2196F3",bg:"#E3F2FD",url:"https://halo.run",tag:"工具" },
+{ name:"禅道Zentao",icon:"fas fa-tasks",color:"#009688",bg:"#EAF6F6",url:"https://www.zentao.net",tag:"工具" },
+{ name:"OpenI启智社区",icon:"fas fa-robot",color:"#7B1FA2",bg:"#F3E5F5",url:"https://openi.pcl.ac.cn",tag:"工具" },
+{ name:"HBuilderX",icon:"fas fa-code",color:"#0078D4",bg:"#E6F7FF",url:"https://www.dcloud.io",tag:"工具" },
+{ name:"Apache ShenYu",icon:"fas fa-project-diagram",color:"#D32F2F",bg:"#FFEBEE",url:"https://shenyu.apache.org",tag:"工具" },
+{ name:"Zabbix中国社区",icon:"fas fa-chart-line",color:"#0099CC",bg:"#E6F7FF",url:"https://www.zabbix.com/cn",tag:"工具" },
+{ name:"Deepin社区",icon:"fas fa-desktop",color:"#4285F4",bg:"#E8F0FE",url:"https://www.deepin.org",tag:"工具" },
+{ name:"OpenAnolis龙蜥",icon:"fas fa-server",color:"#F4B400",bg:"#FFFBEB",url:"https://openanolis.cn",tag:"工具" },
+{ name:"openEuler欧拉",icon:"fas fa-cogs",color:"#00B42A",bg:"#E6F9E6",url:"https://www.openeuler.org",tag:"工具" },
+{ name:"OpenKylin开放麒麟",icon:"fas fa-laptop",color:"#1A73E8",bg:"#E8F0FE",url:"https://www.openkylin.org",tag:"工具" },
+{ name:"华中大开源镜像",icon:"fas fa-database",color:"#FF9800",bg:"#FFF3E0",url:"http://mirrors.hust.edu.cn",tag:"工具" }
 
 ];
 const VIDEO_DATA = [ { title:"", desc:"", views:"", meta:"", videoUrl:"https://ddd.372164885.xyz:8443/stream/130?hash=62f469", coverUrl:"https://svip.372164885.xyz/file/AgACAgUAAyEGAASy0sHyAAOSacyZFW4EZL2btBwNhWRkkCNUJjMAAv8OaxuSV2BWxMzs0iPanBABAAMCAAN5AAM6BA.jpg", linkUrl:"https://www.bilibili.com" },
 { title:"", desc:"", views:"", meta:"", videoUrl:"https://ddd.372164885.xyz:8443/stream/131?hash=810ddd", coverUrl:"https://svip.372164885.xyz/file/AgACAgUAAyEGAASy0sHyAAOTacyblN88Sym8Qc0mMvhJAqUpWjsAAiQPaxuSV2BW8x-l-5vMlbYBAAMCAAN3AAM6BA.jpg", linkUrl:"https://www.bilibili.com" },
 { title:"", desc:"", views:"", meta:"", videoUrl:"https://ddd.372164885.xyz:8443/stream/132?hash=e9cc53", coverUrl:"https://svip.372164885.xyz/file/AgACAgUAAyEGAASy0sHyAAOUacyb0ayK7VMxgEryaQE9H3vmasQAAiUPaxuSV2BWctOBqrm1g-cBAAMCAAN5AAM6BA.jpg", linkUrl:"https://www.bilibili.com" },
-{ title:"", desc:"", views:"", meta:"", videoUrl:"https://ddd.372164885.xyz:8443/stream/133?hash=26f921", coverUrl:"https://svip.372164885.xyz/file/AgACAgUAAyEGAASy0sHyAAOMacR3hYyrZcryXaado7rrRTzbRlsAAtQNaxusviFWmcKgTkW-8nIBAAMCAAN4AAM6BA.jpg", linkUrl:"https://www.bilibili.com" } ];
+{ title:"", desc:"", views:"", meta:"", videoUrl:"https://ddd.372164885.xyz:8443/stream/133?hash=26f921", coverUrl:"https://svip.372164885.xyz/file/AgACAgUAAyEGAASy0sHyAAOMacR3hYyrZcryXaado7rrRTzbRlsAAtQNaxusviFWmcKgTkW-8nIBAAMCAAN4AAM6BA.jpg", linkUrl:"https://www.bilibili.com" },
+{ title:"", desc:"", views:"", meta:"", videoUrl:"https://ddd.372164885.xyz:8443/stream/163?hash=67df5c", coverUrl:"https://svip.372164885.xyz/file/AgACAgUAAyEGAASy0sHyAAOYac_T1zB_WXsK99-YrQr-fR-pnSgAAjwNaxt71YBWqg11grd7itABAAMCAAN5AAM7BA.jpg", linkUrl:"https://www.bilibili.com" },
+];
 const NOVEL_DATA = [ { cateName:"玄幻小说", bookList:[ { bookName:"遮天", author:"辰东", linkUrl:"https://www.qidian.com/", chapterList:[ { chapterName:"第一章 · 神秘古籍", content:"<p class='reader-chapter-title'>第一章　神秘古籍</p><p>荒古时代，万古长河，天地玄黄，宇宙洪荒。少年叶凡端坐于山巅，手持一卷泛黄古籍...</p>" }, 
 { chapterName:"第二章 · 踏足修炼", content:"<p class='reader-chapter-title'>第二章　踏足修炼</p><p>轮海开辟，天地异象。叶凡踏入修炼之途...</p>" } ] }, 
 { bookName:"斗破苍穹", author:"天蚕土豆", linkUrl:"https://www.qidian.com/", chapterList:[ { chapterName:"第一章 · 萧炎", content:"<p class='reader-chapter-title'>第一章　萧炎</p><p>斗气大陆，少年萧炎，曾经的天才...</p>" } ] } ] }, 
@@ -625,14 +685,55 @@ const NOVEL_DATA = [ { cateName:"玄幻小说", bookList:[ { bookName:"遮天", 
 } ] } ] }, 
 { cateName:"科幻小说", bookList:[ { bookName:"三体", author:"刘慈欣", linkUrl:"https://weread.qq.com/", chapterList:[ { chapterName:"第一章 · 科学边界", content:"<p>红岸基地，叶文洁仰望星空...</p>" } ] } ] } ];
 
-const TOOL_DATA = [ { cate:"办公", icon:"fas fa-file-word", title:"WPS Office", desc:"全能办公套件，文档表格演示", url:"https://www.wps.cn/", color:"#e44d2e" },
-{ cate:"办公", icon:"fas fa-sticky-note", title:"Notion", desc:"笔记数据库一体化", url:"https://www.notion.so/", color:"#000000" },
-{ cate:"设计", icon:"fas fa-palette", title:"Canva可画", desc:"在线平面设计神器", url:"https://www.canva.com/", color:"#00c4cc" },
-{ cate:"开发", icon:"fas fa-code", title:"VS Code", desc:"免费代码编辑器", url:"https://code.visualstudio.com/", color:"#007acc" },
-{ cate:"实用", icon:"fas fa-cloud", title:"百度网盘", desc:"超大云存储", url:"https://pan.baidu.com/", color:"#2869e6" },
-{ cate:"开发", icon:"fas fa-robot", title:"DeepSeek", desc:"AI对话助手", url:"https://chat.deepseek.com/", color:"#4A90E2" },
-{ cate:"设计", icon:"fas fa-scissors", title:"剪映", desc:"视频剪辑神器", url:"https://www.capcut.com/", color:"#1a1a1a" },
-{ cate:"实用", icon:"fas fa-download", title:"迅雷", desc:"高速下载工具", url:"https://www.xunlei.com/", color:"#0078ff" } ];
+const TOOL_DATA = [
+    { cate:"办公", icon:"fas fa-file-word", title:"WPS Office", desc:"全能办公套件，文档表格演示", url:"https://www.wps.cn/", color:"#e44d2e" },
+    { cate:"办公", icon:"fas fa-sticky-note", title:"Notion", desc:"笔记数据库一体化", url:"https://www.notion.so/", color:"#000000" },
+    { cate:"办公", icon:"fas fa-users", title:"飞书", desc:"字节跳动出品，高效协作与沟通", url:"https://www.feishu.cn/", color:"#00B42A" },
+    { cate:"办公", icon:"fas fa-comments", title:"企业微信", desc:"腾讯生态协同，连接微信与企业", url:"https://work.weixin.qq.com/", color:"#00C1DE" },
+    { cate:"办公", icon:"fas fa-cloud", title:"腾讯文档", desc:"在线协作文档，多人实时编辑", url:"https://docs.qq.com/", color:"#14A8FF" },
+    { cate:"办公", icon:"fas fa-tasks", title:"Worktile", desc:"项目管理与团队协作平台", url:"https://www.worktile.com/", color:"#4080FF" },
+    { cate:"办公", icon:"fas fa-sitemap", title:"泛微eteams", desc:"一体化敏捷SaaS协同平台", url:"https://eteams.cn/", color:"#0052D9" },
+    { cate:"办公", icon:"fas fa-table", title:"飞书多维表格", desc:"全能数据管理与协作", url:"https://www.feishu.cn/product/base", color:"#00B42A" },
+    { cate:"办公", icon:"fas fa-file-pdf", title:"iLovePDF", desc:"PDF在线处理，转换与编辑", url:"https://www.ilovepdf.com/zh-cn", color:"#00A3FF" },
+    { cate:"办公", icon:"fas fa-brain", title:"豆包", desc:"AI文档助手，写作与总结提效", url:"https://www.doubao.com/", color:"#E6162D" },
+
+    { cate:"设计", icon:"fas fa-palette", title:"Canva可画", desc:"在线平面设计神器", url:"https://www.canva.com/", color:"#00c4cc" },
+    { cate:"设计", icon:"fas fa-paint-brush", title:"即时设计", desc:"国产UI/UX在线设计工具，兼容Figma", url:"https://js.design/", color:"#0084FF" },
+    { cate:"设计", icon:"fas fa-object-group", title:"Pixso", desc:"在线设计与协作，内置AI助手", url:"https://pixso.cn/", color:"#14A8FF" },
+    { cate:"设计", icon:"fas fa-cube", title:"墨刀", desc:"原型设计与产品协作工具", url:"https://modao.cc/", color:"#4080FF" },
+    { cate:"设计", icon:"fas fa-images", title:"创客贴", desc:"全场景模板设计，快速出图", url:"https://www.chuangkit.com/", color:"#FF6A00" },
+    { cate:"设计", icon:"fas fa-icons", title:"Iconfont", desc:"阿里图标库，海量矢量图标", url:"https://www.iconfont.cn/", color:"#00A3FF" },
+    { cate:"设计", icon:"fas fa-gem", title:"稿定设计", desc:"自媒体与电商设计模板库", url:"https://www.gaoding.com/", color:"#FF4D4F" },
+    { cate:"设计", icon:"fas fa-book", title:"站酷", desc:"原创设计社区，作品与资源分享", url:"https://www.zcool.com.cn/", color:"#FF5C7F" },
+    { cate:"设计", icon:"fas fa-compass", title:"花瓣网", desc:"灵感采集与设计素材社区", url:"https://huaban.com/", color:"#FF6A00" },
+    { cate:"设计", icon:"fas fa-scissors", title:"剪映", desc:"视频剪辑神器", url:"https://www.capcut.com/", color:"#1a1a1a" },
+
+    { cate:"开发", icon:"fas fa-code", title:"VS Code", desc:"免费代码编辑器", url:"https://code.visualstudio.com/", color:"#007acc" },
+    { cate:"开发", icon:"fas fa-robot", title:"DeepSeek", desc:"AI对话助手", url:"https://chat.deepseek.com/", color:"#4A90E2" },
+    { cate:"开发", icon:"fas fa-code", title:"CSDN", desc:"国内老牌技术社区，教程与资源丰富", url:"https://www.csdn.net/", color:"#FF6A00" },
+    { cate:"开发", icon:"fas fa-code-branch", title:"码云Gitee", desc:"国内开源代码托管平台", url:"https://gitee.com/", color:"#C50000" },
+    { cate:"开发", icon:"fas fa-search", title:"菜鸟教程", desc:"编程入门与技术学习平台", url:"https://www.runoob.com/", color:"#5F9EA0" },
+    { cate:"开发", icon:"fas fa-bolt", title:"掘金", desc:"高质量技术社区，前端与后端干货", url:"https://juejin.cn/", color:"#007FFF" },
+    { cate:"开发", icon:"fas fa-cogs", title:"开源中国OSChina", desc:"开源项目与技术资讯平台", url:"https://www.oschina.net/", color:"#4CAF50" },
+    { cate:"开发", icon:"fas fa-question-circle", title:"SegmentFault思否", desc:"中文技术问答社区", url:"https://segmentfault.com/", color:"#00A3FF" },
+    { cate:"开发", icon:"fas fa-server", title:"腾讯云开发者社区", desc:"云服务与开发技术平台", url:"https://cloud.tencent.com/developer", color:"#00C1DE" },
+    { cate:"开发", icon:"fas fa-terminal", title:"牛客网", desc:"编程练习与校招求职平台", url:"https://www.nowcoder.com/", color:"#0066CC" },
+    { cate:"开发", icon:"fas fa-plug", title:"Apifox", desc:"API文档、调试与测试工具", url:"https://apifox.com/", color:"#4080FF" },
+    { cate:"开发", icon:"fas fa-file-code", title:"MDN Web Docs（中文）", desc:"Web开发技术文档与指南", url:"https://developer.mozilla.org/zh-CN", color:"#0095DD" },
+
+    { cate:"实用", icon:"fas fa-cloud", title:"百度网盘", desc:"超大云存储", url:"https://pan.baidu.com/", color:"#2869e6" },
+    { cate:"实用", icon:"fas fa-download", title:"迅雷", desc:"高速下载工具", url:"https://www.xunlei.com/", color:"#0078ff" },
+    { cate:"实用", icon:"fas fa-microphone", title:"讯飞听见", desc:"语音转文字，会议纪要精准生成", url:"https://www.iflyrec.com/", color:"#00C1DE" },
+    { cate:"实用", icon:"fas fa-shield-alt", title:"学信网", desc:"学历、学籍与学历认证查询", url:"https://www.chsi.com.cn/", color:"#0052D9" },
+    { cate:"实用", icon:"fas fa-tools", title:"帮小忙", desc:"腾讯工具箱，证件照、PDF转换等", url:"https://www.bangxiaomang.com/", color:"#14A8FF" },
+    { cate:"实用", icon:"fas fa-search-dollar", title:"秘塔AI搜索", desc:"无广告结构化搜索与AI问答", url:"https://metaso.cn/", color:"#00A3FF" },
+    { cate:"实用", icon:"fas fa-file-pdf", title:"OfficeViewer", desc:"在线预览200+格式文件", url:"https://officeviewer.org/", color:"#4080FF" },
+    { cate:"实用", icon:"fas fa-music", title:"Chosic", desc:"免费商用音乐库，Vlog背景音", url:"https://www.chosic.com/", color:"#FF6A00" },
+    { cate:"实用", icon:"fas fa-map-marker-alt", title:"国家政务服务平台", desc:"全国政务总枢纽，社保、医保等", url:"https://gjzwfw.www.gov.cn/", color:"#D9272E" },
+    { cate:"实用", icon:"fas fa-user-md", title:"国家医保服务平台", desc:"医保缴费、异地备案与报销查询", url:"https://fuwu.nhsa.gov.cn/", color:"#00A3FF" },
+    { cate:"实用", icon:"fas fa-briefcase", title:"36氪", desc:"科技资讯与创业报道", url:"https://36kr.com/", color:"#FF4500" },
+
+];
 
 /* 存储与主题切换 */
 const Storage={get:(k,d=null)=>{try{let v=localStorage.getItem('mediahub_'+k);return v?JSON.parse(v):d;}catch(e){return d;}},set:(k,v)=>{try{localStorage.setItem('mediahub_'+k,JSON.stringify(v));}catch(e){}}};
