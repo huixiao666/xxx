@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>皮卡皮卡仓库</title>
+<title>皮卡皮卡仓库 · 聊天聚合</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -13,7 +13,7 @@
   --bg: #0c0c10; --bg2: #14141c; --bg3: #1c1c28; --glass: rgba(12,12,16,0.85);
   --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.12);
   --text: #f0eff6; --text2: #a09eb8; --muted: #5c5a72;
-  --app-accent: #7c6ef5; --video-accent: #ff4455; --novel-accent: #e8c46a;
+  --app-accent: #7c6ef5; --video-accent: #ff4455; --chat-accent: #3b82f6;
   --search-accent: #3ecfff; --tool-accent: #2dd4a8;
   --active-accent: var(--app-accent); --radius: 16px; --ease: cubic-bezier(.25,.8,.25,1);
 }
@@ -27,29 +27,13 @@ body {
   font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text);
   min-height: 100vh; overflow-x: hidden; transition: background 0.35s, color 0.35s;
 }
-/* 隐藏头部和底部导航栏 - 但保留右上角的开关按钮 */
+/* 头部隐藏模式 */
 body.nav-hidden .topnav .nav-tabs,
-body.nav-hidden .topnav .nav-logo {
-  display: none !important;
-}
-body.nav-hidden .topnav {
-  justify-content: flex-end !important;
-  background: transparent !important;
-  backdrop-filter: none !important;
-  border-bottom: none !important;
-  height: auto !important;
-  padding: 1rem !important;
-}
-body.nav-hidden .topnav .nav-right {
-  margin-left: 0 !important;
-}
-body.nav-hidden .mobile-nav {
-  display: none !important;
-}
-body.nav-hidden .view-wrap {
-  margin-top: 0 !important;
-  padding-top: 0 !important;
-}
+body.nav-hidden .topnav .nav-logo { display: none !important; }
+body.nav-hidden .topnav { justify-content: flex-end !important; background: transparent !important; backdrop-filter: none !important; border-bottom: none !important; height: auto !important; padding: 1rem !important; }
+body.nav-hidden .topnav .nav-right { margin-left: 0 !important; }
+body.nav-hidden .mobile-nav { display: none !important; }
+body.nav-hidden .view-wrap { margin-top: 0 !important; padding-top: 0 !important; }
 .topnav {
   position: fixed; top:0; left:0; width:100%; z-index:900; height:64px;
   background: var(--glass); backdrop-filter: blur(24px); border-bottom:1px solid var(--border);
@@ -72,7 +56,7 @@ body.nav-hidden .view-wrap {
 }
 .tab-btn[data-view="apps"]::before { background:var(--app-accent); }
 .tab-btn[data-view="videos"]::before { background:var(--video-accent); }
-.tab-btn[data-view="novels"]::before { background:var(--novel-accent); }
+.tab-btn[data-view="chat"]::before { background:var(--chat-accent); }
 .tab-btn[data-view="search"]::before { background:var(--search-accent); }
 .tab-btn[data-view="tools"]::before { background:var(--tool-accent); }
 .tab-btn.active { color:#fff; }
@@ -85,34 +69,11 @@ body.nav-hidden .view-wrap {
   display:flex; align-items:center; justify-content:center; transition: all .25s;
 }
 .nav-icon-btn:hover { color:var(--text); border-color:var(--active-accent); transform:rotate(5deg); }
-/* 头部隐藏按钮样式 - 始终保持可见 */
-.nav-toggle-btn {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  color: var(--text2);
-}
-.nav-toggle-btn.active {
-  color: var(--tool-accent);
-  border-color: var(--tool-accent);
-  background: rgba(45,212,168,0.15);
-}
-/* 隐藏模式下按钮背景透明但保持可见 */
-body.nav-hidden .nav-toggle-btn {
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(8px);
-  border-color: rgba(255,255,255,0.3);
-  color: white;
-}
-body.nav-hidden .nav-toggle-btn:hover {
-  background: var(--tool-accent);
-  color: #000;
-}
-body.nav-hidden .theme-btn {
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(8px);
-  border-color: rgba(255,255,255,0.3);
-  color: white;
-}
+.nav-toggle-btn { background: var(--bg2); border: 1px solid var(--border); color: var(--text2); }
+.nav-toggle-btn.active { color: var(--tool-accent); border-color: var(--tool-accent); background: rgba(45,212,168,0.15); }
+body.nav-hidden .nav-toggle-btn { background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); border-color: rgba(255,255,255,0.3); color: white; }
+body.nav-hidden .nav-toggle-btn:hover { background: var(--tool-accent); color: #000; }
+body.nav-hidden .theme-btn { background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); border-color: rgba(255,255,255,0.3); color: white; }
 .view-wrap {
   margin-top: 64px; min-height: calc(100vh - 64px); padding: 1.5rem;
   max-width: 1400px; margin-left: auto; margin-right: auto;
@@ -120,19 +81,16 @@ body.nav-hidden .theme-btn {
 .section-view { display:none; animation: fadeIn .38s var(--ease); }
 .section-view.active { display:block; }
 @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
-.sec-header {
-  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap;
-  gap:1rem; margin-bottom:1.5rem;
-}
+.sec-header { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem; }
 .sec-title { display:flex; align-items:center; gap:.8rem; font-size:1.5rem; font-weight:700; }
 .sec-title-icon { width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:1rem; }
 .icon-app { background: var(--app-accent); }
 .icon-video { background: var(--video-accent); }
-.icon-novel { background: var(--novel-accent); }
+.icon-chat { background: var(--chat-accent); }
 .icon-search { background: var(--search-accent); }
 .icon-tool { background: var(--tool-accent); }
 
-/* 应用模块 */
+/* 应用模块样式 */
 .app-filter { display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:1.5rem; }
 .app-chip { padding:.38rem 1rem; border-radius:40px; cursor:pointer; border:1px solid var(--border); background:var(--bg2); color:var(--text2); font-size:.78rem; font-weight:600; transition: all .2s; }
 .app-chip.active { background:var(--app-accent); border-color:var(--app-accent); color:#fff; box-shadow:0 4px 14px rgba(124,110,245,.35); }
@@ -149,120 +107,27 @@ body.nav-hidden .theme-btn {
 .app-pin-btn.pinned { color:var(--app-accent); opacity:1; }
 
 /* 视频模块 */
-.short-video-wrap {
-  position: relative;
-  width: 100%;
-  max-width: 100%;
-  height: calc(100vh - 100px);
-  min-height: 480px;
-  margin: 0 auto;
-  border-radius: var(--radius);
-  overflow: hidden;
-  background: #000;
-  display: block;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
-}
+.short-video-wrap { position: relative; width: 100%; max-width: 100%; height: calc(100vh - 100px); min-height: 480px; margin: 0 auto; border-radius: var(--radius); overflow: hidden; background: #000; display: block; box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
 .short-video-item { position: relative; width: 100%; height: 100%; }
 .short-video-item video { width: 100%; height: 100%; object-fit: cover; }
-.short-video-info {
-  position: absolute; bottom: 0; left: 0; width: 100%;
-  padding: 2rem 1.5rem 5rem;
-  background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
-  color: #fff; pointer-events: none;
-}
+.short-video-info { position: absolute; bottom: 0; left: 0; width: 100%; padding: 2rem 1.5rem 5rem; background: linear-gradient(to top, rgba(0,0,0,0.85), transparent); color: #fff; pointer-events: none; }
 .short-video-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.3rem; text-shadow:0 1px 3px black; }
 .short-video-desc { font-size: 0.85rem; opacity: 0.9; margin-bottom: 0.8rem; }
 .short-video-link { display: inline-flex; align-items: center; gap:5px; padding:0.4rem 1rem; border-radius:40px; background:var(--video-accent); color:#fff; font-size:0.75rem; font-weight:600; text-decoration:none; pointer-events:auto; }
-.short-video-controls {
-  position: absolute; right: 1rem; bottom: 6rem;
-  display: flex; flex-direction: column; gap: 1rem; z-index: 20;
-}
-.short-video-control-btn {
-  width: 44px; height: 44px; border-radius: 50%;
-  background: rgba(0,0,0,0.6); backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.3);
-  color: #fff; font-size: 1.2rem; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: 0.2s;
-}
+.short-video-controls { position: absolute; right: 1rem; bottom: 6rem; display: flex; flex-direction: column; gap: 1rem; z-index: 20; }
+.short-video-control-btn { width: 44px; height: 44px; border-radius: 50%; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.3); color: #fff; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
 .short-video-control-btn:hover { background: var(--video-accent); transform: scale(1.08); }
-.nav-video-btns {
-  position: absolute; left: 50%; bottom: 20px; transform: translateX(-50%);
-  display: flex; gap: 2rem;
-  background: rgba(0,0,0,0.55); backdrop-filter: blur(12px);
-  padding: 0.5rem 1.2rem; border-radius: 60px; z-index: 20;
-  border: 1px solid rgba(255,255,255,0.2);
-}
-.nav-video-btns button {
-  background: transparent; border: none; color: white;
-  font-size: 1.5rem; cursor: pointer; width: 48px; padding: 6px;
-  border-radius: 40px; transition: 0.2s;
-}
+.nav-video-btns { position: absolute; left: 50%; bottom: 20px; transform: translateX(-50%); display: flex; gap: 2rem; background: rgba(0,0,0,0.55); backdrop-filter: blur(12px); padding: 0.5rem 1.2rem; border-radius: 60px; z-index: 20; border: 1px solid rgba(255,255,255,0.2); }
+.nav-video-btns button { background: transparent; border: none; color: white; font-size: 1.5rem; cursor: pointer; width: 48px; padding: 6px; border-radius: 40px; transition: 0.2s; }
 .nav-video-btns button:hover { background: var(--video-accent); transform: scale(1.05); }
 
-/* 小说模块 */
-.novel-layout { display:grid; grid-template-columns:280px 1fr; gap:1.3rem; align-items:start; }
-.novel-sidebar { background:var(--bg2); border:1px solid var(--border); border-radius:var(--radius); padding:1rem; position:sticky; top:76px; max-height:calc(100vh - 92px); overflow-y:auto; }
-.novel-sidebar-label { font-family:'Space Mono',monospace; font-size:.65rem; letter-spacing:2px; color:var(--muted); margin-bottom:.8rem; }
-.novel-cate-item { margin-bottom: 0.5rem; }
-.novel-cate-title {
-  padding:.75rem .85rem; border-radius:10px; cursor:pointer;
-  display:flex; align-items:center; justify-content:space-between;
-  font-weight:600; font-size:.9rem; border-left:3px solid transparent;
-  transition: all .2s;
-}
-.novel-cate-title:hover, .novel-cate-title.active-cate { background:var(--bg3); border-left-color:var(--novel-accent); }
-.novel-cate-title i { transition: transform 0.2s; font-size: 0.7rem; }
-.novel-cate-title.expanded i { transform: rotate(90deg); }
-.novel-book-list { max-height: 0; overflow: hidden; transition: max-height 0.35s var(--ease); padding-left: 1rem; }
-.novel-book-list.show { max-height: 800px; }
-.novel-book-item {
-  padding:.6rem .85rem; border-radius:8px; cursor:pointer;
-  font-size:.85rem; color:var(--text2);
-  display:flex; align-items:center; justify-content:space-between;
-  transition: all .2s;
-}
-.novel-book-item:hover, .novel-book-item.active-book { background:rgba(232,196,106,.12); color:var(--novel-accent); }
-.novel-book-item i { transition: transform 0.2s; font-size: 0.6rem; }
-.novel-book-item.expanded i { transform: rotate(90deg); }
-.novel-chapter-list { max-height: 0; overflow: hidden; transition: max-height 0.35s var(--ease); padding-left: 1rem; }
-.novel-chapter-list.show { max-height: 800px; }
-.novel-chapter-item {
-  padding:.45rem .85rem; border-radius:6px;
-  font-size:.78rem; color:var(--text2); cursor:pointer;
-  transition:.18s;
-}
-.novel-chapter-item:hover, .novel-chapter-item.active-chapter {
-  background:rgba(232,196,106,.2); color:var(--novel-accent); font-weight:600;
-}
-.novel-reader { background:var(--bg2); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; display:flex; flex-direction:column; min-height:calc(100vh - 92px); }
-.reader-toolbar { padding:.9rem 1.3rem; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:.6rem; }
-.reader-current { font-weight:700; font-size:.88rem; color:var(--novel-accent); }
-.reader-ctrls { display:flex; gap:.4rem; flex-wrap:wrap; align-items:center; }
-.r-btn { padding:.3rem .7rem; border-radius:7px; background:var(--bg3); border:1px solid var(--border); color:var(--text2); font-size:.72rem; cursor:pointer; }
-.r-btn:hover { border-color:var(--novel-accent); color:var(--novel-accent); }
-.r-btn.active { background:rgba(232,196,106,.2); border-color:var(--novel-accent); color:var(--novel-accent); }
-.reader-body { flex:1; padding:2rem 2.5rem; font-family:'Noto Serif SC',serif; line-height:2; font-size:1rem; overflow-y:auto; }
-[data-theme="dark"] .reader-body { background:#0e0d0a; color:#ddd5c0; }
-[data-theme="light"] .reader-body { background:#fdf7ec; color:#2e2418; }
-.reader-body.eye-mode { background:#daeada !important; color:#1a3a1a !important; }
-.reader-body.night-mode { background:#1a1a22 !important; color:#c8c6d0 !important; }
-.reader-chapter-title { text-align:center; font-size:1.15rem; font-weight:700; color:var(--novel-accent); margin-bottom:1.8rem; letter-spacing:4px; }
-.reader-body p { margin-bottom:1.1em; text-indent:2em; }
-@keyframes pageIn { from { opacity:0; transform:perspective(800px) rotateY(12deg) translateX(40px); } to { opacity:1; transform:rotateY(0) translateX(0); } }
-.page-anim { animation: pageIn .55s var(--ease); }
-.reader-footer { padding:.85rem 1.3rem; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
-.reader-nav { display:flex; align-items:center; gap:.8rem; }
-.r-nav-btn { padding:.38rem .9rem; border-radius:8px; background:var(--bg3); border:1px solid var(--border); color:var(--text2); font-size:.78rem; cursor:pointer; display:flex; align-items:center; gap:.4rem; }
-.r-nav-btn:hover:not(:disabled) { background:var(--novel-accent); color:#000; border-color:var(--novel-accent); }
-.r-nav-btn:disabled { opacity:.4; cursor:not-allowed; }
-.reader-progress { font-family:'Space Mono',monospace; font-size:.7rem; color:var(--muted); }
-.reader-visit { display:inline-flex; align-items:center; gap:5px; font-size:.75rem; color:var(--novel-accent); text-decoration:none; font-weight:600; opacity:.8; }
+/* 聊天模块 (嵌入式网站) */
+.chat-container { display: flex; flex-direction: column; height: calc(100vh - 100px); min-height: 500px; }
+.embedded-browser { flex: 1; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); background: var(--bg2); }
+.embedded-browser iframe { width: 100%; height: 100%; border: none; background: #fff; }
 
 /* 搜索模块 */
 .search-container { display: flex; flex-direction: column; height: calc(100vh - 100px); min-height: 500px; }
-.embedded-browser { flex: 1; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); background: var(--bg2); }
-.embedded-browser iframe { width: 100%; height: 100%; border: none; background: #fff; }
 .search-tip { text-align: center; color: var(--muted); font-size: 0.7rem; margin-top: 0.8rem; flex-shrink: 0; }
 
 /* 工具模块 */
@@ -278,20 +143,54 @@ body.nav-hidden .theme-btn {
 .tool-btn { display:inline-flex; align-items:center; gap:8px; padding:.5rem 1.2rem; border-radius:40px; background:var(--tool-accent); color:#000; font-size:.8rem; font-weight:700; text-decoration:none; transition:.2s; }
 .tool-btn:hover { opacity:.85; transform:scale(.96); background:#1f9a7a; color:white; }
 
-.mobile-nav { display:none; position:fixed; bottom:0; left:0; width:100%; z-index:900; background:var(--glass); backdrop-filter:blur(24px); border-top:1px solid var(--border); padding:.4rem 0; }
-.mobile-nav-inner { display:flex; justify-content:space-around; }
-.mob-tab { display:flex; flex-direction:column; align-items:center; gap:.25rem; padding:.3rem .6rem; border:none; background:transparent; color:var(--muted); font-size:.62rem; font-weight:600; cursor:pointer; }
-.mob-tab i { font-size:1.15rem; }
-.mob-tab.active { color:var(--app-accent); }
-@media (max-width:900px) { .novel-layout { grid-template-columns:1fr; } .novel-sidebar { position:static; max-height:unset; } }
+/* 移动底部导航 - 强化点击区域与反馈 */
+.mobile-nav { 
+  display: none; 
+  position: fixed; 
+  bottom: 0; 
+  left: 0; 
+  width: 100%; 
+  z-index: 1000; 
+  background: var(--glass); 
+  backdrop-filter: blur(24px); 
+  border-top: 1px solid var(--border); 
+  padding: 0.4rem 0 0.6rem;
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
+}
+.mobile-nav-inner { 
+  display: flex; 
+  justify-content: space-around; 
+  align-items: center;
+}
+.mob-tab { 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  gap: 0.2rem; 
+  padding: 0.5rem 0.8rem; 
+  border: none; 
+  background: transparent; 
+  color: var(--muted); 
+  font-size: 0.7rem; 
+  font-weight: 600; 
+  cursor: pointer;
+  border-radius: 40px;
+  transition: all 0.2s ease;
+  touch-action: manipulation;
+  user-select: none;
+}
+.mob-tab i { font-size: 1.3rem; margin-bottom: 0.1rem; }
+.mob-tab.active { color: var(--active-accent); background: rgba(59,130,246,0.12); }
+.mob-tab:active { transform: scale(0.94); background: rgba(255,255,255,0.05); }
+
+@media (max-width:900px) {  }
 @media (max-width:768px) {
-  .view-wrap { padding:1rem; }
+  .view-wrap { padding: 1rem 1rem 5rem; }  /* 底部留出移动导航空间 */
   .topnav { padding:0 1rem; }
-  .nav-tabs { display:none; }
-  .mobile-nav { display:block; }
+  .nav-tabs { display: none; }
+  .mobile-nav { display: block; }
   .short-video-wrap { height: calc(100vh - 80px); border-radius: 0; }
-  .search-container { height: calc(100vh - 80px); }
-  .reader-body { padding:1rem; }
+  .chat-container, .search-container { height: calc(100vh - 80px); }
 }
 ::-webkit-scrollbar { width:5px; }
 ::-webkit-scrollbar-thumb { background:#2a2a3a; border-radius:3px; }
@@ -303,7 +202,7 @@ body.nav-hidden .theme-btn {
   <div class="nav-tabs">
     <button class="tab-btn active" data-view="apps"><i class="fas fa-th"></i> 应用</button>
     <button class="tab-btn" data-view="videos"><i class="fas fa-play"></i> 视频</button>
-    <button class="tab-btn" data-view="novels"><i class="fas fa-book-open"></i> 小说</button>
+    <button class="tab-btn" data-view="chat"><i class="fas fa-comments"></i> 聊天</button>
     <button class="tab-btn" data-view="search"><i class="fas fa-search"></i> 搜索</button>
     <button class="tab-btn" data-view="tools"><i class="fas fa-tools"></i> 工具</button>
   </div>
@@ -332,6 +231,7 @@ body.nav-hidden .theme-btn {
     <button class="app-chip" data-cat="动漫">动漫</button>
     <button class="app-chip" data-cat="影视">影视</button>
     <button class="app-chip" data-cat="海外">海外</button>
+    <button class="app-chip" data-cat="热门">热门</button>
     </div></div>
     <div class="app-pinned-wrap" id="pinnedWrap"><div class="app-pinned-label">常用应用</div><div class="apps-grid" id="pinnedGrid"></div></div>
     <div class="apps-grid" id="appsGrid"></div>
@@ -356,39 +256,23 @@ body.nav-hidden .theme-btn {
     </div>
   </section>
 
-  <!-- 小说模块 -->
-  <section class="section-view" id="novelsView">
+  <!-- 聊天模块 (pk2.372164885.xyz) 重点功能 -->
+  <section class="section-view" id="chatView">
     <div class="sec-header"></div>
-    <div class="novel-layout">
-      <div class="novel-sidebar"><div class="novel-sidebar-label">📖 三级目录 (点击展开/收起)</div><div id="novelCateList"></div></div>
-      <div class="novel-reader" id="novelReaderContainer">
-        <div class="reader-toolbar">
-        <span class="reader-current" id="readerCurrent">请选择小说</span>
-        <div class="reader-ctrls">
-        <button class="r-btn" data-font="sm">小</button>
-        <button class="r-btn active" data-font="md">中</button>
-        <button class="r-btn" data-font="lg">大</button>
-        <button class="r-btn" id="lineHeightBtn">行高</button>
-        <button class="r-btn" id="eyeBtn">护眼</button>
-        <button class="r-btn" id="nightBtn">夜间</button>
-        <button class="r-btn" id="fullscreenNovelBtn"><i class="fas fa-expand"></i> 全屏</button></div></div>
-        <div class="reader-body" id="readerBody"><div style="text-align:center;padding:4rem 1rem;"><i class="fas fa-book-open" style="font-size:2.5rem;display:block;margin-bottom:1rem"></i>从左侧目录选择小说开始阅读</div></div>
-        <div class="reader-footer">
-        <div class="reader-nav">
-        <button class="r-nav-btn" id="prevCh" disabled><i class="fas fa-chevron-left"></i> 上一章</button>
-        <span class="reader-progress" id="chProgress">—</span>
-        <button class="r-nav-btn" id="nextCh" disabled>下一章 <i class="fas fa-chevron-right"></i></button>
-        </div><a class="reader-visit" id="novelVisitBtn" href="#" target="_blank"><i class="fas fa-external-link-alt"></i> 原文链接</a></div>
+    <div class="chat-container">
+      <div class="embedded-browser">
+        <iframe id="chatIframe" src="https://pk2.372164885.xyz" title="在线聊天室" sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-popups-to-escape-sandbox"></iframe>
       </div>
+      <div class="search-tip" style="margin-top:0.6rem;">💬 实时聊天室 | 点击输入框即可交流</div>
     </div>
   </section>
 
-  <!-- 搜索模块 -->
+  <!-- 搜索模块 (内置浏览器) -->
   <section class="section-view" id="searchView">
     <div class="sec-header"></div>
     <div class="search-container">
-      <div class="embedded-browser"><iframe id="embeddedIframe" src="https://aaa.372164885.xyz" title="内置浏览器"></iframe></div>
-      <div class="search-tip"></div>
+      <div class="embedded-browser"><iframe id="embeddedIframe" src="https://aaa.372164885.xyz" title="聚合搜索"></iframe></div>
+      <div class="search-tip">🔍 多功能搜索 | 支持网页/图片/资讯</div>
     </div>
   </section>
 
@@ -404,22 +288,18 @@ body.nav-hidden .theme-btn {
     <div class="tools-grid" id="toolsGrid"></div>
   </section>
 </div>
+
+<!-- 移动端底部导航栏 - 已强化交互 -->
 <nav class="mobile-nav">
 <div class="mobile-nav-inner">
-<button class="mob-tab active" data-view="apps">
-<i class="fas fa-th"></i>应用</button>
-<button class="mob-tab" data-view="videos">
-<i class="fas fa-play"></i>视频</button>
-<button class="mob-tab" data-view="novels">
-<i class="fas fa-book-open"></i>小说</button>
-<button class="mob-tab" data-view="search">
-<i class="fas fa-search"></i>搜索</button>
-<button class="mob-tab" data-view="tools">
-<i class="fas fa-tools"></i>工具</button></div></nav>
-<audio id="pageFlipSound" src="https://assets.mixkit.co/sfx/preview/mixkit-page-turn-over-1335.mp3" preload="auto"></audio>
+<button class="mob-tab active" data-view="apps"><i class="fas fa-th"></i><span>应用</span></button>
+<button class="mob-tab" data-view="videos"><i class="fas fa-play"></i><span>视频</span></button>
+<button class="mob-tab" data-view="chat"><i class="fas fa-comments"></i><span>聊天</span></button>
+<button class="mob-tab" data-view="search"><i class="fas fa-search"></i><span>搜索</span></button>
+<button class="mob-tab" data-view="tools"><i class="fas fa-tools"></i><span>工具</span></button>
+</div></nav>
 
 <script>
-/* 数据定义 */
 const APP_DATA = [ 
 { name:"抖音",icon:"fab fa-tiktok",color:"#010101",bg:"#fefefe",url:"https://www.douyin.com/",tag:"视频" },
 { name:"哔哩哔哩",icon:"fas fa-tv",color:"#fb7299",bg:"#fff1f5",url:"https://www.bilibili.com/",tag:"视频" },
@@ -637,8 +517,8 @@ const APP_DATA = [
 { name:"OpenAnolis龙蜥",icon:"fas fa-server",color:"#F4B400",bg:"#FFFBEB",url:"https://openanolis.cn",tag:"工具" },
 { name:"openEuler欧拉",icon:"fas fa-cogs",color:"#00B42A",bg:"#E6F9E6",url:"https://www.openeuler.org",tag:"工具" },
 { name:"OpenKylin开放麒麟",icon:"fas fa-laptop",color:"#1A73E8",bg:"#E8F0FE",url:"https://www.openkylin.org",tag:"工具" },
-{ name:"华中大开源镜像",icon:"fas fa-database",color:"#FF9800",bg:"#FFF3E0",url:"http://mirrors.hust.edu.cn",tag:"工具" }
-
+{ name:"华中大开源镜像",icon:"fas fa-database",color:"#FF9800",bg:"#FFF3E0",url:"http://mirrors.hust.edu.cn",tag:"工具" },
+{ name:"电报中文版",icon:"fas fa-paper-plane",color:"#FF9800",bg:"#FFF3E0",url:"https://ddd.372164885.xyz:8443/stream/164?hash=4b724e",tag:"热门" },
 ];
 const VIDEO_DATA = [ { title:"", desc:"", views:"", meta:"", videoUrl:"https://ddd.372164885.xyz:8443/stream/130?hash=62f469", coverUrl:"https://svip.372164885.xyz/file/AgACAgUAAyEGAASy0sHyAAOSacyZFW4EZL2btBwNhWRkkCNUJjMAAv8OaxuSV2BWxMzs0iPanBABAAMCAAN5AAM6BA.jpg", linkUrl:"https://www.bilibili.com" },
 { title:"", desc:"", views:"", meta:"", videoUrl:"https://ddd.372164885.xyz:8443/stream/131?hash=810ddd", coverUrl:"https://svip.372164885.xyz/file/AgACAgUAAyEGAASy0sHyAAOTacyblN88Sym8Qc0mMvhJAqUpWjsAAiQPaxuSV2BW8x-l-5vMlbYBAAMCAAN3AAM6BA.jpg", linkUrl:"https://www.bilibili.com" },
@@ -646,45 +526,6 @@ const VIDEO_DATA = [ { title:"", desc:"", views:"", meta:"", videoUrl:"https://d
 { title:"", desc:"", views:"", meta:"", videoUrl:"https://ddd.372164885.xyz:8443/stream/133?hash=26f921", coverUrl:"https://svip.372164885.xyz/file/AgACAgUAAyEGAASy0sHyAAOMacR3hYyrZcryXaado7rrRTzbRlsAAtQNaxusviFWmcKgTkW-8nIBAAMCAAN4AAM6BA.jpg", linkUrl:"https://www.bilibili.com" },
 { title:"", desc:"", views:"", meta:"", videoUrl:"https://ddd.372164885.xyz:8443/stream/163?hash=67df5c", coverUrl:"https://svip.372164885.xyz/file/AgACAgUAAyEGAASy0sHyAAOYac_T1zB_WXsK99-YrQr-fR-pnSgAAjwNaxt71YBWqg11grd7itABAAMCAAN5AAM7BA.jpg", linkUrl:"https://www.bilibili.com" },
 ];
-const NOVEL_DATA = [ { cateName:"玄幻小说", bookList:[ { bookName:"遮天", author:"辰东", linkUrl:"https://www.qidian.com/", chapterList:[ { chapterName:"第一章 · 神秘古籍", content:"<p class='reader-chapter-title'>第一章　神秘古籍</p><p>荒古时代，万古长河，天地玄黄，宇宙洪荒。少年叶凡端坐于山巅，手持一卷泛黄古籍...</p>" }, 
-{ chapterName:"第二章 · 踏足修炼", content:"<p class='reader-chapter-title'>第二章　踏足修炼</p><p>轮海开辟，天地异象。叶凡踏入修炼之途...</p>" } ] }, 
-{ bookName:"斗破苍穹", author:"天蚕土豆", linkUrl:"https://www.qidian.com/", chapterList:[ { chapterName:"第一章 · 萧炎", content:"<p class='reader-chapter-title'>第一章　萧炎</p><p>斗气大陆，少年萧炎，曾经的天才...</p>" } ] } ] }, 
-{ cateName:"现代文学", bookList:[ { bookName:"芭蕾舞", author:"网络", linkUrl:"https://weread.qq.com/", chapterList:[ { chapterName:"第一章", content:`<p>老师开始一组一组地数口令，让每一组站上场来分解练习。李弋站在角落的一小块空地上，悄悄松了松肩膀，身体仍未完全从先前的紧绷中解脱。李弋站在一旁，回想着老师的口令以及先前的示范，将动作拆解，站位、立足尖、抬腿、转腰、身体前倾、向上伸直……每一步都要停顿和定型，尤其是女生腿部高高扬起时，男生往往必须身体前倾地贴身支撑，对李弋而言，这无异于一种生理和心理上的煎熬。</p>
-<p>每一次“停顿”，对他来说，都是一次身心双重考验。他能清楚感受到裤袜内那一处已因持续贴靠与期待而渐渐升温，即使尚未开始自己的练习，体内那根神经早已被这近距离的观摩牵引至紧绷边缘。</p>
-<p>等到第一个站位的口令下达，李弋在摆好手位与脚位之后瞬间僵住——那处因紧张与期待已悄然隆起。他深吸一口气，努力调整表情与呼吸，伸手扶上舞伴的腰侧，掌心略显潮湿，却仍尽力让动作平稳、不显突兀。老师的口令逐步推进，随着她开始抬腿，他不得不上前半步，贴近她的核心位置，以双掌稳住她上升的重心。“保持。”老师在前方强调，“等我检查完你们每一组再换动作。”这段停顿远比想象中漫长。</p>
-<p>他清楚感受到她背部微微起伏的呼吸，还有后腿抬升带动骨盆轻轻上移的力量——她的后臀就那样贴靠在他前方最敏感的部位。他死死绷着核心肌群，尽可能避免骨盆的贴近，但即便如此，那处仍被布料一寸寸压紧，变得更加灼热、充血。他直视前方，不敢乱动，不敢低头，也不敢确认此刻贴合的真实程度。只能借助镜中模糊的倒影观察是否“姿态合格”。</p>
-<p>指腹贴在她腰侧，汗意渗出，背脊紧绷如弓。他仿佛是被一条细线牵住的木偶，全靠意志维系表面的镇定。“身体前倾。”老师终于发出下一个指令，“男生同步，用核心支撑。”李弋深吸一口气，随她一同缓缓前倾——好在两人重心同步，那处原本几近贴合的接触因此略微拉开了一线。</p>` }, 
-{ chapterName:"第二章", content:`<p>但紧张未减。他感觉自己像悬在钢丝上的杂技演员，一边死命控制身体，一边也察觉那根早已绷紧的部位正随每一次心跳微颤，布料间的摩擦与湿热不断扩散。最后一声口令响起，女生艰难地将后腿再次抬起，骨盆随之上扬。他为了维稳，不得不更贴近半步，那处终于失控般全然贴上她大腿根部——不是一瞬，而是整个前端深深陷入那层布料下的温热中，像被柔软地“包裹住”一样。</p>
-<p>他不敢动。那一瞬间仿佛全世界都静止了。布料之间的温度和湿度交汇，那处甚至有了微微跳动的冲动感。他竭力维持支撑姿态，膝盖却隐约发软，内心已掀起连绵的波澜。女生也因长时间的保持同一动作而显出疲态，一边调整前脚的重心，肌肉也时不时地颤抖......</p>
-<p>每当她在站位中略作移动，他都能感到那处敏感的前端在摩擦——并不是剧烈的、明确的挤压，而是一种夹在布料间、随她呼吸而缓缓变动的贴滑感。她每一次略微转动骨盆或重新站稳，都会牵动那处在两层湿润面料之间轻轻滑动，有时向左一压，有时向右一牵，像是被柔软却坚实的内侧缓缓“研磨”。</p>
-<p>李弋无法控制那种逐步累积的快感，像是一道持续的小电流，一点点沿着下腹爬升。他屏住呼吸，心跳如擂，那处也随之一跳一跳，在看似平静的肢体协作中，悄悄绷紧至极点。她大腿肌肉的颤抖所给他那里直接传导的振动，像一阵柔和却持续的震颤，顺着贴合的部位一波一波传进他体内。他几乎要怀疑那层细薄布料已经无法构成真正的阻隔——每一丝震动仿佛都精确地击中前端最敏感的部分。</p>` }, 
-{ chapterName:"第三章", content:`
-<p>他的心跳越来越乱，那处也越来越硬，像是被裹在一层既湿润又炽热的膜中，甚至能感到渗出的液体缓慢而真实地在布料之间铺展开来，一点点向外晕染。时间越久，女生的肌力愈发吃紧，她不得不放下足尖缓冲片刻，再重新踮起——这一落一起，带着一股真实的下压力道，从她腿根直接压上李弋那处最敏感的位置，像是一次毫不遮掩的冲击。</p>
-<p>剧烈的触感直冲脑门，他几乎无法站稳，那处在这一下中剧烈地抽动了一下，紧贴的布面迅速被加压，又被湿意重新涂满。李弋脑中一片空白，连自己还维持着舞姿这件事都仿佛是凭借肌肉记忆勉强撑起。他感到自己像是一根弓到极限的弦，一点点朝崩断的边缘靠近。</p>
-<p>把杆旁那触电般的触碰之后，李弋感觉自己像刚从冰水里捞出来又被扔进熔炉。冷汗浸透的背脊一片冰凉，而下腹和裤袜内那片新扩大的湿黏区域却如同烙印般滚烫，清晰地提醒着他刚才那瞬间的彻底失控。他死死抓住把杆，指关节的疼痛成了此刻唯一能锚定他即将崩散的意识的支点。他不敢再看镜子里的自己，更不敢去看身边的林薇。空气里弥漫着汗水和松香的味道，但李弋只嗅到一种浓烈的、属于他自己的羞耻气息。</p>
-<p>林薇迅速调整好姿态，重新抬起了后腿，动作流畅而专注，仿佛刚才那小小的意外从未发生。只有她微微泛红的耳根和紧绷的下颌线，泄露了一丝不易察觉的异样。她刻意地将目光投向远处镜子的另一头，避免与李弋有任何视线的交集。这份刻意的回避，在李弋混乱的解读里，更坐实了他的狼狈已被对方洞悉的恐惧。</p>` }, 
-{ chapterName:"第四章", content:`<p>短暂的平衡练习后，老师拍手示意大家集中：“好了，接下来我们练习一下扶腰旋转的准备动作。重点感受核心收紧和旋转轴心的稳定。两人一组，李弋林薇，你们先来示范一下慢速分解。”</p>
-<p>李弋的心瞬间沉到谷底。扶腰旋转！这意味着他必须主动地、稳定地将手掌贴合在林薇的腰侧，在旋转启动和停止的过程中提供支撑力。那个刚才仅仅被“Arabesque”平衡时意外触碰手背就引爆他身体的区域，现在需要他主动去触碰、去施加压力！</p>
-<p>他僵硬地走到林薇身后。她能清晰地感觉到身后人靠近时带来的、带着紊乱气息的热度。两人都没有说话，一种心照不宣的沉重空气笼罩着他们。</p>
-<p>“男生，右手掌根贴在女生后腰脊柱下方，左手轻轻扶在她左侧腰际上方，找到支撑点。”老师的声音清晰传来，“女生，核心收紧，骨盆中立，感受男生手掌的位置，那是你旋转的轴心支点之一。好，准备——”</p>
-<p>李弋深吸一口气，仿佛要潜入深海。他抬起右手，掌心带着一层薄汗，缓慢地、带着一种近乎悲壮的决绝，贴上了林薇后腰那被紧身练功服包裹的、温热而紧实的肌肤。他的左手也随即扶上了她左侧腰际稍高的位置，指尖能清晰感觉到她呼吸时肋骨的轻微起伏。</p>` }, 
-{ chapterName:"第五章", content:`<p>就在他掌心完全贴合她腰窝下方那柔软而富有弹性的弧线时，一股难以言喻的电流瞬间从掌心窜入！那不仅仅是体温和汗意，更是透过薄薄的布料和肌肤，传递而来的、属于林薇身体的活力和生命力。他全身的肌肉瞬间绷紧如铁，尤其是下腹深处那根从未真正软化的神经，猛地抽紧、向上弹跳，隔着几层布料，清晰地顶住了他自己的练功裤裆部。那肿胀感让他窒息。</p>
-<p>“开始慢速旋转引导，男生给一个稳定的推力，女生顺势转胯。”老师下令。</p>
-<p>李弋的右手掌根用力，试图推动林薇的骨盆启动旋转。然而，就在他发力、掌心更深地陷入她腰后柔软弧线的瞬间——</p>
-<p>林薇为了配合旋转，核心骤然收紧，腰腹肌肉绷紧，整个后腰的线条瞬间变得更加清晰、有力。同时，她的骨盆在李弋的推力下，极其自然地、带着舞蹈动作特有的韵律感，向内侧（即李弋身体的方向）做了一个微小的、但极其明确的拧转和推送！</p>
-<p>这一拧一送的动作，幅度不大，在舞蹈中再正常不过。但对此刻高度敏感的李弋而言，却无异于一场精准的、毁灭性的打击。</p>
-<p>他清晰地感觉到，林薇那被练功裤紧紧包裹的、饱满而富有弹性的后臀弧线，随着她骨盆的拧转推送，结结实实地、带着一股不容忽视的力道，向后上方顶压了过来！目标，正是他裤裆前方那处早已肿胀不堪、湿黏一片的敏感隆起！</p>` }, 
-{ chapterName:"第六章", content:`
-<p>“嗯——！”一声压抑到极致的、几乎是从喉咙深处挤出来的闷哼从李弋口中溢出。</p>
-<p>撞击！挤压！研磨！</p>
-<p>三种触感在万分之一秒内叠加爆发！</p>
-<p>林薇后臀那温热、坚实、充满弹性的软肉，隔着两层被汗水浸得半透明的紧身布料，狠狠地、毫无缓冲地撞在了李弋那最脆弱、最敏感、也最失控的顶端！那撞击的力道因为林薇核心发力和旋转启动而带着一股穿透性的劲道，像是一记重锤，狠狠砸在了他紧绷的神经末梢上。</p>
-<p>紧接着，是挤压。她的臀峰顶住他，在旋转启动的微小位移中，形成了一种短暂却无比清晰的、全方位的包裹和压迫。那饱满的弧线几乎完全嵌合了他隆起的形状。</p>
-<p>最后，是那致命的研磨感。随着林薇完成启动动作，骨盆回归中立位的微小调整，那顶压在他敏感处的丰盈软肉，不可避免地带着汗液的湿滑，在他肿胀的顶端极其缓慢而清晰地、左右滑动碾压了那么一丝丝！如同最柔软的砂纸，带着体温和湿意，在最娇嫩的神经上缓缓擦过！</p>
-<p>“呃啊！”李弋再也无法抑制，身体猛地一颤，如同被高压电击中！眼前瞬间发黑，视野边缘炸开一片白炽的雪花点！那处被顶撞、挤压、研磨的部位，如同被点燃的火药桶，猛烈地、失控地痉挛、跳动起来！一股比之前Arabesque触碰时更汹涌、更滚烫的热流，如同溃堤般猛地喷射而出</p>` 
-} ] } ] }, 
-{ cateName:"科幻小说", bookList:[ { bookName:"三体", author:"刘慈欣", linkUrl:"https://weread.qq.com/", chapterList:[ { chapterName:"第一章 · 科学边界", content:"<p>红岸基地，叶文洁仰望星空...</p>" } ] } ] } ];
-
 const TOOL_DATA = [
     { cate:"办公", icon:"fas fa-file-word", title:"WPS Office", desc:"全能办公套件，文档表格演示", url:"https://www.wps.cn/", color:"#e44d2e" },
     { cate:"办公", icon:"fas fa-sticky-note", title:"Notion", desc:"笔记数据库一体化", url:"https://www.notion.so/", color:"#000000" },
@@ -696,7 +537,6 @@ const TOOL_DATA = [
     { cate:"办公", icon:"fas fa-table", title:"飞书多维表格", desc:"全能数据管理与协作", url:"https://www.feishu.cn/product/base", color:"#00B42A" },
     { cate:"办公", icon:"fas fa-file-pdf", title:"iLovePDF", desc:"PDF在线处理，转换与编辑", url:"https://www.ilovepdf.com/zh-cn", color:"#00A3FF" },
     { cate:"办公", icon:"fas fa-brain", title:"豆包", desc:"AI文档助手，写作与总结提效", url:"https://www.doubao.com/", color:"#E6162D" },
-
     { cate:"设计", icon:"fas fa-palette", title:"Canva可画", desc:"在线平面设计神器", url:"https://www.canva.com/", color:"#00c4cc" },
     { cate:"设计", icon:"fas fa-paint-brush", title:"即时设计", desc:"国产UI/UX在线设计工具，兼容Figma", url:"https://js.design/", color:"#0084FF" },
     { cate:"设计", icon:"fas fa-object-group", title:"Pixso", desc:"在线设计与协作，内置AI助手", url:"https://pixso.cn/", color:"#14A8FF" },
@@ -707,7 +547,6 @@ const TOOL_DATA = [
     { cate:"设计", icon:"fas fa-book", title:"站酷", desc:"原创设计社区，作品与资源分享", url:"https://www.zcool.com.cn/", color:"#FF5C7F" },
     { cate:"设计", icon:"fas fa-compass", title:"花瓣网", desc:"灵感采集与设计素材社区", url:"https://huaban.com/", color:"#FF6A00" },
     { cate:"设计", icon:"fas fa-scissors", title:"剪映", desc:"视频剪辑神器", url:"https://www.capcut.com/", color:"#1a1a1a" },
-
     { cate:"开发", icon:"fas fa-code", title:"VS Code", desc:"免费代码编辑器", url:"https://code.visualstudio.com/", color:"#007acc" },
     { cate:"开发", icon:"fas fa-robot", title:"DeepSeek", desc:"AI对话助手", url:"https://chat.deepseek.com/", color:"#4A90E2" },
     { cate:"开发", icon:"fas fa-code", title:"CSDN", desc:"国内老牌技术社区，教程与资源丰富", url:"https://www.csdn.net/", color:"#FF6A00" },
@@ -720,7 +559,6 @@ const TOOL_DATA = [
     { cate:"开发", icon:"fas fa-terminal", title:"牛客网", desc:"编程练习与校招求职平台", url:"https://www.nowcoder.com/", color:"#0066CC" },
     { cate:"开发", icon:"fas fa-plug", title:"Apifox", desc:"API文档、调试与测试工具", url:"https://apifox.com/", color:"#4080FF" },
     { cate:"开发", icon:"fas fa-file-code", title:"MDN Web Docs（中文）", desc:"Web开发技术文档与指南", url:"https://developer.mozilla.org/zh-CN", color:"#0095DD" },
-
     { cate:"实用", icon:"fas fa-cloud", title:"百度网盘", desc:"超大云存储", url:"https://pan.baidu.com/", color:"#2869e6" },
     { cate:"实用", icon:"fas fa-download", title:"迅雷", desc:"高速下载工具", url:"https://www.xunlei.com/", color:"#0078ff" },
     { cate:"实用", icon:"fas fa-microphone", title:"讯飞听见", desc:"语音转文字，会议纪要精准生成", url:"https://www.iflyrec.com/", color:"#00C1DE" },
@@ -731,80 +569,136 @@ const TOOL_DATA = [
     { cate:"实用", icon:"fas fa-music", title:"Chosic", desc:"免费商用音乐库，Vlog背景音", url:"https://www.chosic.com/", color:"#FF6A00" },
     { cate:"实用", icon:"fas fa-map-marker-alt", title:"国家政务服务平台", desc:"全国政务总枢纽，社保、医保等", url:"https://gjzwfw.www.gov.cn/", color:"#D9272E" },
     { cate:"实用", icon:"fas fa-user-md", title:"国家医保服务平台", desc:"医保缴费、异地备案与报销查询", url:"https://fuwu.nhsa.gov.cn/", color:"#00A3FF" },
-    { cate:"实用", icon:"fas fa-briefcase", title:"36氪", desc:"科技资讯与创业报道", url:"https://36kr.com/", color:"#FF4500" },
-
+    { cate:"实用", icon:"fas fa-briefcase", title:"36氪", desc:"科技资讯与创业报道", url:"https://36kr.com/", color:"#FF4500" }
 ];
 
 /* 存储与主题切换 */
 const Storage={get:(k,d=null)=>{try{let v=localStorage.getItem('mediahub_'+k);return v?JSON.parse(v):d;}catch(e){return d;}},set:(k,v)=>{try{localStorage.setItem('mediahub_'+k,JSON.stringify(v));}catch(e){}}};
-const ACCENT_MAP={apps:'--app-accent',videos:'--video-accent',novels:'--novel-accent',search:'--search-accent',tools:'--tool-accent'};
-function switchView(name){document.querySelectorAll('.section-view').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab-btn, .mob-tab').forEach(b=>{b.classList.toggle('active',b.dataset.view===name);});document.getElementById(name+'View').classList.add('active');document.documentElement.style.setProperty('--active-accent',`var(${ACCENT_MAP[name]})`);Storage.set('currentView',name);}
-document.querySelectorAll('.tab-btn, .mob-tab').forEach(b=>b.addEventListener('click',()=>switchView(b.dataset.view)));switchView(Storage.get('currentView','apps'));
-let isDark=Storage.get('isDark',true);document.documentElement.setAttribute('data-theme',isDark?'dark':'light');document.getElementById('themeBtn').innerHTML=isDark?'<i class="fas fa-moon"></i>':'<i class="fas fa-sun"></i>';document.getElementById('themeBtn').addEventListener('click',()=>{isDark=!isDark;document.documentElement.setAttribute('data-theme',isDark?'dark':'light');document.getElementById('themeBtn').innerHTML=isDark?'<i class="fas fa-moon"></i>':'<i class="fas fa-sun"></i>';Storage.set('isDark',isDark);});
+const ACCENT_MAP={apps:'--app-accent',videos:'--video-accent',chat:'--chat-accent',search:'--search-accent',tools:'--tool-accent'};
 
-/* 头部/底部导航栏隐藏切换按钮 - 按钮始终可见 */
+// 视图切换核心函数
+function switchView(name){
+  if(!document.getElementById(name+'View')) return;
+  document.querySelectorAll('.section-view').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn, .mob-tab').forEach(btn=>{
+    if(btn.dataset.view === name){
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+  document.getElementById(name+'View').classList.add('active');
+  document.documentElement.style.setProperty('--active-accent',`var(${ACCENT_MAP[name]})`);
+  Storage.set('currentView',name);
+}
+
+// 修正旧版小说残留存储并初始化视图
+let savedView = Storage.get('currentView','apps');
+if(savedView === 'novels') savedView = 'apps';
+switchView(savedView);
+
+// 主题切换
+let isDark=Storage.get('isDark',true);
+document.documentElement.setAttribute('data-theme',isDark?'dark':'light');
+document.getElementById('themeBtn').innerHTML=isDark?'<i class="fas fa-moon"></i>':'<i class="fas fa-sun"></i>';
+document.getElementById('themeBtn').addEventListener('click',()=>{
+  isDark=!isDark;
+  document.documentElement.setAttribute('data-theme',isDark?'dark':'light');
+  document.getElementById('themeBtn').innerHTML=isDark?'<i class="fas fa-moon"></i>':'<i class="fas fa-sun"></i>';
+  Storage.set('isDark',isDark);
+});
+
+// 头部导航栏隐藏/显示
 const navToggleBtn = document.getElementById('navToggleBtn');
 let navHidden = Storage.get('navHidden', false);
 function setNavHidden(hidden) {
-  if (hidden) {
-    document.body.classList.add('nav-hidden');
-    navToggleBtn.classList.add('active');
-    navToggleBtn.innerHTML = '<i class="fas fa-chevron-down"></i>';
-    navToggleBtn.title = '显示导航栏';
-  } else {
-    document.body.classList.remove('nav-hidden');
-    navToggleBtn.classList.remove('active');
-    navToggleBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
-    navToggleBtn.title = '隐藏导航栏';
+  if (hidden) { 
+    document.body.classList.add('nav-hidden'); 
+    navToggleBtn.classList.add('active'); 
+    navToggleBtn.innerHTML = '<i class="fas fa-chevron-down"></i>'; 
+    navToggleBtn.title = '显示导航栏'; 
+  } else { 
+    document.body.classList.remove('nav-hidden'); 
+    navToggleBtn.classList.remove('active'); 
+    navToggleBtn.innerHTML = '<i class="fas fa-chevron-up"></i>'; 
+    navToggleBtn.title = '隐藏导航栏'; 
   }
-  navHidden = hidden;
+  navHidden = hidden; 
   Storage.set('navHidden', hidden);
 }
 setNavHidden(navHidden);
-navToggleBtn.addEventListener('click', () => {
-  setNavHidden(!navHidden);
+navToggleBtn.addEventListener('click', () => setNavHidden(!navHidden));
+
+// 为所有导航按钮绑定事件 (包含顶部和移动底部)
+document.querySelectorAll('.tab-btn, .mob-tab').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const viewName = btn.dataset.view;
+    if(viewName) switchView(viewName);
+  });
 });
 
 /* 应用模块 */
 let currentCat='all',pinnedApps=Storage.get('pinnedApps',[]);
-function renderPinnedApps(){let grid=document.getElementById('pinnedGrid'),wrap=document.getElementById('pinnedWrap');if(pinnedApps.length===0){wrap.classList.remove('show');return;}wrap.classList.add('show');let pinnedList=APP_DATA.filter(a=>pinnedApps.includes(a.name));grid.innerHTML=pinnedList.map(a=>`<div class="app-card" href="${a.url}"><div class="app-icon-wrap" style="background:${a.bg};color:${a.color}"><i class="${a.icon}"></i></div><div class="app-name">${a.name}</div><div class="app-tag">${a.tag}</div><div class="app-pin-btn pinned" data-name="${a.name}"><i class="fas fa-thumbtack"></i></div></div>`).join('');document.querySelectorAll('#pinnedGrid .app-pin-btn').forEach(btn=>btn.addEventListener('click',(e)=>{e.stopPropagation();let name=btn.dataset.name;pinnedApps=pinnedApps.filter(n=>n!==name);Storage.set('pinnedApps',pinnedApps);renderPinnedApps();renderApps();}));document.querySelectorAll('#pinnedGrid .app-card').forEach(c=>c.addEventListener('click',()=>window.open(c.getAttribute('href'),'_blank')));}
-function renderApps(){let grid=document.getElementById('appsGrid');let list=currentCat==='all'?APP_DATA:APP_DATA.filter(a=>a.tag===currentCat);grid.innerHTML=list.map(a=>`<div class="app-card" href="${a.url}"><div class="app-icon-wrap" style="background:${a.bg};color:${a.color}"><i class="${a.icon}"></i></div><div class="app-name">${a.name}</div><div class="app-tag">${a.tag}</div><div class="app-pin-btn ${pinnedApps.includes(a.name)?'pinned':''}" data-name="${a.name}"><i class="fas fa-thumbtack"></i></div></div>`).join('');document.querySelectorAll('#appsGrid .app-pin-btn').forEach(btn=>btn.addEventListener('click',(e)=>{e.stopPropagation();let name=btn.dataset.name;if(pinnedApps.includes(name))pinnedApps=pinnedApps.filter(n=>n!==name);else pinnedApps.push(name);Storage.set('pinnedApps',pinnedApps);renderPinnedApps();renderApps();}));document.querySelectorAll('#appsGrid .app-card').forEach(c=>c.addEventListener('click',()=>window.open(c.getAttribute('href'),'_blank')));}
-document.getElementById('appFilter').addEventListener('click',e=>{let chip=e.target.closest('.app-chip');if(!chip)return;document.querySelectorAll('.app-chip').forEach(c=>c.classList.remove('active'));chip.classList.add('active');currentCat=chip.dataset.cat;renderApps();});renderPinnedApps();renderApps();
+function renderPinnedApps(){
+  let grid=document.getElementById('pinnedGrid'),wrap=document.getElementById('pinnedWrap');
+  if(pinnedApps.length===0){wrap.classList.remove('show');return;}
+  wrap.classList.add('show');
+  let pinnedList=APP_DATA.filter(a=>pinnedApps.includes(a.name));
+  grid.innerHTML=pinnedList.map(a=>`<div class="app-card" href="${a.url}"><div class="app-icon-wrap" style="background:${a.bg};color:${a.color}"><i class="${a.icon}"></i></div><div class="app-name">${a.name}</div><div class="app-tag">${a.tag}</div><div class="app-pin-btn pinned" data-name="${a.name}"><i class="fas fa-thumbtack"></i></div></div>`).join('');
+  document.querySelectorAll('#pinnedGrid .app-pin-btn').forEach(btn=>btn.addEventListener('click',(e)=>{e.stopPropagation();let name=btn.dataset.name;pinnedApps=pinnedApps.filter(n=>n!==name);Storage.set('pinnedApps',pinnedApps);renderPinnedApps();renderApps();}));
+  document.querySelectorAll('#pinnedGrid .app-card').forEach(c=>c.addEventListener('click',()=>window.open(c.getAttribute('href'),'_blank')));
+}
+function renderApps(){
+  let grid=document.getElementById('appsGrid');
+  let list=currentCat==='all'?APP_DATA:APP_DATA.filter(a=>a.tag===currentCat);
+  grid.innerHTML=list.map(a=>`<div class="app-card" href="${a.url}"><div class="app-icon-wrap" style="background:${a.bg};color:${a.color}"><i class="${a.icon}"></i></div><div class="app-name">${a.name}</div><div class="app-tag">${a.tag}</div><div class="app-pin-btn ${pinnedApps.includes(a.name)?'pinned':''}" data-name="${a.name}"><i class="fas fa-thumbtack"></i></div></div>`).join('');
+  document.querySelectorAll('#appsGrid .app-pin-btn').forEach(btn=>btn.addEventListener('click',(e)=>{e.stopPropagation();let name=btn.dataset.name;if(pinnedApps.includes(name))pinnedApps=pinnedApps.filter(n=>n!==name);else pinnedApps.push(name);Storage.set('pinnedApps',pinnedApps);renderPinnedApps();renderApps();}));
+  document.querySelectorAll('#appsGrid .app-card').forEach(c=>c.addEventListener('click',()=>window.open(c.getAttribute('href'),'_blank')));
+}
+document.getElementById('appFilter').addEventListener('click',e=>{let chip=e.target.closest('.app-chip');if(!chip)return;document.querySelectorAll('.app-chip').forEach(c=>c.classList.remove('active'));chip.classList.add('active');currentCat=chip.dataset.cat;renderApps();});
+renderPinnedApps(); renderApps();
 
 /* 视频逻辑 */
-let currentVidIndex=0;const shortVideo=document.getElementById('shortVideo');function loadVideoByIndex(i){let v=VIDEO_DATA[i];if(!v)return;shortVideo.src=v.videoUrl;shortVideo.poster=v.coverUrl;shortVideo.load();shortVideo.play().catch(()=>{});document.getElementById('shortVideoTitle').innerText=v.title;document.getElementById('shortVideoDesc').innerText=v.desc;document.getElementById('shortVideoLink').href=v.linkUrl||'#';document.getElementById('shortVideoIcon').className='fas fa-pause';}
-function nextVideo(){currentVidIndex=(currentVidIndex+1)%VIDEO_DATA.length;loadVideoByIndex(currentVidIndex);}
-function prevVideo(){currentVidIndex=(currentVidIndex-1+VIDEO_DATA.length)%VIDEO_DATA.length;loadVideoByIndex(currentVidIndex);}
-document.getElementById('nextVideoBtn').addEventListener('click',nextVideo);document.getElementById('prevVideoBtn').addEventListener('click',prevVideo);
-document.getElementById('shortVideoPlayBtn').addEventListener('click',()=>{if(shortVideo.paused){shortVideo.play();document.getElementById('shortVideoIcon').className='fas fa-pause';}else{shortVideo.pause();document.getElementById('shortVideoIcon').className='fas fa-play';}});
-document.getElementById('shortVideoFullBtn').addEventListener('click',()=>{if(shortVideo.requestFullscreen)shortVideo.requestFullscreen();});
+let currentVidIndex=0; const shortVideo=document.getElementById('shortVideo');
+function loadVideoByIndex(i){
+  let v=VIDEO_DATA[i]; if(!v) return;
+  shortVideo.src=v.videoUrl; shortVideo.poster=v.coverUrl; shortVideo.load();
+  shortVideo.play().catch(()=>{});
+  document.getElementById('shortVideoTitle').innerText=v.title;
+  document.getElementById('shortVideoDesc').innerText=v.desc;
+  document.getElementById('shortVideoLink').href=v.linkUrl||'#';
+  document.getElementById('shortVideoIcon').className='fas fa-pause';
+}
+function nextVideo(){currentVidIndex=(currentVidIndex+1)%VIDEO_DATA.length; loadVideoByIndex(currentVidIndex);}
+function prevVideo(){currentVidIndex=(currentVidIndex-1+VIDEO_DATA.length)%VIDEO_DATA.length; loadVideoByIndex(currentVidIndex);}
+document.getElementById('nextVideoBtn').addEventListener('click',nextVideo);
+document.getElementById('prevVideoBtn').addEventListener('click',prevVideo);
+document.getElementById('shortVideoPlayBtn').addEventListener('click',()=>{
+  if(shortVideo.paused){ shortVideo.play(); document.getElementById('shortVideoIcon').className='fas fa-pause'; }
+  else{ shortVideo.pause(); document.getElementById('shortVideoIcon').className='fas fa-play'; }
+});
+document.getElementById('shortVideoFullBtn').addEventListener('click',()=>{ if(shortVideo.requestFullscreen) shortVideo.requestFullscreen(); });
 loadVideoByIndex(0);
 
-/* 小说模块 */
-let cateExpanded = NOVEL_DATA.map(() => false);
-let bookExpanded = NOVEL_DATA.map(cate => cate.bookList.map(() => false));
-let curCateIdx=0, curBookIdx=0, curChapIdx=0;
-function renderNovelSidebar(){
-  let container=document.getElementById('novelCateList');
-  container.innerHTML=NOVEL_DATA.map((cate,cIdx)=>`<div class="novel-cate-item"><div class="novel-cate-title ${cateExpanded[cIdx]?'expanded active-cate':''}" data-cateidx="${cIdx}">${cate.cateName}<i class="fas fa-chevron-right"></i></div><div class="novel-book-list ${cateExpanded[cIdx]?'show':''}">${cate.bookList.map((book,bIdx)=>`<div><div class="novel-book-item ${(curCateIdx===cIdx && curBookIdx===bIdx)?'active-book':''} ${bookExpanded[cIdx][bIdx]?'expanded':''}" data-cateidx="${cIdx}" data-bookidx="${bIdx}">${book.bookName}<i class="fas fa-chevron-right"></i></div><div class="novel-chapter-list ${bookExpanded[cIdx][bIdx]?'show':''}">${book.chapterList.map((chap,chIdx)=>`<div class="novel-chapter-item ${(curCateIdx===cIdx && curBookIdx===bIdx && curChapIdx===chIdx)?'active-chapter':''}" data-cateidx="${cIdx}" data-bookidx="${bIdx}" data-chapidx="${chIdx}">${chap.chapterName}</div>`).join('')}</div></div>`).join('')}</div></div>`).join('');
-  document.querySelectorAll('.novel-cate-title').forEach(el=>{el.addEventListener('click',(e)=>{let idx=parseInt(el.dataset.cateidx);cateExpanded[idx]=!cateExpanded[idx];renderNovelSidebar();});});
-  document.querySelectorAll('.novel-book-item').forEach(el=>{el.addEventListener('click',(e)=>{let cIdx=parseInt(el.dataset.cateidx),bIdx=parseInt(el.dataset.bookidx);if(curCateIdx===cIdx && curBookIdx===bIdx){bookExpanded[cIdx][bIdx]=!bookExpanded[cIdx][bIdx];}else{curCateIdx=cIdx;curBookIdx=bIdx;curChapIdx=0;bookExpanded[cIdx][bIdx]=true;}renderNovelSidebar();renderReaderContent();});});
-  document.querySelectorAll('.novel-chapter-item').forEach(el=>{el.addEventListener('click',(e)=>{let cIdx=parseInt(el.dataset.cateidx),bIdx=parseInt(el.dataset.bookidx),chIdx=parseInt(el.dataset.chapidx);curCateIdx=cIdx;curBookIdx=bIdx;curChapIdx=chIdx;renderNovelSidebar();renderReaderContent();});});
-}
-function renderReaderContent(){let cate=NOVEL_DATA[curCateIdx],book=cate.bookList[curBookIdx],chap=book.chapterList[curChapIdx];document.getElementById('readerCurrent').innerText=`${book.bookName} · ${chap.chapterName}`;let body=document.getElementById('readerBody');body.innerHTML=`<div class="page-anim">${chap.content}</div>`;body.scrollTop=0;document.getElementById('pageFlipSound').play().catch(()=>{});document.getElementById('chProgress').innerText=`${curChapIdx+1}/${book.chapterList.length}`;document.getElementById('prevCh').disabled=curChapIdx===0;document.getElementById('nextCh').disabled=curChapIdx===book.chapterList.length-1;document.getElementById('novelVisitBtn').href=book.linkUrl;Storage.set('novelProgress',{cateIndex:curCateIdx,bookIndex:curBookIdx,chapterIndex:curChapIdx});}
-document.getElementById('prevCh').addEventListener('click',()=>{if(curChapIdx>0){curChapIdx--;renderNovelSidebar();renderReaderContent();}});document.getElementById('nextCh').addEventListener('click',()=>{let book=NOVEL_DATA[curCateIdx].bookList[curBookIdx];if(curChapIdx<book.chapterList.length-1){curChapIdx++;renderNovelSidebar();renderReaderContent();}});
-document.querySelectorAll('.r-btn[data-font]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.r-btn[data-font]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.getElementById('readerBody').style.fontSize={sm:'.88rem',md:'1rem',lg:'1.15rem'}[btn.dataset.font];}));
-let lineHeightIndex=1,lineHeights=['1.8','2','2.2','2.5'];document.getElementById('lineHeightBtn').addEventListener('click',function(){lineHeightIndex=(lineHeightIndex+1)%lineHeights.length;document.getElementById('readerBody').style.lineHeight=lineHeights[lineHeightIndex];this.classList.toggle('active',lineHeightIndex!==1);});
-let eyeMode=false,nightMode=false;document.getElementById('eyeBtn').addEventListener('click',function(){eyeMode=!eyeMode;nightMode=false;this.classList.toggle('active',eyeMode);document.getElementById('nightBtn').classList.remove('active');let body=document.getElementById('readerBody');body.classList.toggle('eye-mode',eyeMode);body.classList.remove('night-mode');});document.getElementById('nightBtn').addEventListener('click',function(){nightMode=!nightMode;eyeMode=false;this.classList.toggle('active',nightMode);document.getElementById('eyeBtn').classList.remove('active');let body=document.getElementById('readerBody');body.classList.toggle('night-mode',nightMode);body.classList.remove('eye-mode');});
-document.getElementById('fullscreenNovelBtn').addEventListener('click',()=>{let reader=document.getElementById('novelReaderContainer');if(reader.requestFullscreen)reader.requestFullscreen();});
-let lastProgress=Storage.get('novelProgress',{cateIndex:0,bookIndex:0,chapterIndex:0});curCateIdx=lastProgress.cateIndex;curBookIdx=lastProgress.bookIndex;curChapIdx=lastProgress.chapterIndex;renderNovelSidebar();renderReaderContent();
-
-/* 搜索模块 */
-const iframe=document.getElementById('embeddedIframe');
-
 /* 工具模块 */
-let curToolCate='all';function renderTools(){let grid=document.getElementById('toolsGrid');let list=curToolCate==='all'?TOOL_DATA:TOOL_DATA.filter(t=>t.cate===curToolCate);grid.innerHTML=list.map(t=>`<div class="tool-card"><div class="tool-icon" style="background:${t.color}"><i class="${t.icon}"></i></div><div class="tool-title">${t.title}</div><div class="tool-desc">${t.desc}</div><a class="tool-btn" href="${t.url}" target="_blank"><i class="fas fa-download"></i> 下载 / 使用</a></div>`).join('');}
-document.getElementById('toolsCateWrap').addEventListener('click',e=>{let btn=e.target.closest('.tools-cate-btn');if(!btn)return;document.querySelectorAll('.tools-cate-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');curToolCate=btn.dataset.cate;renderTools();});renderTools();
+let curToolCate='all';
+function renderTools(){
+  let grid=document.getElementById('toolsGrid');
+  let list=curToolCate==='all'?TOOL_DATA:TOOL_DATA.filter(t=>t.cate===curToolCate);
+  grid.innerHTML=list.map(t=>`<div class="tool-card"><div class="tool-icon" style="background:${t.color}"><i class="${t.icon}"></i></div><div class="tool-title">${t.title}</div><div class="tool-desc">${t.desc}</div><a class="tool-btn" href="${t.url}" target="_blank"><i class="fas fa-download"></i> 下载 / 使用</a></div>`).join('');
+}
+document.getElementById('toolsCateWrap').addEventListener('click',e=>{
+  let btn=e.target.closest('.tools-cate-btn');
+  if(!btn) return;
+  document.querySelectorAll('.tools-cate-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  curToolCate=btn.dataset.cate;
+  renderTools();
+});
+renderTools();
+
+// 聊天模块和搜索模块的 iframe 已内置，无需额外代码，保证加载即可
 </script>
 </body>
 </html>
