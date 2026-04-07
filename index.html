@@ -2,8 +2,8 @@
 <html lang="zh-CN" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>皮卡皮卡仓库 · 聊天聚合</title>
+<meta name="viewport" content="width=dinstagwidth, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>皮卡皮卡仓库</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -232,6 +232,8 @@ body.nav-hidden .theme-btn { background: rgba(0,0,0,0.6); backdrop-filter: blur(
     <button class="app-chip" data-cat="影视">影视</button>
     <button class="app-chip" data-cat="海外">海外</button>
     <button class="app-chip" data-cat="热门">热门</button>
+    <button class="app-chip" data-cat="电脑">电脑</button>
+    <button class="app-chip" data-cat="代理">代理</button>
     </div></div>
     <div class="app-pinned-wrap" id="pinnedWrap"><div class="app-pinned-label">常用应用</div><div class="apps-grid" id="pinnedGrid"></div></div>
     <div class="apps-grid" id="appsGrid"></div>
@@ -428,6 +430,7 @@ const APP_DATA = [
 { name:"梨园行戏曲",icon:"fas fa-theater-masks",color:"#E6162D",bg:"#FFE6E9",url:"https://ddd.372164885.xyz:8443/stream/160?hash=7b37e0",tag:"工具" },
 { name:"神奇脑波",icon:"fas fa-wave-square",color:"#E6162D",bg:"#FFE6E9",url:"https://ddd.372164885.xyz:8443/stream/161?hash=f83251",tag:"工具" },
 { name:"百度贴吧",icon:"fas fa-comments",color:"#E6162D",bg:"#FFE6E9",url:"https://ddd.372164885.xyz:8443/stream/162?hash=dc747c",tag:"工具" },
+{ name:"谷歌商店",icon:"fas fa-play",color:"#E6162D",bg:"#FFE6E9",url:"https://ddd.372164885.xyz:8443/stream/177?hash=be9906",tag:"工具" },
 { name:"ChatGPT", icon:"fas fa-robot", color:"#E6162D", bg:"#FFE6E9", url:"https://chat.openai.com", tag:"AI" },
 { name:"Gemini", icon:"fas fa-rocket", color:"#E6162D", bg:"#FFE6E9", url:"https://gemini.google.com", tag:"AI" },
 { name:"DeepSeek", icon:"fas fa-brain", color:"#E6162D", bg:"#FFE6E9", url:"https://deepseek.com", tag:"AI" },
@@ -519,6 +522,25 @@ const APP_DATA = [
 { name:"OpenKylin开放麒麟",icon:"fas fa-laptop",color:"#1A73E8",bg:"#E8F0FE",url:"https://www.openkylin.org",tag:"工具" },
 { name:"华中大开源镜像",icon:"fas fa-database",color:"#FF9800",bg:"#FFF3E0",url:"http://mirrors.hust.edu.cn",tag:"工具" },
 { name:"电报中文版",icon:"fas fa-paper-plane",color:"#FF9800",bg:"#FFF3E0",url:"https://ddd.372164885.xyz:8443/stream/164?hash=4b724e",tag:"热门" },
+{ name:"推特-x",icon:"fas fa-x",color:"#FF9800",bg:"#FFF3E0",url:"https://ddd.372164885.xyz:8443/stream/165?hash=6cc3d9",tag:"热门" },
+{ name:"跨设备投屏",icon:"fas fa-mobile-screen-button",color:"#FF9800",bg:"#FFF3E0",url:"https://ddd.372164885.xyz:8443/stream/166?hash=74327f",tag:"电脑" }, 
+{ name:"pixiv",icon:"fas fa-images",color:"#FF9800",bg:"#FFF3E0",url:"https://ddd.372164885.xyz:8443/stream/167?hash=d2f353",tag:"热门" },
+{ name:"Instagram",icon:"fas fa-image",color:"#FF9800",bg:"#FFF3E0",url:"https://ddd.372164885.xyz:8443/stream/168?hash=60947b",tag:"热门" }, 
+{ name:"Discord",icon:"fas fa-users",color:"#FF9800",bg:"#FFF3E0",url:"https://ddd.372164885.xyz:8443/stream/169?hash=07adbb",tag:"热门" },
+{ name:"goolgle相机",icon:"fas fa-globe",color:"#FF9800",bg:"#FFF3E0",url:"https://ddd.372164885.xyz:8443/stream/170?hash=f1f79c",tag:"热门" },
+{ name:"bing",icon:"fas fa-globe-americas",color:"#FF9800",bg:"#FFF3E0",url:"https://ddd.372164885.xyz:8443/stream/171?hash=bfc98b",tag:"热门" },
+{ name:"安易",icon:"fas fa-network-wired",color:"#FF9800",bg:"#FFF3E0",url:"https://ddd.372164885.xyz:8443/stream/172?hash=94e19a",tag:"电脑" },
+{ name:"菜鸟",icon:"fas fa-bolt",color:"#FF9800",bg:"#FFF3E0",url:"https://ddd.372164885.xyz:8443/stream/173?hash=7e6b2c",tag:"电脑" },
+{ name:"dragon",icon:"fas fa-rocket",color:"#FF9800",bg:"#FFF3E0",url:"https://ddd.372164885.xyz:8443/stream/174?hash=d96f6d",tag:"电脑" },
+{ name:"nthlink",icon:"fas fa-bolt",color:"#FF9800",bg:"#FFF3E0",url:"https://ddd.372164885.xyz:8443/stream/175?hash=e42d7c",tag:"电脑" },
+{ name:"绝尘",icon:"fas fa-rocket",color:"#2869e6",bg:"#edf2ff",url:"https://www.juechenjsq.com/",tag:"电脑" },
+{ name:"魔方",icon:"fas fa-rocket",color:"#2869e6",bg:"#edf2ff",url:"https://www.cybercubevpn.com/android",tag:"电脑" },
+{ name:"proton",icon:"fas fa-rocket",color:"#2869e6",bg:"#edf2ff",url:"https://protonvpn.com/download-windows",tag:"电脑" },
+{ name:"youtube",icon:"fas fa-play-circle",color:"#2869e6",bg:"#edf2ff",url:"https://www.youtube.com/",tag:"热门" },
+{ name:"wePE",icon:"fas fa-tools",color:"#2869e6",bg:"#edf2ff",url:"https://ddd.372164885.xyz:8443/stream/176?hash=0d1511",tag:"电脑" },
+{ name:"谷歌浏览器",icon:"fas fa-globe",color:"#2869e6",bg:"#edf2ff",url:"https://www.google.com/intl/zh-CN/chrome/",tag:"电脑" },
+{ name:"cloudflare-one",icon:"fas fa-globe",color:"#2869e6",bg:"#edf2ff",url:"https://ddd.372164885.xyz:8443/stream/178?hash=2de5a4",tag:"电脑" },
+
 ];
 const VIDEO_DATA = [ { title:"", desc:"", views:"", meta:"", videoUrl:"https://ddd.372164885.xyz:8443/stream/130?hash=62f469", coverUrl:"https://svip.372164885.xyz/file/AgACAgUAAyEGAASy0sHyAAOSacyZFW4EZL2btBwNhWRkkCNUJjMAAv8OaxuSV2BWxMzs0iPanBABAAMCAAN5AAM6BA.jpg", linkUrl:"https://www.bilibili.com" },
 { title:"", desc:"", views:"", meta:"", videoUrl:"https://ddd.372164885.xyz:8443/stream/131?hash=810ddd", coverUrl:"https://svip.372164885.xyz/file/AgACAgUAAyEGAASy0sHyAAOTacyblN88Sym8Qc0mMvhJAqUpWjsAAiQPaxuSV2BW8x-l-5vMlbYBAAMCAAN3AAM6BA.jpg", linkUrl:"https://www.bilibili.com" },
