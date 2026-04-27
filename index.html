@@ -233,7 +233,8 @@ body.nav-hidden .theme-btn { background: rgba(0,0,0,0.6); backdrop-filter: blur(
     <button class="app-chip" data-cat="海外">海外</button>
     <button class="app-chip" data-cat="热门">热门</button>
     <button class="app-chip" data-cat="电脑">电脑</button>
-    <button class="app-chip" data-cat="代理">代理</button>
+    <button class="app-chip"><a href="https://t.me/s/pkpk158/" style="color: white; background: black;">电报</a></button>
+    <button class="app-chip"><a href="https://huixiao666.github.io/cxc/" style="color: white; background: black;">修图</a></button>
     </div></div>
     <div class="app-pinned-wrap" id="pinnedWrap"><div class="app-pinned-label">常用应用</div><div class="apps-grid" id="pinnedGrid"></div></div>
     <div class="apps-grid" id="appsGrid"></div>
@@ -289,6 +290,8 @@ body.nav-hidden .theme-btn { background: rgba(0,0,0,0.6); backdrop-filter: blur(
     <button class="tools-cate-btn" data-cate="实用">实用</button></div></div>
     <div class="tools-grid" id="toolsGrid"></div>
   </section>
+
+
 </div>
 
 <!-- 移动端底部导航栏 - 已强化交互 -->
@@ -299,6 +302,7 @@ body.nav-hidden .theme-btn { background: rgba(0,0,0,0.6); backdrop-filter: blur(
 <button class="mob-tab" data-view="chat"><i class="fas fa-comments"></i><span>聊天</span></button>
 <button class="mob-tab" data-view="search"><i class="fas fa-search"></i><span>搜索</span></button>
 <button class="mob-tab" data-view="tools"><i class="fas fa-tools"></i><span>工具</span></button>
+
 </div></nav>
 
 <script>
@@ -596,7 +600,14 @@ const TOOL_DATA = [
 
 /* 存储与主题切换 */
 const Storage={get:(k,d=null)=>{try{let v=localStorage.getItem('mediahub_'+k);return v?JSON.parse(v):d;}catch(e){return d;}},set:(k,v)=>{try{localStorage.setItem('mediahub_'+k,JSON.stringify(v));}catch(e){}}};
-const ACCENT_MAP={apps:'--app-accent',videos:'--video-accent',chat:'--chat-accent',search:'--search-accent',tools:'--tool-accent'};
+const ACCENT_MAP={
+  apps:'--app-accent',
+  videos:'--video-accent',
+  chat:'--chat-accent',
+  search:'--search-accent',
+  tools:'--tool-accent',
+  image:'--search-accent'   // 让图片模块也有强调色
+};
 
 // 视图切换核心函数
 function switchView(name){
