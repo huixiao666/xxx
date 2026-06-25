@@ -1,1447 +1,1275 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>网站大全</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-  :root {
-    --primary: #ff4d6d;
-    --primary-light: #ff8fa3;
-    --accent: #4cc9f0;
-    --green: #2ecc71;
-    --bg: #fff5f7;
-    --card-bg: #ffffff;
-    --text: #1a1a2e;
-    --text-muted: #888;
-    --border: #f0e0e5;
-    --tab-active: #ff4d6d;
-    --shadow: 0 2px 12px rgba(255,77,109,0.08);
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网站大全</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ff4d6d;
+            --primary-light: #ff8fa3;
+            --accent: #4cc9f0;
+            --green: #2ecc71;
+            --bg: #fff5f7;
+            --card-bg: #ffffff;
+            --text: #1a1a2e;
+            --text-muted: #888;
+            --border: #f0e0e5;
+            --tab-active: #ff4d6d;
+            --shadow: 0 2px 12px rgba(255, 77, 109, 0.08);
+            --iframe-bg: #ffffff;
+        }
 
-  [data-theme="dark"] {
-    --primary: #ff6b81;
-    --primary-light: #ff8fa3;
-    --accent: #4cc9f0;
-    --green: #2ecc71;
-    --bg: #111111;
-    --card-bg: #1a1a1a;
-    --text: #e0e0e0;
-    --text-muted: #999;
-    --border: #2a2a2a;
-    --tab-active: #ff6b81;
-    --shadow: 0 2px 12px rgba(0,0,0,0.5);
-  }
+        [data-theme="dark"] {
+            --primary: #ff6b81;
+            --primary-light: #ff8fa3;
+            --accent: #4cc9f0;
+            --green: #2ecc71;
+            --bg: #111111;
+            --card-bg: #1a1a1a;
+            --text: #e0e0e0;
+            --text-muted: #999;
+            --border: #2a2a2a;
+            --tab-active: #ff6b81;
+            --shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+            --iframe-bg: #1a1a1a;
+        }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-  body {
-    font-family: 'Noto Sans SC', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-  }
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
 
-  /* Header */
-  .header {
-    background: #fff;
-    padding: 16px 20px 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 1px 0 var(--border);
-  }
+        .header {
+            background: #fff;
+            padding: 16px 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 0 var(--border);
+        }
+        [data-theme="dark"] .header {
+            background: #1a1a1a;
+            box-shadow: 0 1px 0 var(--border);
+        }
 
-  .header-title {
-    text-align: center;
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 12px;
-    letter-spacing: 1px;
-  }
+        .header-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
 
-  .search-bar {
-    display: flex;
-    align-items: center;
-    background: #f8f0f2;
-    border-radius: 24px;
-    padding: 8px 16px;
-    gap: 8px;
-    margin-bottom: 12px;
-    border: 1.5px solid var(--border);
-  }
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: #f8f0f2;
+            border-radius: 24px;
+            padding: 8px 16px;
+            gap: 8px;
+            margin-bottom: 12px;
+            border: 1.5px solid var(--border);
+        }
+        [data-theme="dark"] .search-bar {
+            background: #111;
+        }
+        .search-bar input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-size: 14px;
+            color: var(--text);
+            outline: none;
+            font-family: inherit;
+        }
+        [data-theme="dark"] .search-bar input {
+            color: #e0e0e0;
+        }
+        .search-bar .google-logo {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .google-logo span:nth-child(1) {
+            color: #4285F4;
+        }
+        .google-logo span:nth-child(2) {
+            color: #EA4335;
+        }
+        .google-logo span:nth-child(3) {
+            color: #FBBC05;
+        }
+        .google-logo span:nth-child(4) {
+            color: #4285F4;
+        }
+        .google-logo span:nth-child(5) {
+            color: #34A853;
+        }
+        .google-logo span:nth-child(6) {
+            color: #EA4335;
+        }
+        [data-theme="dark"] .google-logo {
+            color: #e0e0e0;
+        }
+        .search-btn {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 4px 12px;
+            font-size: 13px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        [data-theme="dark"] .search-btn {
+            background: var(--primary);
+            color: #fff;
+        }
 
-  .search-bar input {
-    flex: 1;
-    border: none;
-    background: transparent;
-    font-size: 14px;
-    color: var(--text);
-    outline: none;
-    font-family: inherit;
-  }
+        .tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 2px solid var(--border);
+        }
+        [data-theme="dark"] .tabs {
+            border-bottom-color: var(--border);
+        }
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 14px;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-weight: 500;
+            transition: all 0.2s;
+            position: relative;
+        }
+        [data-theme="dark"] .tab {
+            color: #999;
+        }
+        .tab.active {
+            color: var(--primary);
+            font-weight: 700;
+        }
+        [data-theme="dark"] .tab.active {
+            color: var(--primary);
+        }
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 20%;
+            width: 60%;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
 
-  .search-bar .google-logo {
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-  }
-  .google-logo span:nth-child(1){color:#4285F4}
-  .google-logo span:nth-child(2){color:#EA4335}
-  .google-logo span:nth-child(3){color:#FBBC05}
-  .google-logo span:nth-child(4){color:#4285F4}
-  .google-logo span:nth-child(5){color:#34A853}
-  .google-logo span:nth-child(6){color:#EA4335}
+        .main {
+            display: flex;
+            max-width: 960px;
+            margin: 0 auto;
+        }
 
-  .search-btn {
-    background: var(--primary);
-    color: #fff;
-    border: none;
-    border-radius: 12px;
-    padding: 4px 12px;
-    font-size: 13px;
-    cursor: pointer;
-    font-family: inherit;
-  }
+        .sidebar {
+            width: 72px;
+            background: #fff;
+            min-height: calc(100vh - 120px);
+            padding: 8px 0;
+            border-right: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+        [data-theme="dark"] .sidebar {
+            background: #1a1a1a;
+            border-right-color: var(--border);
+        }
+        .sidebar-item {
+            padding: 12px 8px;
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.15s;
+            border-radius: 0;
+        }
+        [data-theme="dark"] .sidebar-item {
+            color: #999;
+        }
+        .sidebar-item:hover {
+            background: var(--bg);
+            color: var(--primary);
+        }
+        [data-theme="dark"] .sidebar-item:hover {
+            background: #111;
+        }
+        .sidebar-item.active {
+            background: #fff0f3;
+            color: var(--primary);
+            font-weight: 700;
+            border-right: 3px solid var(--primary);
+        }
+        [data-theme="dark"] .sidebar-item.active {
+            background: #2a1018;
+            border-right-color: var(--primary);
+        }
 
-  /* Tabs */
-  .tabs {
-    display: flex;
-    gap: 0;
-    border-bottom: 2px solid var(--border);
-  }
+        .content {
+            flex: 1;
+            padding: 0;
+        }
 
-  .tab {
-    flex: 1;
-    text-align: center;
-    padding: 10px 0;
-    font-size: 14px;
-    cursor: pointer;
-    color: var(--text-muted);
-    font-weight: 500;
-    transition: all 0.2s;
-    position: relative;
-  }
+        .panel {
+            display: none;
+        }
+        .panel.active {
+            display: block;
+        }
 
-  .tab.active {
-    color: var(--primary);
-    font-weight: 700;
-  }
+        .rank-list {
+            padding: 8px 0;
+        }
+        .rank-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            gap: 12px;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        [data-theme="dark"] .rank-item {
+            background: #1a1a1a;
+            border-bottom-color: var(--border);
+        }
+        .rank-item:hover {
+            background: #fff5f7;
+        }
+        [data-theme="dark"] .rank-item:hover {
+            background: #222;
+        }
 
-  .tab.active::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 20%;
-    width: 60%;
-    height: 2px;
-    background: var(--primary);
-    border-radius: 2px;
-  }
+        .rank-num {
+            width: 26px;
+            height: 26px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .rank-num.fire-1 {
+            background: #ff4d6d;
+            color: #fff;
+        }
+        .rank-num.fire-2 {
+            background: #ff8c42;
+            color: #fff;
+        }
+        .rank-num.fire-3 {
+            background: #ffd166;
+            color: #fff;
+        }
+        .rank-num.normal {
+            background: #f0e8ea;
+            color: #888;
+        }
+        [data-theme="dark"] .rank-num.normal {
+            background: #2a2a2a;
+            color: #999;
+        }
 
-  /* Main layout */
-  .main {
-    display: flex;
-    max-width: 960px;
-    margin: 0 auto;
-  }
+        .rank-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            object-fit: cover;
+            flex-shrink: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: 700;
+        }
+        .rank-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .rank-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text);
+        }
+        [data-theme="dark"] .rank-name {
+            color: #e0e0e0;
+        }
+        .rank-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        [data-theme="dark"] .rank-desc {
+            color: #999;
+        }
 
-  /* Sidebar categories */
-  .sidebar {
-    width: 72px;
-    background: #fff;
-    min-height: calc(100vh - 120px);
-    padding: 8px 0;
-    border-right: 1px solid var(--border);
-    flex-shrink: 0;
-  }
+        .app-list {
+            padding: 8px 0;
+            background: var(--bg);
+        }
+        [data-theme="dark"] .app-list {
+            background: transparent;
+        }
+        .app-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            gap: 12px;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        [data-theme="dark"] .app-item {
+            background: #1a1a1a;
+            border-bottom-color: var(--border);
+        }
+        .app-item:hover {
+            background: #fff5f7;
+        }
+        [data-theme="dark"] .app-item:hover {
+            background: #222;
+        }
+        .app-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            overflow: hidden;
+        }
+        .app-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .app-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        [data-theme="dark"] .app-name {
+            color: #e0e0e0;
+        }
+        .badge {
+            font-size: 10px;
+            background: #ff4d6d;
+            color: #fff;
+            border-radius: 4px;
+            padding: 1px 5px;
+            font-weight: 500;
+        }
+        [data-theme="dark"] .badge {
+            color: #fff;
+        }
+        .app-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 3px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-align: left;
+        }
+        .install-btn {
+            background: var(--green);
+            color: #fff;
+            border: none;
+            border-radius: 18px;
+            padding: 7px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            flex-shrink: 0;
+            font-family: inherit;
+            transition: opacity 0.15s;
+        }
+        .install-btn:hover {
+            opacity: 0.85;
+        }
+        .install-btn.open {
+            background: #4cc9f0;
+        }
+        [data-theme="dark"] .install-btn {
+            color: #fff;
+        }
 
-  .sidebar-item {
-    padding: 12px 8px;
-    text-align: center;
-    font-size: 13px;
-    color: var(--text-muted);
-    cursor: pointer;
-    transition: all 0.15s;
-    border-radius: 0;
-  }
+        .app-search-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            padding: 8px 14px;
+            background: #fff;
+            border: 1.5px solid var(--border);
+            border-radius: 24px;
+        }
+        [data-theme="dark"] .app-search-wrap {
+            background: #1a1a1a;
+            border-color: var(--border);
+        }
+        .app-search-wrap input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 14px;
+            color: var(--text);
+            font-family: inherit;
+        }
+        [data-theme="dark"] .app-search-wrap input {
+            color: #e0e0e0;
+        }
+        .app-search-wrap input::placeholder {
+            color: #aaa;
+        }
+        .app-search-clear {
+            background: none;
+            border: none;
+            color: #ccc;
+            cursor: pointer;
+            font-size: 16px;
+            display: none;
+        }
+        [data-theme="dark"] .app-search-clear {
+            color: #999;
+        }
+        .app-search-clear.visible {
+            display: block;
+        }
 
-  .sidebar-item:hover { background: var(--bg); color: var(--primary); }
-  .sidebar-item.active {
-    background: #fff0f3;
-    color: var(--primary);
-    font-weight: 700;
-    border-right: 3px solid var(--primary);
-  }
+        .ai-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            gap: 12px;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        [data-theme="dark"] .ai-item {
+            background: #1a1a1a;
+            border-bottom-color: var(--border);
+        }
+        .ai-item:hover {
+            background: #fff5f7;
+        }
+        [data-theme="dark"] .ai-item:hover {
+            background: #242424;
+        }
 
-  /* Content area */
-  .content {
-    flex: 1;
-    padding: 0;
-  }
+        @media (max-width: 600px) {
+            .sidebar {
+                width: 60px;
+            }
+        }
 
-  /* Section panels */
-  .panel { display: none; }
-  .panel.active { display: block; }
-
-  /* Hot ranking list */
-  .rank-list { padding: 8px 0; }
-
-  .rank-item {
-    display: flex;
-    align-items: center;
-    padding: 12px 16px;
-    background: #fff;
-    border-bottom: 1px solid var(--border);
-    gap: 12px;
-    cursor: pointer;
-    transition: background 0.15s;
-  }
-
-  .rank-item:hover { background: #fff5f7; }
-
-  .rank-num {
-    width: 26px;
-    height: 26px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    font-weight: 700;
-    flex-shrink: 0;
-  }
-
-  .rank-num.fire-1 { background: #ff4d6d; color: #fff; }
-  .rank-num.fire-2 { background: #ff8c42; color: #fff; }
-  .rank-num.fire-3 { background: #ffd166; color: #fff; }
-  .rank-num.normal { background: #f0e8ea; color: #888; }
-
-  .rank-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 10px;
-    object-fit: cover;
-    flex-shrink: 0;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    font-weight: 700;
-  }
-
-  .rank-info { flex: 1; min-width: 0; }
-  .rank-name { font-size: 15px; font-weight: 600; color: var(--text); }
-  .rank-desc {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 2px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  /* App list (cracked versions) */
-  .app-list { padding: 8px 0; background: var(--bg); }
-
-  .app-item {
-    display: flex;
-    align-items: center;
-    padding: 12px 16px;
-    background: #fff;
-    border-bottom: 1px solid var(--border);
-    gap: 12px;
-    cursor: pointer;
-    transition: background 0.15s;
-  }
-
-  .app-item:hover { background: #fff5f7; }
-
-  .app-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 12px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 26px;
-    overflow: hidden;
-  }
-
-  .app-info { flex: 1; min-width: 0; }
-
-  .app-name {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .badge {
-    font-size: 10px;
-    background: #ff4d6d;
-    color: #fff;
-    border-radius: 4px;
-    padding: 1px 5px;
-    font-weight: 500;
-  }
-
-  .app-desc {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 3px;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-align: left;
-  }
-
-  .install-btn {
-    background: var(--green);
-    color: #fff;
-    border: none;
-    border-radius: 18px;
-    padding: 7px 18px;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    flex-shrink: 0;
-    font-family: inherit;
-    transition: opacity 0.15s;
-  }
-  .install-btn:hover { opacity: 0.85; }
-  .install-btn.open { background: #4cc9f0; }
-
-  /* ====== 应用模块样式 ====== */
-  .app-search-wrap {
-    display: flex; align-items: center; gap: 8px; margin-bottom: 12px;
-    padding: 8px 14px; background: #fff;
-    border: 1.5px solid var(--border); border-radius: 24px;
-  }
-  .app-search-wrap input {
-    flex: 1; border: none; background: transparent; outline: none;
-    font-size: 14px; color: var(--text); font-family: inherit;
-  }
-  .app-search-wrap input::placeholder { color: #aaa; }
-  .app-search-clear { background: none; border: none; color: #ccc; cursor: pointer; font-size: 16px; display: none; }
-  .app-search-clear.visible { display: block; }
-  .app-cat-scroll {
-    display: flex; gap: 6px; margin-bottom: 14px;
-    overflow-x: auto; padding-bottom: 4px;
-    -webkit-overflow-scrolling: touch;
-  }
-  .app-cat-scroll::-webkit-scrollbar { height: 4px; }
-  .app-cat-scroll::-webkit-scrollbar-thumb { background: #ddd; border-radius: 2px; }
-  .app-cat-pill {
-    padding: 6px 14px; border-radius: 20px; cursor: pointer;
-    border: 1px solid var(--border); background: #fff;
-    color: var(--text-muted); font-size: 13px; font-weight: 600;
-    white-space: nowrap; transition: all 0.2s; flex-shrink: 0;
-  }
-  .app-cat-pill:hover { border-color: var(--primary); color: var(--primary); }
-  .app-cat-pill.active { background: var(--primary); border-color: var(--primary); color: #fff; }
-  .app-pinned-section { margin-bottom: 16px; display: none; }
-  .app-pinned-section.show { display: block; }
-  .app-pinned-header { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; font-size: 13px; font-weight: 700; color: var(--text); }
-  .app-pinned-scroll { display: flex; gap: 8px; overflow-x: auto; padding: 4px 0 8px; }
-  .app-pinned-scroll::-webkit-scrollbar { height: 0; }
-  .app-pinned-card {
-    display: flex; flex-direction: column; align-items: center; gap: 6px;
-    padding: 10px 14px 8px; min-width: 90px;
-    background: #fff; border: 1px solid var(--border);
-    border-radius: 12px; cursor: pointer; text-decoration: none; color: inherit;
-    transition: all 0.2s; flex-shrink: 0; position: relative;
-  }
-  .app-pinned-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(255,77,109,0.15); border-color: var(--primary); }
-  .app-pinned-card .app-icon-wrap { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
-  .app-pinned-card .app-name { font-size: 12px; font-weight: 600; text-align: center; }
-  .app-pinned-remove {
-    position: absolute; top: 2px; right: 2px; width: 16px; height: 16px;
-    border-radius: 50%; background: #f0e8ea; color: #888;
-    font-size: 8px; display: none; align-items: center; justify-content: center;
-    cursor: pointer; border: none;
-  }
-  .app-pinned-card:hover .app-pinned-remove { display: flex; }
-  .apps-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; padding: 0 2px; }
-  .app-card {
-    display: flex; flex-direction: column; align-items: center; gap: 6px;
-    padding: 12px 6px 10px; background: #fff;
-    border: 1px solid var(--border); border-radius: 14px;
-    cursor: pointer; text-decoration: none; color: inherit;
-    transition: all 0.2s; position: relative;
-  }
-  .app-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(255,77,109,0.12); border-color: var(--primary); }
-  .app-card .app-icon-wrap { width: 46px; height: 46px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
-  .app-card .app-name { font-size: 12px; font-weight: 600; text-align: center; line-height: 1.2; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .app-card .app-tag { font-size: 10px; color: var(--text-muted); background: #f8f0f2; padding: 2px 8px; border-radius: 8px; }
-  .app-pin-star {
-    position: absolute; top: 2px; right: 3px; background: none; border: none;
-    color: #ccc; font-size: 12px; cursor: pointer; opacity: 0; transition: all 0.2s; padding: 2px;
-  }
-  .app-card:hover .app-pin-star { opacity: 1; }
-  .app-pin-star.pinned { color: var(--primary); opacity: 1; }
-
-  /* Category grid */
-  .category-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 12px;
-    padding: 16px;
-  }
-
-  .cat-card {
-    background: #fff;
-    border-radius: 14px;
-    padding: 14px 12px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    transition: transform 0.15s, box-shadow 0.15s;
-    box-shadow: var(--shadow);
-    text-decoration: none;
-    color: var(--text);
-  }
-
-  .cat-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255,77,109,0.13);
-  }
-
-  .cat-icon {
-    width: 38px;
-    height: 38px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    flex-shrink: 0;
-  }
-
-  .cat-name { font-size: 14px; font-weight: 600; }
-  .cat-count { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
-
-  /* AI tools list */
-  .ai-item {
-    display: flex;
-    align-items: center;
-    padding: 12px 16px;
-    background: #fff;
-    border-bottom: 1px solid var(--border);
-    gap: 12px;
-    cursor: pointer;
-    transition: background 0.15s;
-  }
-  .ai-item:hover { background: #fff5f7; }
-
-  /* Responsive */
-  @media (max-width: 600px) {
-    .sidebar { width: 60px; }
-    .category-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-
-  /* ====== 暗色主题全局覆盖 ====== */
-  [data-theme="dark"] .header { background: #1a1a1a; box-shadow: 0 1px 0 var(--border); }
-  [data-theme="dark"] .search-bar { background: #111; }
-  [data-theme="dark"] .search-bar input { color: #e0e0e0; }
-  [data-theme="dark"] .search-btn { background: var(--primary); color: #fff; }
-  [data-theme="dark"] .tab { color: #999; }
-  [data-theme="dark"] .tab.active { color: var(--primary); }
-  [data-theme="dark"] .tabs { border-bottom-color: var(--border); }
-  [data-theme="dark"] .sidebar { background: #1a1a1a; border-right-color: var(--border); }
-  [data-theme="dark"] .sidebar-item { color: #999; }
-  [data-theme="dark"] .sidebar-item:hover { background: #111; }
-  [data-theme="dark"] .sidebar-item.active { background: #2a1018; border-right-color: var(--primary); }
-  [data-theme="dark"] .rank-item { background: #1a1a1a; border-bottom-color: var(--border); }
-  [data-theme="dark"] .rank-item:hover { background: #222; }
-  [data-theme="dark"] .rank-num.normal { background: #2a2a2a; color: #999; }
-  [data-theme="dark"] .rank-name { color: #e0e0e0; }
-  [data-theme="dark"] .rank-desc { color: #999; }
-  [data-theme="dark"] .app-item { background: #1a1a1a; border-bottom-color: var(--border); }
-  [data-theme="dark"] .app-item:hover { background: #222; }
-  [data-theme="dark"] .ai-item { background: #1a1a1a; border-bottom-color: var(--border); }
-  [data-theme="dark"] .ai-item:hover { background: #242424; }
-  [data-theme="dark"] .app-name { color: #e0e0e0; }
-  [data-theme="dark"] .cat-card { background: #1a1a1a; box-shadow: 0 2px 12px rgba(0,0,0,0.5); }
-  [data-theme="dark"] .cat-card:hover { box-shadow: 0 6px 20px rgba(255,107,129,0.15); }
-  [data-theme="dark"] .app-search-wrap { background: #1a1a1a; border-color: var(--border); }
-  [data-theme="dark"] .app-search-wrap input { color: #e0e0e0; }
-  [data-theme="dark"] .app-cat-pill { background: #1a1a1a; border-color: var(--border); color: #999; }
-  [data-theme="dark"] .app-cat-pill:hover { border-color: var(--primary); color: var(--primary); }
-  [data-theme="dark"] .app-cat-pill.active { background: var(--primary); color: #fff; }
-  [data-theme="dark"] .apps-grid { background: transparent; }
-  [data-theme="dark"] .app-card { background: #1a1a1a; border-color: var(--border); }
-  [data-theme="dark"] .app-card:hover { box-shadow: 0 8px 24px rgba(255,107,129,0.15); }
-  [data-theme="dark"] .app-card .app-name { color: #e0e0e0; }
-  [data-theme="dark"] .app-card .app-tag { background: #111; color: #999; }
-  [data-theme="dark"] .app-pinned-section { background: transparent; }
-  [data-theme="dark"] .app-pinned-card { background: #1a1a1a; border-color: var(--border); }
-  [data-theme="dark"] .app-pinned-card:hover { box-shadow: 0 6px 18px rgba(255,107,129,0.15); }
-  [data-theme="dark"] .app-pinned-card .app-name { color: #e0e0e0; }
-  [data-theme="dark"] .install-btn { color: #fff; }
-  [data-theme="dark"] .badge { color: #fff; }
-  [data-theme="dark"] .app-search-clear { color: #999; }
-  [data-theme="dark"] .google-logo { color: #e0e0e0; }
-  [data-theme="dark"] .rank-list { background: transparent; }
-  [data-theme="dark"] .app-list { background: transparent; }
-  [data-theme="dark"] .header-title { color: #e0e0e0; }
-  [data-theme="dark"] .rank-icon { color: #e0e0e0; }
-  [data-theme="dark"] .app-icon { color: #e0e0e0; }
-</style>
+        [data-theme="dark"] .rank-list {
+            background: transparent;
+        }
+        [data-theme="dark"] .header-title {
+            color: #e0e0e0;
+        }
+        [data-theme="dark"] .rank-icon {
+            color: #e0e0e0;
+        }
+        [data-theme="dark"] .app-icon {
+            color: #e0e0e0;
+        }
+    </style>
 </head>
 <body>
 
-<div class="header">
-  <div class="header-title">网站大全 <button class="nav-icon-btn theme-btn" id="themeBtn" style="width:28px;height:28px;font-size:14px;vertical-align:middle;margin-left:4px;" title="切换日夜模式">🌙</button></div>
-  <div class="search-bar">
-    <svg width="16" height="16" fill="none" stroke="#aaa" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-    <input type="text" placeholder="输入你的问题" id="searchInput">
-    <div class="google-logo">
-      <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
+    <div class="header">
+        <div class="header-title">网站大全
+            <button class="nav-icon-btn theme-btn" id="themeBtn" style="width:28px;height:28px;font-size:14px;vertical-align:middle;margin-left:4px;" title="切换日夜模式">🌙</button>
+        </div>
+        <div class="search-bar">
+            <svg width="16" height="16" fill="none" stroke="#aaa" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input type="text" placeholder="输入你的问题" id="searchInput">
+            <div class="google-logo">
+                <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
+            </div>
+            <button class="search-btn">搜索</button>
+        </div>
+        <div class="tabs">
+            <div class="tab active" onclick="switchMainTab(this,'hot')">热度排行</div>
+            <div class="tab" onclick="switchMainTab(this,'category')">网站类别</div>
+            <div class="tab" onclick="switchMainTab(this,'cracked')">海外热门</div>
+        </div>
     </div>
-    <button class="search-btn">搜索</button>
-  </div>
-  <div class="tabs">
-    <div class="tab active" onclick="switchMainTab(this,'hot')">热度排行</div>
-    <div class="tab" onclick="switchMainTab(this,'category')">网站类别</div>
-    <div class="tab" onclick="switchMainTab(this,'cracked')">海外热门</div>
-  </div>
-</div>
 
-<!-- HOT RANKING TAB -->
-<div class="panel active" id="panel-hot">
-  <div class="rank-list" id="rankList"></div>
-</div>
-
-<!-- CATEGORY TAB -->
-<div class="panel" id="panel-category">
-  <div class="app-search-wrap" style="margin:0 0 10px 0;">
-    <svg width="14" height="14" fill="none" stroke="#aaa" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-    <input type="text" placeholder="搜索应用..." id="appSearch">
-    <button class="app-search-clear" id="appSearchClear">✕</button>
-  </div>
-  <div style="display:flex;">
-    <!-- sidebar -->
-    <div class="sidebar" id="catSidebar">
-      <div class="sidebar-item active" onclick="switchCat(this,'AI')">AI</div>
-      <div class="sidebar-item" onclick="switchCat(this,'video')">视频</div>
-      <div class="sidebar-item" onclick="switchCat(this,'anime')">动漫</div>
-      <div class="sidebar-item" onclick="switchCat(this,'ent')">娱乐</div>
-      <div class="sidebar-item" onclick="switchCat(this,'adult')">成人</div>
-      <div class="sidebar-item" onclick="switchCat(this,'novel')">小说</div>
-      <div class="sidebar-item" onclick="switchCat(this,'news')">搜图</div>
-      <div class="sidebar-item" onclick="switchCat(this,'social')">社交</div>
-      <div class="sidebar-item" onclick="switchCat(this,'game')">游戏</div>
-      <div class="sidebar-item" onclick="switchCat(this,'crypto')">网络</div>
-      <div class="sidebar-item" onclick="switchCat(this,'shop')">购物</div>
-      <div class="sidebar-item" onclick="switchCat(this,'biz')">皮卡</div>
-      <div class="sidebar-item" onclick="switchCat(this,'life')">生活</div>
-      <div class="sidebar-item" onclick="switchCat(this,'other')">其他</div>
+    <!-- HOT RANKING TAB -->
+    <div class="panel active" id="panel-hot">
+        <div class="rank-list" id="rankList"></div>
     </div>
-    <!-- ai list -->
-    <div style="flex:1;" id="catContent">
-      <div id="cat-AI">
-        <div class="ai-item">
-          <div class="app-icon" style="background:#10a37f;color:#fff;font-size:22px;width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;">✦</div>
-          <div class="app-info">
-            <div class="app-name">ChatGPT</div>
-            <div class="app-desc">OpenAI开发的人工智能聊天机器人程序，无所不能 >></div>
-          </div>
+
+    <!-- CATEGORY TAB -->
+    <div class="panel" id="panel-category">
+        <div class="app-search-wrap" style="margin:0 0 10px 0;">
+            <svg width="14" height="14" fill="none" stroke="#aaa" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input type="text" placeholder="搜索应用..." id="appSearch">
+            <button class="app-search-clear" id="appSearchClear">✕</button>
         </div>
-        <div class="ai-item">
-          <div class="app-icon" style="background:#000;color:#00e5ff;font-size:14px;font-weight:800;width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;">c.ai</div>
-          <div class="app-info">
-            <div class="app-name">Character.AI</div>
-            <div class="app-desc">时下最热虚拟人物类型 Character.AI 一键直达，无需注册即可使用 >></div>
-          </div>
+        <div style="display:flex;">
+            <div class="sidebar" id="catSidebar">
+                <div class="sidebar-item active" onclick="switchCat(this,'AI')">AI</div>
+                <div class="sidebar-item" onclick="switchCat(this,'video')">视频</div>
+                <div class="sidebar-item" onclick="switchCat(this,'anime')">动漫</div>
+                <div class="sidebar-item" onclick="switchCat(this,'novel')">小说</div>
+                <div class="sidebar-item" onclick="switchCat(this,'social')">社交</div>
+                <div class="sidebar-item" onclick="switchCat(this,'game')">游戏</div>
+                <div class="sidebar-item" onclick="switchCat(this,'biz')">皮卡</div>
+                <div class="sidebar-item" onclick="switchCat(this,'other')">其他</div>
+            </div>
+            <div style="flex:1;" id="catContent">
+                <div id="cat-AI"></div>
+                <div id="cat-video" style="display:none;" class="cat-apps-grid"></div>
+                <div id="cat-anime" style="display:none;" class="cat-apps-grid"></div>
+                <div id="cat-novel" style="display:none;" class="cat-apps-grid"></div>
+                <div id="cat-social" style="display:none;" class="cat-apps-grid"></div>
+                <div id="cat-game" style="display:none;" class="cat-apps-grid"></div>
+                <div id="cat-biz" style="display:none;" class="cat-apps-grid"></div>
+                <div id="cat-other" style="display:none;" class="cat-apps-grid"></div>
+            </div>
         </div>
-        <div class="ai-item">
-          <div class="app-icon" style="background:linear-gradient(135deg,#7928ca,#ff0080);color:#fff;font-size:14px;font-weight:800;width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;">AI</div>
-          <div class="app-info">
-            <div class="app-name">AI 引擎</div>
-            <div class="app-desc">AI技术加持、污漫黄游、色片小说、裸聊约炮 >></div>
-          </div>
-        </div>
-        <div class="ai-item">
-          <div class="app-icon" style="background:#1a1a1a;color:#ffd700;font-size:13px;font-weight:800;width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;">AI色</div>
-          <div class="app-info">
-            <div class="app-name">AI 色色</div>
-            <div class="app-desc">全新AI成人网站每日更新</div>
-          </div>
-        </div>
-        <div class="ai-item">
-          <div class="app-icon" style="background:#8ab4f8;color:#fff;font-size:14px;font-weight:800;width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;">Bard</div>
-          <div class="app-info">
-            <div class="app-name">Google Bard</div>
-            <div class="app-desc">Google 开发的AI人工智能聊天机器人 >></div>
-          </div>
-        </div>
-        <div class="ai-item">
-          <div class="app-icon" style="background:#0d0d0d;color:#00e5ff;font-size:20px;width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;">R</div>
-          <div class="app-info">
-            <div class="app-name">Runway</div>
-            <div class="app-desc">AI Native Tools工厂，下一个时代的视频创作工具 >></div>
-          </div>
-        </div>
-        <div class="ai-item">
-          <div class="app-icon" style="background:#15c39a;color:#fff;font-size:20px;width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;">G</div>
-          <div class="app-info">
-            <div class="app-name">Grammarly</div>
-            <div class="app-desc">AI写作工具，能纠正英文语法、拼字错误，还提供语气等写作建议 >></div>
-          </div>
-        </div>
-        <div class="ai-item">
-          <div class="app-icon" style="background:#fff;border:1px solid #eee;width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;">⛵</div>
-          <div class="app-info">
-            <div class="app-name">Midjourney</div>
-            <div class="app-desc">最火的AI画图应用，只要输入文字即可得到对应的图片 >></div>
-          </div>
-        </div>
-        <div class="ai-item">
-          <div class="app-icon" style="background:linear-gradient(135deg,#f7971e,#ffd200);color:#fff;font-size:18px;width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;">✍</div>
-          <div class="app-info">
-            <div class="app-name">Sudowrite</div>
-            <div class="app-desc">AI故事创作工具，通过简单的文本描述，即可生成故事细节内容 >></div>
-          </div>
-        </div>
-        <div class="ai-item">
-          <div class="app-icon" style="background:#24292e;color:#fff;font-size:18px;width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;">👾</div>
-          <div class="app-info">
-            <div class="app-name">GitHub Copilot</div>
-            <div class="app-desc">能够协助用户更快编写代码，还有聊天及语音协助功能 >></div>
-          </div>
-        </div>
-        <div class="ai-item">
-          <div class="app-icon" style="background:#f7b731;color:#fff;font-size:18px;width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;">✦</div>
-          <div class="app-info">
-            <div class="app-name">Outwrite</div>
-            <div class="app-desc">AI写作助手，集修改语法、纠正错误词语一体 >></div>
-          </div>
-        </div>
-        <div class="ai-item">
-          <div class="app-icon" style="background:#19c37d;color:#fff;font-size:14px;font-weight:800;width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;">Copy</div>
-          <div class="app-info">
-            <div class="app-name">Copy AI</div>
-            <div class="app-desc">帮助用户快速生成不同风格主题的高质量文本内容 >></div>
-          </div>
-        </div>
-        <div class="ai-item">
-          <div class="app-icon" style="background:#00c4cc;color:#fff;font-size:20px;width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;">🎨</div>
-          <div class="app-info">
-            <div class="app-name">Canva AI</div>
-            <div class="app-desc">顶尖AI设计工具，为用户提供智能与个性化的内容 >></div>
-          </div>
-        </div>
-      </div>
-      <div id="cat-video" style="display:none;" class="cat-apps-grid"></div>
-      <div id="cat-anime" style="display:none;" class="cat-apps-grid"></div>
-      <div id="cat-ent" style="display:none;" class="cat-apps-grid"></div>
-      <div id="cat-adult" style="display:none;" class="cat-apps-grid"></div>
-      <div id="cat-novel" style="display:none;" class="cat-apps-grid"></div>
-      <div id="cat-news" style="display:none;padding:20px;text-align:center;color:#aaa;">暂无新闻类网站</div>
-      <div id="cat-social" style="display:none;" class="cat-apps-grid"></div>
-      <div id="cat-game" style="display:none;" class="cat-apps-grid"></div>
-      <div id="cat-crypto" style="display:none;padding:20px;text-align:center;color:#aaa;">暂无币圈类网站</div>
-      <div id="cat-shop" style="display:none;padding:20px;text-align:center;color:#aaa;">暂无购物类网站</div>
-      <div id="cat-biz" style="display:none;" class="cat-apps-grid"></div>
-      <div id="cat-life" style="display:none;padding:20px;text-align:center;color:#aaa;">暂无生活类网站</div>
-      <div id="cat-other" style="display:none;" class="cat-apps-grid"></div>
     </div>
-  </div>
-</div>
 
-<!-- OVERSEAS HOT TAB -->
-<div class="panel" id="panel-cracked">
-  <div class="app-list" id="overseasList"></div>
-</div>
+    <!-- OVERSEAS HOT TAB -->
+    <div class="panel" id="panel-cracked">
+        <div class="app-list" id="overseasList"></div>
+    </div>
 
+    <script>
+        // 日夜模式
+        (function() {
+            let dark = localStorage.getItem('webdir_dark');
+            if (dark === null) dark = '1';
+            document.documentElement.setAttribute('data-theme', dark === '1' ? 'dark' : '');
+            document.getElementById('themeBtn').textContent = dark === '1' ? '☀️' : '🌙';
+            document.getElementById('themeBtn').addEventListener('click', function() {
+                let isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                if (isDark) {
+                    document.documentElement.setAttribute('data-theme', '');
+                    this.textContent = '🌙';
+                    localStorage.setItem('webdir_dark', '0');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    this.textContent = '☀️';
+                    localStorage.setItem('webdir_dark', '1');
+                }
+            });
+        })();
 
-<script>
-// 日夜模式
-(function(){
-  let dark = localStorage.getItem('webdir_dark');
-  if (dark === null) dark = '1';
-  document.documentElement.setAttribute('data-theme', dark === '1' ? 'dark' : '');
-  document.getElementById('themeBtn').textContent = dark === '1' ? '☀️' : '🌙';
-  document.getElementById('themeBtn').addEventListener('click', function(){
-    let isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    if (isDark) {
-      document.documentElement.setAttribute('data-theme', '');
-      this.textContent = '🌙';
-      localStorage.setItem('webdir_dark', '0');
-    } else {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      this.textContent = '☀️';
-      localStorage.setItem('webdir_dark', '1');
-    }
-  });
-})();
+        function switchMainTab(el, tab) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            var panel = document.getElementById('panel-' + tab);
+            if (panel) panel.classList.add('active');
+        }
 
-function switchMainTab(el, tab) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  var panel = document.getElementById('panel-' + tab);
-  if (panel) panel.classList.add('active');
-}
+        // 侧边栏分类 → APP_DATA tag 映射
+        const CAT_TAG_MAP = {
+            AI: ['AI'],
+            video: ['视频', '影视', '海外'],
+            anime: ['动漫', '漫画'],
+            novel: ['小说'],
+            social: ['社交'],
+            game: ['游戏'],
+            biz: ['皮卡', '群友'],
+            other: ['工具', '搜图', '购物', '电脑', 'iOS', '网络', '热门', '起飞']
+        };
 
-// 侧边栏分类 → APP_DATA tag 映射
-const CAT_TAG_MAP = {
-  AI: ['AI'],
-  video: ['视频', '影视', '海外'],
-  anime: ['动漫', '漫画'],
-  ent: ['热门'],
-  adult: ['起飞'],
-  novel: ['小说'],
-  news: ['搜图'],
-  social: ['社交'],
-  game: ['游戏'],
-  crypto: ['网络', '电脑', 'iOS'],
-  shop: ['购物'],
-  biz: ['皮卡', '群友'],
-  life: [],
-  other: ['工具']
-};
+        // 标签描述
+        const TAG_DESC = {
+            '视频': '热门短视频&长视频平台，海量内容随心刷 >>',
+            '小说': '在线小说阅读平台，热门网文全本畅读 >>',
+            '社交': '热门社交平台，连接好友分享生活点滴 >>',
+            '工具': '实用工具软件，提升工作学习效率 >>',
+            '搜图': '以图搜图引擎，快速定位图片来源 >>',
+            '群友': 'QQ群友聚集地，加入一起交流分享 >>',
+            'iOS': 'iOS平台专属应用，苹果用户必备 >>',
+            '皮卡': '皮卡社区专属应用资源 >>',
+            '起飞': '成人视频平台 >>',
+            'AI': '人工智能助手，智能对话与创作工具 >>',
+            '漫画': '在线漫画阅读，海量作品随心看 >>',
+            '动漫': '在线动漫平台，热门番剧一网打尽 >>',
+            '影视': '在线影视平台，热播剧集电影随心看 >>',
+            '海外': '海外流媒体平台，全球影视尽在掌握 >>',
+            '热门': '热门推荐应用，装机必备精选 >>',
+            '电脑': '电脑端应用软件，桌面办公娱乐 >>',
+            '购物': '在线购物平台，海量好货一站购齐 >>',
+            '游戏': '热门手游推荐，随时随地开黑娱乐 >>',
+            '热度排行': '皮卡社区文件存储与分享仓库，安全便捷 >>',
+            '网络': '网络相关应用与工具 >>'
+        };
 
-/* ====== 应用数据 ====== */
-const APP_DATA = [
-{ name:"抖音",icon:"fab fa-tiktok",color:"#010101",bg:"#fefefe",url:"https://www.douyin.com/",tag:"视频" },
-{ name:"哔哩哔哩",icon:"fas fa-tv",color:"#fb7299",bg:"#fff1f5",url:"https://www.bilibili.com/",tag:"视频" },
-{ name:"腾讯视频",icon:"fas fa-film",color:"#0052d9",bg:"#e8f0ff",url:"https://v.qq.com/",tag:"视频" },
-{ name:"爱奇艺",icon:"fas fa-video",color:"#00be06",bg:"#f0fff0",url:"https://www.iqiyi.com/",tag:"视频" },
-{ name:"快手",icon:"fas fa-bolt",color:"#ff4906",bg:"#fff3f0",url:"https://kuaishou.com/",tag:"视频" },
-{ name:"红果免费短剧",icon:"fas fa-film",color:"#ff3b30",bg:"#fff0f0",url:"https://www.hongguoduanju.com/",tag:"视频" },
-{ name:"优酷视频",icon:"fas fa-play-circle",color:"#00b0ff",bg:"#e6f7ff",url:"https://www.youku.com/",tag:"视频" },
-{ name:"西瓜视频",icon:"fas fa-water",color:"#ff6a00",bg:"#fff7e6",url:"https://ixigua.com/",tag:"视频" },
-{ name:"起点读书",icon:"fas fa-book",color:"#f5a623",bg:"#fff5e0",url:"https://www.qidian.com/",tag:"小说" },
-{ name:"微信读书",icon:"fas fa-book-open",color:"#07c160",bg:"#edfaf3",url:"https://weread.qq.com/",tag:"小说" },
-{ name:"番茄小说",icon:"fas fa-leaf",color:"#ff5722",bg:"#fff3f0",url:"https://fanqienovel.com/",tag:"小说" },
-{ name:"QQ阅读",icon:"fas fa-book",color:"#00adfc",bg:"#e6f7ff",url:"https://book.qq.com/",tag:"小说" },
-{ name:"晋江文学城",icon:"fas fa-book-open",color:"#e66465",bg:"#fff0f2",url:"https://www.jjwxc.net/",tag:"小说" },
-{ name:"书旗小说",icon:"fas fa-bookmark",color:"#ff7a45",bg:"#fff2e6",url:"https://www.shuqi.com/",tag:"小说" },
-{ name:"纵横小说",icon:"fas fa-feather-alt",color:"#2d6cef",bg:"#edf2ff",url:"https://www.zongheng.com/",tag:"小说" },
-{ name:"飞卢小说",icon:"fas fa-pen-fancy",color:"#ff4d4f",bg:"#fff0f0",url:"https://www.feilu.com/",tag:"小说" },
-{ name:"七猫免费小说",icon:"fas fa-cat",color:"#1da36f",bg:"#e6f7f0",url:"https://www.qimao.com/",tag:"小说" },
-{ name:"掌阅",icon:"fas fa-book-reader",color:"#ff6034",bg:"#fff2e6",url:"https://www.zhangyue.com/",tag:"小说" },
-{ name:"17K小说网",icon:"fas fa-keyboard",color:"#198cf0",bg:"#e6f4ff",url:"https://www.17k.com/",tag:"小说" },
-{ name:"笔趣阁蓝色版",icon:"fas fa-book-open",color:"#2596ff",bg:"#edf5ff",url:"https://dl.372164885.xyz/d/6a4601a3bfcb",tag:"小说" },
-{ name:"笔趣阁橙色版",icon:"fas fa-book",color:"#ff6d00",bg:"#fff7e6",url:"https://dl.372164885.xyz/d/dad48788eceb",tag:"小说" },
-{ name:"微信",icon:"fab fa-weixin",color:"#07c160",bg:"#edfaf3",url:"https://weixin.qq.com/",tag:"社交" },
-{ name:"微博",icon:"fab fa-weibo",color:"#e6162d",bg:"#fff0f1",url:"https://weibo.com/",tag:"社交" },
-{ name:"小红书",icon:"fas fa-heart",color:"#fe2c55",bg:"#fff0f2",url:"https://www.xiaohongshu.com/",tag:"社交" },
-{ name:"知乎",icon:"fas fa-question-circle",color:"#0F88EB",bg:"#E6F7FF",url:"https://www.zhihu.com/",tag:"社交" },
-{ name:"豆瓣",icon:"fas fa-leaf",color:"#4D9040",bg:"#F5FAF4",url:"https://www.douban.com/",tag:"社交" },
-{ name:"QQ官网",icon:"fas fa-comment",color:"#12B7F5",bg:"#E6F7FF",url:"https://im.qq.com/",tag:"社交" },
-{ name:"网易LOFTER",icon:"fas fa-heart",color:"#F5A623",bg:"#FFF7E6",url:"https://www.lofter.com/",tag:"社交" },
-{ name:"虎扑",icon:"fas fa-baseball-ball",color:"#F9A602",bg:"#FFF9E6",url:"https://www.hupu.com/",tag:"社交" },
-{ name:"汽车之家",icon:"fas fa-car",color:"#0066B3",bg:"#E6F7FF",url:"https://club.autohome.com.cn/",tag:"社交" },
-{ name:"Chrome",icon:"fab fa-chrome",color:"#4285f4",bg:"#eef2ff",url:"https://www.google.com/chrome/",tag:"工具" },
-{ name:"剪映",icon:"fas fa-scissors",color:"#1a1a1a",bg:"#f5f5f5",url:"https://www.capcut.com/",tag:"工具" },
-{ name:"百度网盘",icon:"fas fa-cloud",color:"#2869e6",bg:"#edf2ff",url:"https://pan.baidu.com/",tag:"工具" },
-{ name:"乐享云",icon:"fas fa-server",color:"#E6162D",bg:"#FFE6E9",url:"https://dl.372164885.xyz/d/c76bda28ba4c",tag:"工具" },
-{ name:"蓝光过滤",icon:"fas fa-eye",color:"#3b82f6",bg:"#eef2ff",url:"https://dl.372164885.xyz/d/d043301560df",tag:"工具" },
-{ name:"熊猫视频压缩",icon:"fas fa-compress",color:"#22c55e",bg:"#f0fdf4",url:"https://dl.372164885.xyz/d/5bdf6a0c21cb",tag:"工具" },
-{ name:"增强图片",icon:"fas fa-image",color:"#f59e0b",bg:"#fffbeb",url:"https://dl.372164885.xyz/d/1e479fdea553",tag:"工具" },
-{ name:"JPG格式转换器",icon:"fas fa-image",color:"#6366f1",bg:"#eef2ff",url:"https://dl.372164885.xyz/d/ccd5aaff8155",tag:"工具" },
-{ name:"psd文件查看",icon:"fas fa-file-image",color:"#8b5cf6",bg:"#f5f3ff",url:"https://dl.372164885.xyz/d/7dcd3f4bf303",tag:"工具" },
-{ name:"zarchiver1.0.9",icon:"fas fa-file-archive",color:"#ef4444",bg:"#fef2f2",url:"https://dl.372164885.xyz/d/e3c60b2e361a",tag:"工具" },
-{ name:"zarchiver Pro",icon:"fas fa-file-archive",color:"#f97316",bg:"#fff7ed",url:"https://dl.372164885.xyz/d/7ac81b73558e",tag:"工具" },
-{ name:"万兴PDF",icon:"fas fa-file-pdf",color:"#dc2626",bg:"#fef2f2",url:"https://dl.372164885.xyz/d/73252510c36d",tag:"工具" },
-{ name:"思维笔记",icon:"fas fa-sitemap",color:"#14b8a6",bg:"#f0fdfa",url:"https://dl.372164885.xyz/d/02c63be83941",tag:"工具" },
-{ name:"拼图贴趣",icon:"fas fa-th",color:"#ec4899",bg:"#fdf2f8",url:"https://dl.372164885.xyz/d/a72dc7c045d8",tag:"工具" },
-{ name:"梨园行戏曲",icon:"fas fa-theater-masks",color:"#d946ef",bg:"#fdf4ff",url:"https://dl.372164885.xyz/d/1733cd1e2b46",tag:"工具" },
-{ name:"神奇脑波",icon:"fas fa-wave-square",color:"#a855f7",bg:"#faf5ff",url:"https://dl.372164885.xyz/d/4f9e5541c187",tag:"工具" },
-{ name:"百度贴吧",icon:"fas fa-comments",color:"#3388ff",bg:"#eef4ff",url:"https://dl.372164885.xyz/d/6282e78a09dd",tag:"工具" },
-{ name:"谷歌商店",icon:"fas fa-play",color:"#34a853",bg:"#e6f7ea",url:"https://dl.372164885.xyz/d/bbeea9e3fa86",tag:"工具" },
-{ name:"专搜3D图片",icon:"fas fa-cube",color:"#2869e6",bg:"#edf2ff",url:"http://3d.iqdb.org/",tag:"搜图" },
-{ name:"多种服务图片搜图",icon:"fas fa-search-plus",color:"#2869e6",bg:"#edf2ff",url:"http://iqdb.org/",tag:"搜图" },
-{ name:"二次元画像详细搜索",icon:"fas fa-user-circle",color:"#2869e6",bg:"#edf2ff",url:"https://ascii2d.net/",tag:"搜图" },
-{ name:"素材反向识图",icon:"fas fa-search-plus",color:"#2869e6",bg:"#edf2ff",url:"https://www.everypixel.com/",tag:"搜图" },
-{ name:"素材搜图",icon:"fas fa-search-plus",color:"#2869e6",bg:"#edf2ff",url:"https://unsplash.com/",tag:"搜图" },
-{ name:"谷歌识图镜像网站",icon:"fas fa-search",color:"#2869e6",bg:"#edf2ff",url:"https://soik.top/",tag:"搜图" },
-{ name:"必应视觉搜寻",icon:"fas fa-camera",color:"#2869e6",bg:"#edf2ff",url:"https://cn.bing.com/visualsearch",tag:"搜图" },
-{ name:"老牌识图(被墙)",icon:"fas fa-search-plus",color:"#2869e6",bg:"#edf2ff",url:"https://tineye.com/",tag:"搜图" },
-{ name:"谷歌识图(被墙)",icon:"fas fa-search",color:"#2869e6",bg:"#edf2ff",url:"https://www.google.com.hk/imghp",tag:"搜图" },
-{ name:"俄罗斯搜索引擎",icon:"fas fa-search-plus",color:"#2869e6",bg:"#edf2ff",url:"https://ya.ru/?utm_referrer=https%3A%2F%2Fwww.google.com%2F",tag:"搜图" },
-{ name:"专业P站搜二次元识图",icon:"fas fa-search",color:"#2869e6",bg:"#edf2ff",url:"https://saucenao.com/",tag:"搜图" },
-{ name:"动漫视频截图识别",icon:"fas fa-search-plus",color:"#2869e6",bg:"#edf2ff",url:"https://trace.moe/",tag:"搜图" },
-{ name:"PPBC中国植物图像库",icon:"fas fa-search-plus",color:"#2869e6",bg:"#edf2ff",url:"https://ppbc.iplant.cn/",tag:"搜图" },
-{ name:"百度识图",icon:"fas fa-cloud",color:"#2869e6",bg:"#edf2ff",url:"https://graph.baidu.com/pcpage/index?tpl_from=pc/",tag:"搜图" },
-{ name:"360识图",icon:"fas fa-image",color:"#2869e6",bg:"#edf2ff",url:"https://m.image.so.com/",tag:"搜图" },
-{ name:"搜狗识图",icon:"fas fa-image",color:"#2869e6",bg:"#edf2ff",url:"https://pic.sogou.com/pic/index.jsp?v=5/",tag:"搜图" },
-{ name:"皮卡备用群",icon:"fas fa-comments",color:"#2b8eff",bg:"#eef6ff",url:"https://qun.qq.com/universal-share/share?ac=1&authKey=Xld9l791HF7rsivEh%2FQHOCq3T%2FkUGp84QYDKZOliUcQUAlBccjL4VOJ98PRana%2F3&busi_data=eyJncm91cENvZGUiOiIxMDQ5NTUwOTI1IiwidG9rZW4iOiJvOUdkcDZ1OFRua3Z4Wmg5WVkzRjRoTURjcHR3ZldsRm85QzJRYXdxWjIrNTRUUGpvbzRyaGw2OXlCRWRXNnFRIiwidWluIjoiMTk2NjMzMDMxOSJ9&data=NlQKjt4AzXJQU8zoFaDXBWB-L-26e5lVnjpw_c0e-FGQDu1oMf4Yv0HMaXn3yVX-0w6KMFZXo_NSCsZILOMHwg&svctype=4&tempid=h5_group_info",tag:"群友" },
-{ name:"皮卡翻车群",icon:"fas fa-comments",color:"#ff6d00",bg:"#fff7e6",url:"https://qun.qq.com/universal-share/share?ac=1&authKey=1H7F1EMVtmdMrv1CzYxKwFEJpRQEtXWYo5NymTsfD60RgqfmcLAqYx2kJUBpVeta&busi_data=eyJncm91cENvZGUiOiI1Njg4NzE0MjYiLCJ0b2tlbiI6Im1YMjg3YnBncU9ibEx0cktmTHdMNGY5OE5nMWVjTDRsZkpMdTZwM2N5cElFdExEa3I5MUROSVZsTjJQTEl1SVkiLCJ1aW4iOiIxOTY2MzMwMzE5In0%3D&data=2kh6zsaP4Doa-Jl-KccfFc19LCpsFI1NTPlynFYqUPLj3RgonL8BEg2mEtGGU7CzqwSN6bdHq_SWD9hijXZ9dQ&svctype=4&tempid=h5_group_info",tag:"群友" },
-{ name:"皮卡禁言群",icon:"fas fa-users",color:"#e53935",bg:"#fef2f2",url:"https://qun.qq.com/universal-share/share?ac=1&authKey=CfKOKp6Sc7CP%2BH6hZZ9PpeveC%2FNcfE7iSGwVsMSpfhCGCWOuPjeswNS7Cv5vtCGA&busi_data=eyJncm91cENvZGUiOiIxMDQxMjQ0MjI5IiwidG9rZW4iOiJYb2lqRHQrQ2Y4L2xyMEt5Z2dFNkphT3BONHhPLy92bUNJYjBLeWFNMjJ5WmNlSFU2ZFJ6YkpxLy9nSHg4b0poIiwidWluIjoiMTk2NjMzMDMxOSJ9&data=1UsMWD3H0fkwy-X2lVTwriyc_Va_4M76mJvFSw2HfpmpjSdtsGEybhi3JGw7tTopgZYXPVcyes6wiUHd1eznSw&svctype=4&tempid=h5_group_info",tag:"群友" },
-{ name:"皮卡电报群",icon:"fas fa-paper-plane",color:"#2ea6ff",bg:"#eef8ff",url:"https://t.me/+qiezQCcGXswzYTM1",tag:"群友" },
-{ name:"无语群",icon:"fas fa-comments",color:"#7c3aed",bg:"#f5f3ff",url:"https://qun.qq.com/universal-share/share?ac=1&authKey=1MapCqFxxqy%2BOOXbkM6%2Fz3ZC3G%2BIe%2BOHkXURAf8Zy3yRH8MzazejEb3mGPY7C64m&busi_data=eyJncm91cENvZGUiOiI2MDQ1NzQyMzciLCJ0b2tlbiI6InFyMHVScWw3QzlCbzVNM1VHaEVyVDlQNDRiMThUVVJIcWtJalprOTh3Zjc3S015czdOYTVjK2k4WjhobG91T3AiLCJ1aW4iOiIxMDA1Mzg0NDE4In0%3D&data=mkN0qLE6LehMHkAdQSgjzbHFi20B9fGIKuy2jhRKEIOUD5XFikhrZwZ4UNK-PB-uCwiQicXzFFbTVn8tYHkCLg&svctype=4&tempid=h5_group_info",tag:"群友" },
-{ name:"cloudflare-one",icon:"fas fa-cloud",color:"#f38020",bg:"#fef6ee",url:"https://dl.372164885.xyz/d/1fc327c6a473",tag:"网络" },
-{ name:"cloudflare-one(iOS)",icon:"fas fa-cloud",color:"#f38020",bg:"#fef6ee",url:"https://apps.apple.com/us/app/cloudflare-one-agent/id6443476492",tag:"iOS" },
-{ name:"QQ-9.1.60",icon:"fas fa-comment-alt",color:"#12B7F5",bg:"#E6F7FF",url:"https://dl.372164885.xyz/d/46c8329b0ad0",tag:"社交" },
-{ name:"绿茶加速器",icon:"fas fa-wind",color:"#22c55e",bg:"#f0fdf4",url:"https://dl.372164885.xyz/d/934f45268064",tag:"网络" },
-{ name:"旋风加速器(iOS)",icon:"fas fa-wind",color:"#2563eb",bg:"#eef2ff",url:"https://apps.apple.com/cn/app/testflight/id899247664",tag:"iOS" },
-{ name:"旋风加速器",icon:"fas fa-wind",color:"#2563eb",bg:"#eef2ff",url:"https://dl.372164885.xyz/d/9c8deb5b7212",tag:"网络" },
-{ name:"IT-tools",icon:"fas fa-tools",color:"#6366f1",bg:"#eef2ff",url:"https://sss.372164885.xyz",tag:"皮卡" },
-{ name:"搜索引擎\ud83d\udd0d",icon:"fas fa-search",color:"#3b82f6",bg:"#eff6ff",url:"https://aaa.372164885.xyz",tag:"皮卡" },
-{ name:"AI驱动的语音处理平台",icon:"fas fa-brain",color:"#8b5cf6",bg:"#f5f3ff",url:"https://123.372164885.xyz",tag:"皮卡" },
-{ name:"免费图床(5m)",icon:"fas fa-image",color:"#f59e0b",bg:"#fffbeb",url:"https://svip.372164885.xyz",tag:"皮卡" },
-{ name:"绘画(abcd123)",icon:"fas fa-palette",color:"#ec4899",bg:"#fdf2f8",url:"https://o.372164885.xyz",tag:"皮卡" },
-{ name:"皮卡电报频道",icon:"fas fa-paper-plane",color:"#2ea6ff",bg:"#eef8ff",url:"https://t.me/s/pkpk158/",tag:"皮卡" },
-{ name:"在线修图",icon:"fas fa-paint-brush",color:"#ff6b9d",bg:"#fff0f5",url:"https://huixiao666.github.io/cxc/",tag:"皮卡" },
-{ name:"节点",icon:"fas fa-link",color:"#6366f1",bg:"#f0f0ff",url:"https://pn.372164885.xyz",tag:"皮卡" },
-{ name:"机器人",icon:"fas fa-robot",color:"#10a37f",bg:"#e6f7f2",url:"#",tag:"皮卡" },
-{ name:"超涩AI动图(墙)",icon:"fas fa-rocket",color:"#ef4444",bg:"#fef2f2",url:"https://e-hentai.org/tag/animated+gifs?next=3861720",tag:"起飞" },
-{ name:"52视频",icon:"fas fa-play-circle",color:"#ef4444",bg:"#fef2f2",url:"https://g64l.oyuxpyi.cc/",tag:"起飞" },
-{ name:"羞羞视频",icon:"fas fa-play-circle",color:"#ef4444",bg:"#fef2f2",url:"https://1.xx7265xx.cc:8888",tag:"起飞" },
-{ name:"红杏视频",icon:"fas fa-play-circle",color:"#ef4444",bg:"#fef2f2",url:"https://z1b3r6bculmt.sw8f0w5lhx.cc",tag:"起飞" },
-{ name:"添狗视频",icon:"fas fa-play-circle",color:"#ef4444",bg:"#fef2f2",url:"https://vpg.tglo422.vip:8701/tg.html?channel=119#",tag:"起飞" },
-{ name:"一起草视频",icon:"fas fa-play-circle",color:"#ef4444",bg:"#fef2f2",url:"https://www.uprbmem.com:2087/3004.html",tag:"起飞" },
-{ name:"桃子AV视频",icon:"fas fa-play-circle",color:"#ef4444",bg:"#fef2f2",url:"https://ter.tzds816.vip:8831/tg.html?channel=2T0CH7NGS7ER#",tag:"起飞" },
-{ name:"想要叉叉视频",icon:"fas fa-play-circle",color:"#ef4444",bg:"#fef2f2",url:"https://3.31xx5316b.cc:88/",tag:"起飞" },
-{ name:"红桃视频",icon:"fas fa-play-circle",color:"#ef4444",bg:"#fef2f2",url:"https://www.htllm070.vip:9527/type/1",tag:"起飞" },
-{ name:"91N视频",icon:"fas fa-play-circle",color:"#ef4444",bg:"#fef2f2",url:"https://www.qyfhhoa.com:2087/7005.html",tag:"起飞" },
-{ name:"啪啪视频",icon:"fas fa-play-circle",color:"#ef4444",bg:"#fef2f2",url:"https://3.pp4320a.cc:88/",tag:"起飞" },
-{ name:"香蕉社交视频",icon:"fas fa-play-circle",color:"#ef4444",bg:"#fef2f2",url:"https://www.xjt91.cc:1314/",tag:"起飞" },
-{ name:"蜜桃视频",icon:"fas fa-play-circle",color:"#ef4444",bg:"#fef2f2",url:"https://www.n3r6w9k2m4.vip:9527/",tag:"起飞" },
-{ name:"黑桃视频",icon:"fas fa-play-circle",color:"#ef4444",bg:"#fef2f2",url:"https://www.htx08.cc:5200/",tag:"起飞" },
-{ name:"快播视频",icon:"fas fa-play-circle",color:"#ef4444",bg:"#fef2f2",url:"https://www.kbd18.cc:9090/",tag:"起飞" },
-{ name:"GG51视频",icon:"fas fa-play-circle",color:"#ef4444",bg:"#fef2f2",url:"https://zc2t.qhi42u0.cc/",tag:"起飞" },
-{ name:"海角社交",icon:"fas fa-play-circle",color:"#ef4444",bg:"#fef2f2",url:"https://www.hjk46.cc:9999/",tag:"起飞" },
-{ name:"雷霆加速器",icon:"fas fa-rocket",color:"#f97316",bg:"#fff7ed",url:"https://dl.372164885.xyz/d/62c4900cd900",tag:"网络" },
-{ name:"黑洞加速器",icon:"fas fa-rocket",color:"#1e1b4b",bg:"#eef2ff",url:"https://dl.372164885.xyz/d/22353abff0b4",tag:"网络" },
-{ name:"绝尘加速器",icon:"fas fa-rocket",color:"#0ea5e9",bg:"#f0f9ff",url:"https://www.juechenjsq.com/",tag:"网络" },
-{ name:"绝尘加速器(iOS)",icon:"fas fa-rocket",color:"#0ea5e9",bg:"#f0f9ff",url:"https://www.juechenjsq.com/",tag:"iOS" },
-{ name:"魔方加速器",icon:"fas fa-rocket",color:"#a855f7",bg:"#faf5ff",url:"https://www.cybercubevpn.com/android",tag:"网络" },
-{ name:"魔方加速器(iOS)",icon:"fas fa-rocket",color:"#a855f7",bg:"#faf5ff",url:"https://www.cybercubevpn.com/android",tag:"iOS" },
-{ name:"星星VPN(iOS)",icon:"fas fa-rocket",color:"#eab308",bg:"#fefce8",url:"https://apps.apple.com/cn/app/vpn-%E6%98%9F%E6%98%9Fvpn/id6739603107",tag:"iOS" },
-{ name:"迷雾通加速器",icon:"fas fa-rocket",color:"#6366f1",bg:"#eef2ff",url:"https://geph.io/zhs",tag:"网络" },
-{ name:"安易加速器",icon:"fas fa-rocket",color:"#14b8a6",bg:"#f0fdfa",url:"https://dl.372164885.xyz/d/74aa0649f9c9",tag:"网络" },
-{ name:"dragon加速器",icon:"fas fa-rocket",color:"#ef4444",bg:"#fef2f2",url:"https://www.dragon66.cc/index.html#download-app",tag:"网络" },
-{ name:"dragon加速器(iOS)",icon:"fas fa-rocket",color:"#ef4444",bg:"#fef2f2",url:"https://www.dragon66.cc/index.html#download-app",tag:"iOS" },
-{ name:"海鸥加速器",icon:"fas fa-rocket",color:"#06b6d4",bg:"#ecfeff",url:"https://dl.372164885.xyz/d/3f7cff25616e",tag:"网络" },
-{ name:"小牛加速器",icon:"fas fa-rocket",color:"#f59e0b",bg:"#fffbeb",url:"https://dl.372164885.xyz/d/20d383d3674b",tag:"网络" },
-{ name:"nthlink加速器",icon:"fas fa-bolt",color:"#22c55e",bg:"#f0fdf4",url:"https://dl.372164885.xyz/d/0beca3b4469d",tag:"网络" },
-{ name:"nthlink加速器(iOS)",icon:"fas fa-bolt",color:"#22c55e",bg:"#f0fdf4",url:"https://apps.apple.com/us/app/nthlink/id1467297604",tag:"iOS" },
-{ name:"小狐狸加速器",icon:"fas fa-rocket",color:"#f97316",bg:"#fff7ed",url:"https://dl.372164885.xyz/d/b99e55f34aa3",tag:"网络" },
-{ name:"爱连加速器",icon:"fas fa-rocket",color:"#f97316",bg:"#fff7ed",url:"https://666.ailian666.com/",tag:"网络" },
-{ name:"爱连加速器",icon:"fas fa-rocket",color:"#f97316",bg:"#fff7ed",url:"https://666.ailian666.com/",tag:"电脑" },
-{ name:"proton加速器",icon:"fas fa-shield-alt",color:"#8b5cf6",bg:"#f5f3ff",url:"https://protonvpn.com/download",tag:"网络" },
-{ name:"proton加速器(iOS)",icon:"fas fa-shield-alt",color:"#8b5cf6",bg:"#f5f3ff",url:"https://protonvpn.com/download-ios",tag:"iOS" },
-{ name:"腾讯视频",icon:"fas fa-video",color:"#1677FF",bg:"#E6F7FF",url:"https://v.qq.com",tag:"影视" },
-{ name:"爱奇艺",icon:"fas fa-film",color:"#FF4D4F",bg:"#FFF2F2",url:"https://www.iqiyi.com",tag:"影视" },
-{ name:"优酷",icon:"fas fa-play",color:"#1088EE",bg:"#E6F7FF",url:"https://www.youku.com",tag:"影视" },
-{ name:"芒果TV",icon:"fas fa-tv",color:"#FF6A00",bg:"#FFF7E6",url:"https://www.mgtv.com",tag:"影视" },
-{ name:"1905电影网",icon:"fas fa-clapperboard",color:"#005A9E",bg:"#E6F7FF",url:"https://www.1905.com",tag:"影视" },
-{ name:"咪咕视频",icon:"fas fa-wifi",color:"#0087DE",bg:"#E6F7FF",url:"https://www.miguvideo.com",tag:"影视" },
-{ name:"西瓜视频",icon:"fas fa-water",color:"#FF6A00",bg:"#FFF7E6",url:"https://www.ixigua.com",tag:"影视" },
-{ name:"央视网",icon:"fas fa-tower-broadcast",color:"#D9272E",bg:"#FDEDED",url:"https://tv.cctv.com",tag:"影视" },
-{ name:"学习强国",icon:"fas fa-book-open",color:"#D9272E",bg:"#FDEDED",url:"https://www.xuexi.cn",tag:"影视" },
-{ name:"Vimeo",icon:"fas fa-vimeo-v",color:"#1AB7E4",bg:"#E6F7FF",url:"https://vimeo.com",tag:"影视" },
-{ name:"Netflix",icon:"fas fa-play-circle",color:"#E50914",bg:"#FFE6E6",url:"https://www.netflix.com",tag:"海外" },
-{ name:"Disney+",icon:"fas fa-star",color:"#1A1A1A",bg:"#F0F0F0",url:"https://www.disneyplus.com",tag:"海外" },
-{ name:"Amazon Prime Video",icon:"fas fa-shopping-cart",color:"#FF9900",bg:"#FFF7E6",url:"https://primevideo.com",tag:"海外" },
-{ name:"Apple TV+",icon:"fas fa-apple",color:"#000000",bg:"#F0F0F0",url:"https://tv.apple.com",tag:"海外" },
-{ name:"Max",icon:"fas fa-w",color:"#FF0000",bg:"#FDEDED",url:"https://www.max.com",tag:"海外" },
-{ name:"Hulu",icon:"fas fa-h",color:"#1D70A4",bg:"#E6F7FF",url:"https://www.hulu.com",tag:"海外" },
-{ name:"Peacock",icon:"fas fa-feather",color:"#00A3FF",bg:"#E6F7FF",url:"https://www.peacocktv.com",tag:"海外" },
-{ name:"Pluto TV",icon:"fas fa-tv",color:"#007AFF",bg:"#E6F7FF",url:"https://pluto.tv",tag:"海外" },
-{ name:"Tubi",icon:"fas fa-film",color:"#00A3FF",bg:"#E6F7FF",url:"https://tubitv.com",tag:"海外" },
-{ name:"BBC iPlayer",icon:"fas fa-b",color:"#B30094",bg:"#FDEDED",url:"https://www.bbc.co.uk/iplayer",tag:"海外" },
-{ name:"ChatGPT",icon:"fas fa-robot",color:"#10a37f",bg:"#e6f7f2",url:"https://chat.openai.com",tag:"AI" },
-{ name:"Gemini",icon:"fas fa-gem",color:"#4285f4",bg:"#eef2ff",url:"https://gemini.google.com",tag:"AI" },
-{ name:"DeepSeek",icon:"fas fa-brain",color:"#4A90E2",bg:"#eef4ff",url:"https://deepseek.com",tag:"AI" },
-{ name:"豆包",icon:"fas fa-comment",color:"#E6162D",bg:"#FFE6E9",url:"https://doubao.com",tag:"AI" },
-{ name:"Claude",icon:"fas fa-cloud",color:"#d97706",bg:"#fffbeb",url:"https://claude.ai",tag:"AI" },
-{ name:"Kimi",icon:"fas fa-file-alt",color:"#8b5cf6",bg:"#f5f3ff",url:"https://kimi.moonshot.cn",tag:"AI" },
-{ name:"通义千问",icon:"fas fa-lightbulb",color:"#6366f1",bg:"#eef2ff",url:"https://tongyi.aliyun.com",tag:"AI" },
-{ name:"文心一言",icon:"fas fa-feather",color:"#3b82f6",bg:"#eff6ff",url:"https://yiyan.baidu.com",tag:"AI" },
-{ name:"Midjourney",icon:"fas fa-palette",color:"#6366f1",bg:"#eef2ff",url:"https://www.midjourney.com",tag:"AI" },
-{ name:"可灵AI",icon:"fas fa-film",color:"#06b6d4",bg:"#ecfeff",url:"https://klingai.com",tag:"AI" },
-{ name:"讯飞星火",icon:"fas fa-comments",color:"#2563eb",bg:"#eef2ff",url:"https://xinghuo.xfyun.cn",tag:"AI" },
-{ name:"天工AI",icon:"fas fa-cogs",color:"#0ea5e9",bg:"#f0f9ff",url:"https://www.tiangong.cn",tag:"AI" },
-{ name:"秘塔AI",icon:"fas fa-shield-alt",color:"#00A3FF",bg:"#E6F7FF",url:"https://www.metaso.cn",tag:"AI" },
-{ name:"Runway",icon:"fas fa-video",color:"#000000",bg:"#f5f5f5",url:"https://runwayml.com",tag:"AI" },
-{ name:"Pika",icon:"fas fa-film",color:"#ec4899",bg:"#fdf2f8",url:"https://pika.art",tag:"AI" },
-{ name:"DALL·E 3",icon:"fas fa-paint-brush",color:"#10a37f",bg:"#e6f7f2",url:"https://openai.com/dall-e-3",tag:"AI" },
-{ name:"Stable Diffusion",icon:"fas fa-images",color:"#a855f7",bg:"#faf5ff",url:"https://stablediffusionweb.com",tag:"AI" },
-{ name:"Copilot",icon:"fas fa-code",color:"#7c3aed",bg:"#f5f3ff",url:"https://copilot.microsoft.com",tag:"AI" },
-{ name:"Perplexity",icon:"fas fa-search",color:"#14b8a6",bg:"#f0fdfa",url:"https://www.perplexity.ai",tag:"AI" },
-{ name:"Character.AI",icon:"fas fa-user-circle",color:"#ef4444",bg:"#fef2f2",url:"https://character.ai",tag:"AI" },
-{ name:"Grammarly",icon:"fas fa-spell-check",color:"#15c39a",bg:"#e6fdf5",url:"https://www.grammarly.com/",tag:"AI" },
-{ name:"Sudowrite",icon:"fas fa-feather-alt",color:"#f7971e",bg:"#fffdf0",url:"https://www.sudowrite.com/",tag:"AI" },
-{ name:"Copy AI",icon:"fas fa-copy",color:"#19c37d",bg:"#e6fdf5",url:"https://www.copy.ai/",tag:"AI" },
-{ name:"Canva",icon:"fas fa-paint-brush",color:"#00c4cc",bg:"#e6fdff",url:"https://www.canva.com/",tag:"AI" },
-{ name:"腾讯动漫",icon:"fas fa-book",color:"#12B7F5",bg:"#E6F7FF",url:"https://ac.qq.com",tag:"漫画" },
-{ name:"哔哩哔哩漫画",icon:"fas fa-book-open",color:"#FB7299",bg:"#FFE6EF",url:"https://manga.bilibili.com",tag:"漫画" },
-{ name:"快看漫画",icon:"fas fa-heart",color:"#FF4F88",bg:"#FFE6ED",url:"https://www.kuaikanmanhua.com",tag:"漫画" },
-{ name:"咚漫",icon:"fas fa-fire",color:"#FF6C37",bg:"#FFF2E6",url:"https://www.dongmanmanhua.com",tag:"漫画" },
-{ name:"咚漫(中国)",icon:"fas fa-comments",color:"#36D399",bg:"#E6FFFA",url:"https://www.dongmanmanhua.cn",tag:"漫画" },
-{ name:"叭嗒",icon:"fas fa-star",color:"#722ED1",bg:"#F3E6FF",url:"https://www.pidou.cc",tag:"漫画" },
-{ name:"漫漫漫画",icon:"fas fa-smile",color:"#FF9A2E",bg:"#FFF5E6",url:"https://www.manmanapp.com",tag:"漫画" },
-{ name:"PODO漫画",icon:"fas fa-pen",color:"#14C9C9",bg:"#E6FFFA",url:"https://www.podoapp.com",tag:"漫画" },
-{ name:"PODO漫画(ACG)",icon:"fas fa-star",color:"#FF6F61",bg:"#FFE6E6",url:"https://www.podoacg.com",tag:"漫画" },
-{ name:"知音漫客",icon:"fas fa-feather",color:"#E63946",bg:"#FFE6E9",url:"https://www.zymk.cn",tag:"漫画" },
-{ name:"飒漫画",icon:"fas fa-palette",color:"#8E44AD",bg:"#F4E6FF",url:"https://www.samanhua.net",tag:"漫画" },
-{ name:"动漫之家",icon:"fas fa-home",color:"#3498DB",bg:"#E6F4FF",url:"https://www.dmzj.com",tag:"漫画" },
-{ name:"看漫画",icon:"fas fa-eye",color:"#2ECC71",bg:"#E6FFED",url:"https://www.kanman.com",tag:"漫画" },
-{ name:"漫客栈",icon:"fas fa-umbrella",color:"#F39C12",bg:"#FFF5E6",url:"https://www.mankezhan.com",tag:"漫画" },
-{ name:"VIZ",icon:"fas fa-bookmark",color:"#E74C3C",bg:"#FFE6E6",url:"https://www.viz.com",tag:"漫画" },
-{ name:"MangaPlus",icon:"fas fa-bolt",color:"#F1C40F",bg:"#FFF9E6",url:"https://mangaplus.shueisha.co.jp",tag:"漫画" },
-{ name:"刺猬猫",icon:"fas fa-cat",color:"#9B59B6",bg:"#F6E6FF",url:"https://www.ciweimao.com",tag:"漫画" },
-{ name:"漫画人",icon:"fas fa-user",color:"#FF8C00",bg:"#FFF2E6",url:"https://www.manhuaren.com",tag:"漫画" },
-{ name:"E站漫画",icon:"fas fa-paint-brush",color:"#E6162D",bg:"#FFE6E9",url:"https://dl.372164885.xyz/d/99a16b199728",tag:"漫画" },
-{ name:"哗咔漫画",icon:"fas fa-book-open",color:"#f97316",bg:"#fff7ed",url:"https://dl.372164885.xyz/d/c5470f1e2a4b",tag:"漫画" },
-{ name:"禁漫天堂",icon:"fas fa-file-image",color:"#ef4444",bg:"#fef2f2",url:"https://dl.372164885.xyz/d/82773ddca475",tag:"漫画" },
-{ name:"源仓库",icon:"fas fa-file-image",color:"#ef4444",bg:"#fef2f2",url:"https://www.yckceo.com/",tag:"漫画" },
-{ name:"禁漫天堂(iOS)",icon:"fas fa-file-image",color:"#ef4444",bg:"#fef2f2",url:"https://18comic.vip/ios_app/index.php",tag:"iOS" },
-{ name:"哔哩哔哩",icon:"fas fa-tv",color:"#FB7299",bg:"#FFF0F6",url:"https://www.bilibili.com",tag:"动漫" },
-{ name:"腾讯动漫",icon:"fas fa-fire",color:"#009FE8",bg:"#E6F7FF",url:"https://ac.qq.com",tag:"动漫" },
-{ name:"樱花动漫",icon:"fas fa-film",color:"#FF5C7F",bg:"#FFE6EA",url:"https://www.yinhuadm.one/",tag:"动漫" },
-{ name:"AGE动漫",icon:"fas fa-play",color:"#FF7D00",bg:"#FFF2E6",url:"https://www.agedm.io/",tag:"动漫" },
-{ name:"Anime1",icon:"fas fa-video",color:"#1E88E5",bg:"#E6F4FF",url:"https://anime1.me",tag:"动漫" },
-{ name:"爱奇艺动漫",icon:"fas fa-tv",color:"#00A7E1",bg:"#E6F7FF",url:"https://www.iqiyi.com/dongman",tag:"动漫" },
-{ name:"优酷动漫",icon:"fas fa-play",color:"#00BFFF",bg:"#E6F9FF",url:"https://dongman.youku.com",tag:"动漫" },
-{ name:"芒果动漫",icon:"fas fa-film",color:"#FF3388",bg:"#FFE6F2",url:"https://www.mgtv.com/dongman",tag:"动漫" },
-{ name:"动漫岛",icon:"fas fa-palm-tree",color:"#20B2AA",bg:"#E6FFFA",url:"https://www.dmd3.com",tag:"动漫" },
-{ name:"新世界动漫",icon:"fas fa-globe-asia",color:"#FF4500",bg:"#FFE6E0",url:"https://www.xsjdm.com",tag:"动漫" },
-{ name:"Gitee（码云）",icon:"fas fa-code-branch",color:"#C50000",bg:"#FCEEEE",url:"https://gitee.com",tag:"工具" },
-{ name:"开源中国OSCHINA",icon:"fas fa-globe",color:"#4CAF50",bg:"#E8F5E9",url:"https://www.oschina.net",tag:"工具" },
-{ name:"清华开源镜像站",icon:"fas fa-database",color:"#0052D9",bg:"#E8F0FF",url:"https://mirrors.tuna.tsinghua.edu.cn",tag:"工具" },
-{ name:"阿里云开源镜像",icon:"fas fa-cloud",color:"#FF6A00",bg:"#FFF7E6",url:"https://developer.aliyun.com/mirror",tag:"工具" },
-{ name:"腾讯云软件源",icon:"fas fa-server",color:"#00C1DE",bg:"#E6F7FF",url:"https://mirrors.cloud.tencent.com",tag:"工具" },
-{ name:"华为开源镜像站",icon:"fas fa-microchip",color:"#C41E3A",bg:"#FCE8EC",url:"https://mirrors.huaweicloud.com",tag:"工具" },
-{ name:"网易开源镜像",icon:"fas fa-inbox",color:"#FF4500",bg:"#FFF0E6",url:"http://mirrors.163.com",tag:"工具" },
-{ name:"中科大开源镜像",icon:"fas fa-university",color:"#6C5CE7",bg:"#F0F0FF",url:"https://mirrors.ustc.edu.cn",tag:"工具" },
-{ name:"GitCode",icon:"fas fa-code",color:"#0084FF",bg:"#E6F7FF",url:"https://gitcode.com",tag:"工具" },
-{ name:"Halo",icon:"fas fa-blog",color:"#2196F3",bg:"#E3F2FD",url:"https://halo.run",tag:"工具" },
-{ name:"禅道Zentao",icon:"fas fa-tasks",color:"#009688",bg:"#EAF6F6",url:"https://www.zentao.net",tag:"工具" },
-{ name:"OpenI启智社区",icon:"fas fa-robot",color:"#7B1FA2",bg:"#F3E5F5",url:"https://openi.pcl.ac.cn",tag:"工具" },
-{ name:"HBuilderX",icon:"fas fa-code",color:"#0078D4",bg:"#E6F7FF",url:"https://www.dcloud.io",tag:"工具" },
-{ name:"Apache ShenYu",icon:"fas fa-project-diagram",color:"#D32F2F",bg:"#FFEBEE",url:"https://shenyu.apache.org",tag:"工具" },
-{ name:"Zabbix中国社区",icon:"fas fa-chart-line",color:"#0099CC",bg:"#E6F7FF",url:"https://www.zabbix.com/cn",tag:"工具" },
-{ name:"Deepin社区",icon:"fas fa-desktop",color:"#4285F4",bg:"#E8F0FE",url:"https://www.deepin.org",tag:"工具" },
-{ name:"OpenAnolis龙蜥",icon:"fas fa-server",color:"#F4B400",bg:"#FFFBEB",url:"https://openanolis.cn",tag:"工具" },
-{ name:"openEuler欧拉",icon:"fas fa-cogs",color:"#00B42A",bg:"#E6F9E6",url:"https://www.openeuler.org",tag:"工具" },
-{ name:"OpenKylin开放麒麟",icon:"fas fa-laptop",color:"#1A73E8",bg:"#E8F0FE",url:"https://www.openkylin.org",tag:"工具" },
-{ name:"华中大开源镜像",icon:"fas fa-database",color:"#FF9800",bg:"#FFF3E0",url:"http://mirrors.hust.edu.cn",tag:"工具" },
-{ name:"电报中文版",icon:"fas fa-paper-plane",color:"#26a5e4",bg:"#e6f7fd",url:"https://dl.372164885.xyz/d/d1337a18d0e5",tag:"热门" },
-{ name:"推特-x",icon:"fas fa-x",color:"#1a1a1a",bg:"#f5f5f5",url:"https://dl.372164885.xyz/d/bdc39b3a31ff",tag:"热门" },
-{ name:"pixiv",icon:"fas fa-images",color:"#0096fa",bg:"#e6f4ff",url:"https://dl.372164885.xyz/d/90c306daeeac",tag:"热门" },
-{ name:"Instagram",icon:"fas fa-image",color:"#e4405f",bg:"#fef2f5",url:"https://dl.372164885.xyz/d/7380b2e7dde9",tag:"热门" },
-{ name:"Discord",icon:"fas fa-users",color:"#5865f2",bg:"#eef0ff",url:"https://dl.372164885.xyz/d/35e43b3925d2",tag:"热门" },
-{ name:"Google相机",icon:"fas fa-camera",color:"#4285f4",bg:"#eef2ff",url:"https://dl.372164885.xyz/d/56b6d26ace52",tag:"热门" },
-{ name:"Bing",icon:"fas fa-globe-americas",color:"#0078d4",bg:"#e6f4ff",url:"https://dl.372164885.xyz/d/4454abbb755e",tag:"热门" },
-{ name:"YouTube",icon:"fas fa-play-circle",color:"#ff0000",bg:"#ffe6e6",url:"https://www.youtube.com/",tag:"热门" },
-{ name:"王者荣耀",icon:"fas fa-crown",color:"#d4a843",bg:"#fffdf0",url:"https://pvp.qq.com/",tag:"游戏" },
-{ name:"和平精英",icon:"fas fa-crosshairs",color:"#ff4500",bg:"#fff5ee",url:"https://gp.qq.com/",tag:"游戏" },
-{ name:"原神",icon:"fas fa-star",color:"#ffcc00",bg:"#fffef0",url:"https://ys.mihoyo.com/",tag:"游戏" },
-{ name:"崩坏：星穹铁道",icon:"fas fa-train",color:"#1a9ce8",bg:"#eef8ff",url:"https://sr.mihoyo.com/",tag:"游戏" },
-{ name:"英雄联盟手游",icon:"fas fa-trophy",color:"#c8aa6e",bg:"#fffdf5",url:"https://lolm.qq.com/",tag:"游戏" },
-{ name:"金铲铲之战",icon:"fas fa-chess",color:"#f5a623",bg:"#fffdf0",url:"https://jcc.qq.com/",tag:"游戏" },
-{ name:"火影忍者",icon:"fas fa-fire",color:"#ff6b35",bg:"#fff5f0",url:"https://naruto.qq.com/",tag:"游戏" },
-{ name:"崩坏3",icon:"fas fa-heart",color:"#ff4081",bg:"#fff0f5",url:"https://bh3.mihoyo.com/",tag:"游戏" },
-{ name:"绝区零",icon:"fas fa-bolt",color:"#ff6600",bg:"#fff7ee",url:"https://zzz.mihoyo.com/",tag:"游戏" },
-{ name:"蛋仔派对",icon:"fas fa-egg",color:"#ff69b4",bg:"#fff0f5",url:"https://party.163.com/",tag:"游戏" },
-{ name:"第五人格",icon:"fas fa-ghost",color:"#7c3aed",bg:"#f5f0ff",url:"https://id5.163.com/",tag:"游戏" },
-{ name:"明日方舟",icon:"fas fa-shield-alt",color:"#2d8cf0",bg:"#eef6ff",url:"https://ak.hypergryph.com/",tag:"游戏" },
-{ name:"逆水寒手游",icon:"fas fa-water",color:"#3b82f6",bg:"#eff6ff",url:"https://n.163.com/",tag:"游戏" },
-{ name:"永劫无间手游",icon:"fas fa-fist-raised",color:"#dc2626",bg:"#fff0f0",url:"https://www.yjwujian.cn/",tag:"游戏" },
-{ name:"鸣潮",icon:"fas fa-wave-square",color:"#06b6d4",bg:"#f0fdff",url:"https://mc.kurogames.com/",tag:"游戏" },
-{ name:"幻塔",icon:"fas fa-dice-d6",color:"#6366f1",bg:"#f0f0ff",url:"https://ht.wanmei.com/",tag:"游戏" },
-{ name:"光遇",icon:"fas fa-feather",color:"#f59e0b",bg:"#fffdf0",url:"https://sky.thatgamecompany.com/",tag:"游戏" },
-{ name:"阴阳师",icon:"fas fa-yin-yang",color:"#8b5cf6",bg:"#f5f0ff",url:"https://yys.163.com/",tag:"游戏" },
-{ name:"碧蓝航线",icon:"fas fa-ship",color:"#2196f3",bg:"#eef6ff",url:"https://game.bilibili.com/blhx/",tag:"游戏" },
-{ name:"暗黑破坏神：不朽",icon:"fas fa-skull",color:"#ef4444",bg:"#fff0f0",url:"https://di.blizzard.cn/",tag:"游戏" },
-{ name:"三国志战略版",icon:"fas fa-chess-knight",color:"#d97706",bg:"#fffdf0",url:"https://sgzzlb.lingxigames.com/",tag:"游戏" },
-{ name:"率土之滨",icon:"fas fa-flag",color:"#059669",bg:"#f0fdf5",url:"https://stzb.163.com/",tag:"游戏" },
-{ name:"QQ飞车手游",icon:"fas fa-car",color:"#f97316",bg:"#fff7ee",url:"https://speedm.qq.com/",tag:"游戏" },
-{ name:"穿越火线手游",icon:"fas fa-skull-crossbones",color:"#e74c3c",bg:"#fff0f0",url:"https://cfm.qq.com/",tag:"游戏" },
-{ name:"梦幻西游",icon:"fas fa-dragon",color:"#e0245e",bg:"#fff0f5",url:"https://my.163.com/",tag:"游戏" },
-{ name:"大话西游",icon:"fas fa-mask",color:"#7c2d12",bg:"#fdf5f0",url:"https://dhxy.163.com/",tag:"游戏" },
-{ name:"我的世界",icon:"fas fa-cube",color:"#5d9a3f",bg:"#f0fdf0",url:"https://mc.163.com/",tag:"游戏" },
-{ name:"迷你世界",icon:"fas fa-smile",color:"#ff9800",bg:"#fff8f0",url:"https://www.mini1.cn/",tag:"游戏" },
-{ name:"球球大作战",icon:"fas fa-circle",color:"#00bcd4",bg:"#f0fdff",url:"https://www.battleofballs.com/",tag:"游戏" },
-{ name:"无尽的拉格朗日",icon:"fas fa-rocket",color:"#14b8a6",bg:"#f0fdfa",url:"https://www.neteasegames.com/lglr/",tag:"游戏" },
-{ name:"淘宝",icon:"fas fa-store",color:"#ff5000",bg:"#fff3ee",url:"https://www.taobao.com/",tag:"购物" },
-{ name:"京东",icon:"fas fa-box",color:"#e2231a",bg:"#fff0f0",url:"https://www.jd.com/",tag:"购物" },
-{ name:"拼多多",icon:"fas fa-shopping-bag",color:"#e02e24",bg:"#fff2f2",url:"https://www.pinduoduo.com/",tag:"购物" },
-{ name:"天猫",icon:"fas fa-cat",color:"#ff0036",bg:"#fff0f2",url:"https://www.tmall.com/",tag:"购物" },
-{ name:"闲鱼",icon:"fas fa-fish",color:"#ffc300",bg:"#fffbeb",url:"https://www.goofish.com/",tag:"购物" },
-{ name:"得物",icon:"fas fa-shoe-prints",color:"#1a1a1a",bg:"#f5f5f5",url:"https://www.dewu.com/",tag:"购物" },
-{ name:"转转",icon:"fas fa-sync-alt",color:"#fe4d37",bg:"#fff0f0",url:"https://www.zhuanzhuan.com/",tag:"购物" },
-{ name:"阿里巴巴1688",icon:"fas fa-industry",color:"#ff6c00",bg:"#fff7ee",url:"https://www.1688.com/",tag:"购物" },
-{ name:"苏宁易购",icon:"fas fa-shopping-cart",color:"#ffc000",bg:"#fffce6",url:"https://www.suning.com/",tag:"购物" },
-{ name:"唯品会",icon:"fas fa-tag",color:"#e6196b",bg:"#fff0f5",url:"https://www.vip.com/",tag:"购物" },
-{ name:"蘑菇街",icon:"fas fa-tshirt",color:"#ff4466",bg:"#fff0f2",url:"https://www.mogujie.com/",tag:"购物" },
-{ name:"什么值得买",icon:"fas fa-thumbs-up",color:"#e1251b",bg:"#fff0f0",url:"https://www.smzdm.com/",tag:"购物" },
-{ name:"考拉海购",icon:"fas fa-globe-asia",color:"#c41230",bg:"#fff0f2",url:"https://www.kaola.com/",tag:"购物" },
-{ name:"跨设备投屏",icon:"fas fa-mobile-screen-button",color:"#f59e0b",bg:"#fffbeb",url:"https://dl.372164885.xyz/d/de8e67de82b5",tag:"电脑" },
-{ name:"安易",icon:"fas fa-network-wired",color:"#14b8a6",bg:"#f0fdfa",url:"https://dl.372164885.xyz/d/948ff53759b5",tag:"电脑" },
-{ name:"菜鸟",icon:"fas fa-bolt",color:"#f97316",bg:"#fff7ed",url:"https://dl.372164885.xyz/d/925176ebf257",tag:"电脑" },
-{ name:"dragon(电脑)",icon:"fas fa-rocket",color:"#ef4444",bg:"#fef2f2",url:"https://dl.372164885.xyz/d/ca2321ce872d",tag:"电脑" },
-{ name:"nthlink(电脑)",icon:"fas fa-bolt",color:"#22c55e",bg:"#f0fdf4",url:"https://dl.372164885.xyz/d/9489985f4821",tag:"电脑" },
-{ name:"绝尘(电脑)",icon:"fas fa-rocket",color:"#0ea5e9",bg:"#f0f9ff",url:"https://www.juechenjsq.com/",tag:"电脑" },
-{ name:"魔方(电脑)",icon:"fas fa-rocket",color:"#a855f7",bg:"#faf5ff",url:"https://www.cybercubevpn.com/android",tag:"电脑" },
-{ name:"proton(电脑)",icon:"fas fa-shield-alt",color:"#8b5cf6",bg:"#f5f3ff",url:"https://protonvpn.com/download-windows",tag:"电脑" },
-{ name:"wePE",icon:"fas fa-tools",color:"#2563eb",bg:"#eef2ff",url:"https://dl.372164885.xyz/d/05766dcac3a2",tag:"电脑" },
-{ name:"谷歌浏览器",icon:"fas fa-globe",color:"#4285f4",bg:"#eef2ff",url:"https://dl.372164885.xyz/d/4a931b633b34",tag:"电脑" },
-{ name:"cloudflare-one(电脑)",icon:"fas fa-cloud",color:"#f38020",bg:"#fef6ee",url:"https://dl.372164885.xyz/d/f1fcc039e3be",tag:"电脑" },
-  { name:"临时聊天",icon:"fas fa-cloud",color:"#f38020",bg:"#fef6ee",url:"https://chat123.372164885.xyz/",tag:"皮卡" }
-];
+        // 应用数据
+        const APP_DATA = [
+            { name: "文件仓库", icon: "fas fa-cloud", color: "#f38020", bg: "#fef6ee", url: "https://dl.372164885.xyz/", tag: "热度排行" },
+            { name: "抖音", icon: "fab fa-tiktok", color: "#010101", bg: "#fefefe", url: "https://www.douyin.com/", tag: "视频" },
+            { name: "哔哩哔哩", icon: "fas fa-tv", color: "#fb7299", bg: "#fff1f5", url: "https://www.bilibili.com/", tag: "视频" },
+            { name: "腾讯视频", icon: "fas fa-film", color: "#0052d9", bg: "#e8f0ff", url: "https://v.qq.com/", tag: "视频" },
+            { name: "爱奇艺", icon: "fas fa-video", color: "#00be06", bg: "#f0fff0", url: "https://www.iqiyi.com/", tag: "视频" },
+            { name: "快手", icon: "fas fa-bolt", color: "#ff4906", bg: "#fff3f0", url: "https://kuaishou.com/", tag: "视频" },
+            { name: "红果免费短剧", icon: "fas fa-film", color: "#ff3b30", bg: "#fff0f0", url: "https://www.hongguoduanju.com/", tag: "视频" },
+            { name: "优酷视频", icon: "fas fa-play-circle", color: "#00b0ff", bg: "#e6f7ff", url: "https://www.youku.com/", tag: "视频" },
+            { name: "西瓜视频", icon: "fas fa-water", color: "#ff6a00", bg: "#fff7e6", url: "https://ixigua.com/", tag: "视频" },
+            { name: "起点读书", icon: "fas fa-book", color: "#f5a623", bg: "#fff5e0", url: "https://www.qidian.com/", tag: "小说" },
+            { name: "微信读书", icon: "fas fa-book-open", color: "#07c160", bg: "#edfaf3", url: "https://weread.qq.com/", tag: "小说" },
+            { name: "番茄小说", icon: "fas fa-leaf", color: "#ff5722", bg: "#fff3f0", url: "https://fanqienovel.com/", tag: "小说" },
+            { name: "QQ阅读", icon: "fas fa-book", color: "#00adfc", bg: "#e6f7ff", url: "https://book.qq.com/", tag: "小说" },
+            { name: "晋江文学城", icon: "fas fa-book-open", color: "#e66465", bg: "#fff0f2", url: "https://www.jjwxc.net/", tag: "小说" },
+            { name: "书旗小说", icon: "fas fa-bookmark", color: "#ff7a45", bg: "#fff2e6", url: "https://www.shuqi.com/", tag: "小说" },
+            { name: "纵横小说", icon: "fas fa-feather-alt", color: "#2d6cef", bg: "#edf2ff", url: "https://www.zongheng.com/", tag: "小说" },
+            { name: "飞卢小说", icon: "fas fa-pen-fancy", color: "#ff4d4f", bg: "#fff0f0", url: "https://www.feilu.com/", tag: "小说" },
+            { name: "七猫免费小说", icon: "fas fa-cat", color: "#1da36f", bg: "#e6f7f0", url: "https://www.qimao.com/", tag: "小说" },
+            { name: "掌阅", icon: "fas fa-book-reader", color: "#ff6034", bg: "#fff2e6", url: "https://www.zhangyue.com/", tag: "小说" },
+            { name: "17K小说网", icon: "fas fa-keyboard", color: "#198cf0", bg: "#e6f4ff", url: "https://www.17k.com/", tag: "小说" },
+            { name: "微信", icon: "fab fa-weixin", color: "#07c160", bg: "#edfaf3", url: "https://weixin.qq.com/", tag: "社交" },
+            { name: "微博", icon: "fab fa-weibo", color: "#e6162d", bg: "#fff0f1", url: "https://weibo.com/", tag: "社交" },
+            { name: "小红书", icon: "fas fa-heart", color: "#fe2c55", bg: "#fff0f2", url: "https://www.xiaohongshu.com/", tag: "社交" },
+            { name: "知乎", icon: "fas fa-question-circle", color: "#0F88EB", bg: "#E6F7FF", url: "https://www.zhihu.com/", tag: "社交" },
+            { name: "豆瓣", icon: "fas fa-leaf", color: "#4D9040", bg: "#F5FAF4", url: "https://www.douban.com/", tag: "社交" },
+            { name: "QQ官网", icon: "fas fa-comment", color: "#12B7F5", bg: "#E6F7FF", url: "https://im.qq.com/", tag: "社交" },
+            { name: "网易LOFTER", icon: "fas fa-heart", color: "#F5A623", bg: "#FFF7E6", url: "https://www.lofter.com/", tag: "社交" },
+            { name: "虎扑", icon: "fas fa-baseball-ball", color: "#F9A602", bg: "#FFF9E6", url: "https://www.hupu.com/", tag: "社交" },
+            { name: "汽车之家", icon: "fas fa-car", color: "#0066B3", bg: "#E6F7FF", url: "https://club.autohome.com.cn/", tag: "社交" },
+            { name: "Chrome", icon: "fab fa-chrome", color: "#4285f4", bg: "#eef2ff", url: "https://www.google.com/chrome/", tag: "工具" },
+            { name: "剪映", icon: "fas fa-scissors", color: "#1a1a1a", bg: "#f5f5f5", url: "https://www.capcut.com/", tag: "工具" },
+            { name: "百度网盘", icon: "fas fa-cloud", color: "#2869e6", bg: "#edf2ff", url: "https://pan.baidu.com/", tag: "工具" },
+            { name: "专搜3D图片", icon: "fas fa-cube", color: "#2869e6", bg: "#edf2ff", url: "http://3d.iqdb.org/", tag: "搜图" },
+            { name: "多种服务图片搜图", icon: "fas fa-search-plus", color: "#2869e6", bg: "#edf2ff", url: "http://iqdb.org/", tag: "搜图" },
+            { name: "二次元画像详细搜索", icon: "fas fa-user-circle", color: "#2869e6", bg: "#edf2ff", url: "https://ascii2d.net/", tag: "搜图" },
+            { name: "素材反向识图", icon: "fas fa-search-plus", color: "#2869e6", bg: "#edf2ff", url: "https://www.everypixel.com/", tag: "搜图" },
+            { name: "素材搜图", icon: "fas fa-search-plus", color: "#2869e6", bg: "#edf2ff", url: "https://unsplash.com/", tag: "搜图" },
+            { name: "谷歌识图镜像网站", icon: "fas fa-search", color: "#2869e6", bg: "#edf2ff", url: "https://soik.top/", tag: "搜图" },
+            { name: "必应视觉搜寻", icon: "fas fa-camera", color: "#2869e6", bg: "#edf2ff", url: "https://cn.bing.com/visualsearch", tag: "搜图" },
+            { name: "老牌识图(被墙)", icon: "fas fa-search-plus", color: "#2869e6", bg: "#edf2ff", url: "https://tineye.com/", tag: "搜图" },
+            { name: "谷歌识图(被墙)", icon: "fas fa-search", color: "#2869e6", bg: "#edf2ff", url: "https://www.google.com.hk/imghp", tag: "搜图" },
+            { name: "俄罗斯搜索引擎", icon: "fas fa-search-plus", color: "#2869e6", bg: "#edf2ff", url: "https://ya.ru/?utm_referrer=https%3A%2F%2Fwww.google.com%2F", tag: "搜图" },
+            { name: "专业P站搜二次元识图", icon: "fas fa-search", color: "#2869e6", bg: "#edf2ff", url: "https://saucenao.com/", tag: "搜图" },
+            { name: "动漫视频截图识别", icon: "fas fa-search-plus", color: "#2869e6", bg: "#edf2ff", url: "https://trace.moe/", tag: "搜图" },
+            { name: "PPBC中国植物图像库", icon: "fas fa-search-plus", color: "#2869e6", bg: "#edf2ff", url: "https://ppbc.iplant.cn/", tag: "搜图" },
+            { name: "百度识图", icon: "fas fa-cloud", color: "#2869e6", bg: "#edf2ff", url: "https://graph.baidu.com/pcpage/index?tpl_from=pc/", tag: "搜图" },
+            { name: "360识图", icon: "fas fa-image", color: "#2869e6", bg: "#edf2ff", url: "https://m.image.so.com/", tag: "搜图" },
+            { name: "搜狗识图", icon: "fas fa-image", color: "#2869e6", bg: "#edf2ff", url: "https://pic.sogou.com/pic/index.jsp?v=5/", tag: "搜图" },
+            { name: "皮卡备用群", icon: "fas fa-comments", color: "#2b8eff", bg: "#eef6ff", url: "https://qun.qq.com/universal-share/share?ac=1&authKey=Xld9l791HF7rsivEh%2FQHOCq3T%2FkUGp84QYDKZOliUcQUAlBccjL4VOJ98PRana%2F3&busi_data=eyJncm91cENvZGUiOiIxMDQ5NTUwOTI1IiwidG9rZW4iOiJvOUdkcDZ1OFRua3Z4Wmg5WVkzRjRoTURjcHR3ZldsRm85QzJRYXdxWjIrNTRUUGpvbzRyaGw2OXlCRWRXNnFRIiwidWluIjoiMTk2NjMzMDMxOSJ9&data=NlQKjt4AzXJQU8zoFaDXBWB-L-26e5lVnjpw_c0e-FGQDu1oMf4Yv0HMaXn3yVX-0w6KMFZXo_NSCsZILOMHwg&svctype=4&tempid=h5_group_info", tag: "群友" },
+            { name: "皮卡翻车群", icon: "fas fa-comments", color: "#ff6d00", bg: "#fff7e6", url: "https://qun.qq.com/universal-share/share?ac=1&authKey=1H7F1EMVtmdMrv1CzYxKwFEJpRQEtXWYo5NymTsfD60RgqfmcLAqYx2kJUBpVeta&busi_data=eyJncm91cENvZGUiOiI1Njg4NzE0MjYiLCJ0b2tlbiI6Im1YMjg3YnBncU9ibEx0cktmTHdMNGY5OE5nMWVjTDRsZkpMdTZwM2N5cElFdExEa3I5MUROSVZsTjJQTEl1SVkiLCJ1aW4iOiIxOTY2MzMwMzE5In0%3D&data=2kh6zsaP4Doa-Jl-KccfFc19LCpsFI1NTPlynFYqUPLj3RgonL8BEg2mEtGGU7CzqwSN6bdHq_SWD9hijXZ9dQ&svctype=4&tempid=h5_group_info", tag: "群友" },
+            { name: "皮卡禁言群", icon: "fas fa-users", color: "#e53935", bg: "#fef2f2", url: "https://qun.qq.com/universal-share/share?ac=1&authKey=CfKOKp6Sc7CP%2BH6hZZ9PpeveC%2FNcfE7iSGwVsMSpfhCGCWOuPjeswNS7Cv5vtCGA&busi_data=eyJncm91cENvZGUiOiIxMDQxMjQ0MjI5IiwidG9rZW4iOiJYb2lqRHQrQ2Y4L2xyMEt5Z2dFNkphT3BONHhPLy92bUNJYjBLeWFNMjJ5WmNlSFU2ZFJ6YkpxLy9nSHg4b0poIiwidWluIjoiMTk2NjMzMDMxOSJ9&data=1UsMWD3H0fkwy-X2lVTwriyc_Va_4M76mJvFSw2HfpmpjSdtsGEybhi3JGw7tTopgZYXPVcyes6wiUHd1eznSw&svctype=4&tempid=h5_group_info", tag: "群友" },
+            { name: "皮卡电报群", icon: "fas fa-paper-plane", color: "#2ea6ff", bg: "#eef8ff", url: "https://t.me/+qiezQCcGXswzYTM1", tag: "群友" },
+            { name: "无语群", icon: "fas fa-comments", color: "#7c3aed", bg: "#f5f3ff", url: "https://qun.qq.com/universal-share/share?ac=1&authKey=1MapCqFxxqy%2BOOXbkM6%2Fz3ZC3G%2BIe%2BOHkXURAf8Zy3yRH8MzazejEb3mGPY7C64m&busi_data=eyJncm91cENvZGUiOiI2MDQ1NzQyMzciLCJ0b2tlbiI6InFyMHVScWw3QzlCbzVNM1VHaEVyVDlQNDRiMThUVVJIcWtJalprOTh3Zjc3S015czdOYTVjK2k4WjhobG91T3AiLCJ1aW4iOiIxMDA1Mzg0NDE4In0%3D&data=mkN0qLE6LehMHkAdQSgjzbHFi20B9fGIKuy2jhRKEIOUD5XFikhrZwZ4UNK-PB-uCwiQicXzFFbTVn8tYHkCLg&svctype=4&tempid=h5_group_info", tag: "群友" },
+            { name: "IT-tools", icon: "fas fa-tools", color: "#6366f1", bg: "#eef2ff", url: "https://sss.372164885.xyz", tag: "皮卡" },
+            { name: "搜索引擎🔍", icon: "fas fa-search", color: "#3b82f6", bg: "#eff6ff", url: "https://aaa.372164885.xyz", tag: "皮卡" },
+            { name: "AI驱动的语音处理平台", icon: "fas fa-brain", color: "#8b5cf6", bg: "#f5f3ff", url: "https://123.372164885.xyz", tag: "皮卡" },
+            { name: "免费图床(5m)", icon: "fas fa-image", color: "#f59e0b", bg: "#fffbeb", url: "https://svip.372164885.xyz", tag: "皮卡" },
+            { name: "绘画(abcd123)", icon: "fas fa-palette", color: "#ec4899", bg: "#fdf2f8", url: "https://o.372164885.xyz", tag: "皮卡" },
+            { name: "皮卡电报频道", icon: "fas fa-paper-plane", color: "#2ea6ff", bg: "#eef8ff", url: "https://t.me/s/pkpk158/", tag: "皮卡" },
+            { name: "在线修图", icon: "fas fa-paint-brush", color: "#ff6b9d", bg: "#fff0f5", url: "https://huixiao666.github.io/cxc/", tag: "皮卡" },
+            { name: "节点", icon: "fas fa-link", color: "#6366f1", bg: "#f0f0ff", url: "https://pn.372164885.xyz", tag: "皮卡" },
+            { name: "机器人", icon: "fas fa-robot", color: "#10a37f", bg: "#e6f7f2", url: "#", tag: "皮卡" },
+            { name: "芒果TV", icon: "fas fa-tv", color: "#FF6A00", bg: "#FFF7E6", url: "https://www.mgtv.com", tag: "影视" },
+            { name: "1905电影网", icon: "fas fa-clapperboard", color: "#005A9E", bg: "#E6F7FF", url: "https://www.1905.com", tag: "影视" },
+            { name: "咪咕视频", icon: "fas fa-wifi", color: "#0087DE", bg: "#E6F7FF", url: "https://www.miguvideo.com", tag: "影视" },
+            { name: "央视网", icon: "fas fa-tower-broadcast", color: "#D9272E", bg: "#FDEDED", url: "https://tv.cctv.com", tag: "影视" },
+            { name: "学习强国", icon: "fas fa-book-open", color: "#D9272E", bg: "#FDEDED", url: "https://www.xuexi.cn", tag: "影视" },
+            { name: "Vimeo", icon: "fas fa-vimeo-v", color: "#1AB7E4", bg: "#E6F7FF", url: "https://vimeo.com", tag: "影视" },
+            { name: "Netflix", icon: "fas fa-play-circle", color: "#E50914", bg: "#FFE6E6", url: "https://www.netflix.com", tag: "海外" },
+            { name: "Disney+", icon: "fas fa-star", color: "#1A1A1A", bg: "#F0F0F0", url: "https://www.disneyplus.com", tag: "海外" },
+            { name: "Amazon Prime Video", icon: "fas fa-shopping-cart", color: "#FF9900", bg: "#FFF7E6", url: "https://primevideo.com", tag: "海外" },
+            { name: "Apple TV+", icon: "fas fa-apple", color: "#000000", bg: "#F0F0F0", url: "https://tv.apple.com", tag: "海外" },
+            { name: "Max", icon: "fas fa-w", color: "#FF0000", bg: "#FDEDED", url: "https://www.max.com", tag: "海外" },
+            { name: "Hulu", icon: "fas fa-h", color: "#1D70A4", bg: "#E6F7FF", url: "https://www.hulu.com", tag: "海外" },
+            { name: "Peacock", icon: "fas fa-feather", color: "#00A3FF", bg: "#E6F7FF", url: "https://www.peacocktv.com", tag: "海外" },
+            { name: "Pluto TV", icon: "fas fa-tv", color: "#007AFF", bg: "#E6F7FF", url: "https://pluto.tv", tag: "海外" },
+            { name: "Tubi", icon: "fas fa-film", color: "#00A3FF", bg: "#E6F7FF", url: "https://tubitv.com", tag: "海外" },
+            { name: "BBC iPlayer", icon: "fas fa-b", color: "#B30094", bg: "#FDEDED", url: "https://www.bbc.co.uk/iplayer", tag: "海外" },
+            { name: "ChatGPT", icon: "fas fa-robot", color: "#10a37f", bg: "#e6f7f2", url: "https://chat.openai.com", tag: "AI" },
+            { name: "Gemini", icon: "fas fa-gem", color: "#4285f4", bg: "#eef2ff", url: "https://gemini.google.com", tag: "AI" },
+            { name: "DeepSeek", icon: "fas fa-brain", color: "#4A90E2", bg: "#eef4ff", url: "https://deepseek.com", tag: "AI" },
+            { name: "豆包", icon: "fas fa-comment", color: "#E6162D", bg: "#FFE6E9", url: "https://doubao.com", tag: "AI" },
+            { name: "Claude", icon: "fas fa-cloud", color: "#d97706", bg: "#fffbeb", url: "https://claude.ai", tag: "AI" },
+            { name: "Kimi", icon: "fas fa-file-alt", color: "#8b5cf6", bg: "#f5f3ff", url: "https://kimi.moonshot.cn", tag: "AI" },
+            { name: "通义千问", icon: "fas fa-lightbulb", color: "#6366f1", bg: "#eef2ff", url: "https://tongyi.aliyun.com", tag: "AI" },
+            { name: "文心一言", icon: "fas fa-feather", color: "#3b82f6", bg: "#eff6ff", url: "https://yiyan.baidu.com", tag: "AI" },
+            { name: "Midjourney", icon: "fas fa-palette", color: "#6366f1", bg: "#eef2ff", url: "https://www.midjourney.com", tag: "AI" },
+            { name: "可灵AI", icon: "fas fa-film", color: "#06b6d4", bg: "#ecfeff", url: "https://klingai.com", tag: "AI" },
+            { name: "讯飞星火", icon: "fas fa-comments", color: "#2563eb", bg: "#eef2ff", url: "https://xinghuo.xfyun.cn", tag: "AI" },
+            { name: "天工AI", icon: "fas fa-cogs", color: "#0ea5e9", bg: "#f0f9ff", url: "https://www.tiangong.cn", tag: "AI" },
+            { name: "秘塔AI", icon: "fas fa-shield-alt", color: "#00A3FF", bg: "#E6F7FF", url: "https://www.metaso.cn", tag: "AI" },
+            { name: "Runway", icon: "fas fa-video", color: "#000000", bg: "#f5f5f5", url: "https://runwayml.com", tag: "AI" },
+            { name: "Pika", icon: "fas fa-film", color: "#ec4899", bg: "#fdf2f8", url: "https://pika.art", tag: "AI" },
+            { name: "DALL·E 3", icon: "fas fa-paint-brush", color: "#10a37f", bg: "#e6f7f2", url: "https://openai.com/dall-e-3", tag: "AI" },
+            { name: "Stable Diffusion", icon: "fas fa-images", color: "#a855f7", bg: "#faf5ff", url: "https://stablediffusionweb.com", tag: "AI" },
+            { name: "Copilot", icon: "fas fa-code", color: "#7c3aed", bg: "#f5f3ff", url: "https://copilot.microsoft.com", tag: "AI" },
+            { name: "Perplexity", icon: "fas fa-search", color: "#14b8a6", bg: "#f0fdfa", url: "https://www.perplexity.ai", tag: "AI" },
+            { name: "Character.AI", icon: "fas fa-user-circle", color: "#ef4444", bg: "#fef2f2", url: "https://character.ai", tag: "AI" },
+            { name: "Grammarly", icon: "fas fa-spell-check", color: "#15c39a", bg: "#e6fdf5", url: "https://www.grammarly.com/", tag: "AI" },
+            { name: "Sudowrite", icon: "fas fa-feather-alt", color: "#f7971e", bg: "#fffdf0", url: "https://www.sudowrite.com/", tag: "AI" },
+            { name: "Copy AI", icon: "fas fa-copy", color: "#19c37d", bg: "#e6fdf5", url: "https://www.copy.ai/", tag: "AI" },
+            { name: "Canva", icon: "fas fa-paint-brush", color: "#00c4cc", bg: "#e6fdff", url: "https://www.canva.com/", tag: "AI" },
+            { name: "腾讯动漫", icon: "fas fa-book", color: "#12B7F5", bg: "#E6F7FF", url: "https://ac.qq.com", tag: "漫画" },
+            { name: "哔哩哔哩漫画", icon: "fas fa-book-open", color: "#FB7299", bg: "#FFE6EF", url: "https://manga.bilibili.com", tag: "漫画" },
+            { name: "快看漫画", icon: "fas fa-heart", color: "#FF4F88", bg: "#FFE6ED", url: "https://www.kuaikanmanhua.com", tag: "漫画" },
+            { name: "咚漫", icon: "fas fa-fire", color: "#FF6C37", bg: "#FFF2E6", url: "https://www.dongmanmanhua.com", tag: "漫画" },
+            { name: "咚漫(中国)", icon: "fas fa-comments", color: "#36D399", bg: "#E6FFFA", url: "https://www.dongmanmanhua.cn", tag: "漫画" },
+            { name: "叭嗒", icon: "fas fa-star", color: "#722ED1", bg: "#F3E6FF", url: "https://www.pidou.cc", tag: "漫画" },
+            { name: "漫漫漫画", icon: "fas fa-smile", color: "#FF9A2E", bg: "#FFF5E6", url: "https://www.manmanapp.com", tag: "漫画" },
+            { name: "PODO漫画", icon: "fas fa-pen", color: "#14C9C9", bg: "#E6FFFA", url: "https://www.podoapp.com", tag: "漫画" },
+            { name: "PODO漫画(ACG)", icon: "fas fa-star", color: "#FF6F61", bg: "#FFE6E6", url: "https://www.podoacg.com", tag: "漫画" },
+            { name: "知音漫客", icon: "fas fa-feather", color: "#E63946", bg: "#FFE6E9", url: "https://www.zymk.cn", tag: "漫画" },
+            { name: "飒漫画", icon: "fas fa-palette", color: "#8E44AD", bg: "#F4E6FF", url: "https://www.samanhua.net", tag: "漫画" },
+            { name: "动漫之家", icon: "fas fa-home", color: "#3498DB", bg: "#E6F4FF", url: "https://www.dmzj.com", tag: "漫画" },
+            { name: "看漫画", icon: "fas fa-eye", color: "#2ECC71", bg: "#E6FFED", url: "https://www.kanman.com", tag: "漫画" },
+            { name: "漫客栈", icon: "fas fa-umbrella", color: "#F39C12", bg: "#FFF5E6", url: "https://www.mankezhan.com", tag: "漫画" },
+            { name: "VIZ", icon: "fas fa-bookmark", color: "#E74C3C", bg: "#FFE6E6", url: "https://www.viz.com", tag: "漫画" },
+            { name: "MangaPlus", icon: "fas fa-bolt", color: "#F1C40F", bg: "#FFF9E6", url: "https://mangaplus.shueisha.co.jp", tag: "漫画" },
+            { name: "刺猬猫", icon: "fas fa-cat", color: "#9B59B6", bg: "#F6E6FF", url: "https://www.ciweimao.com", tag: "漫画" },
+            { name: "漫画人", icon: "fas fa-user", color: "#FF8C00", bg: "#FFF2E6", url: "https://www.manhuaren.com", tag: "漫画" },
+            { name: "源仓库", icon: "fas fa-file-image", color: "#ef4444", bg: "#fef2f2", url: "https://www.yckceo.com/", tag: "漫画" },
+            { name: "樱花动漫", icon: "fas fa-film", color: "#FF5C7F", bg: "#FFE6EA", url: "https://www.yinhuadm.one/", tag: "动漫" },
+            { name: "AGE动漫", icon: "fas fa-play", color: "#FF7D00", bg: "#FFF2E6", url: "https://www.agedm.io/", tag: "动漫" },
+            { name: "Anime1", icon: "fas fa-video", color: "#1E88E5", bg: "#E6F4FF", url: "https://anime1.me", tag: "动漫" },
+            { name: "爱奇艺动漫", icon: "fas fa-tv", color: "#00A7E1", bg: "#E6F7FF", url: "https://www.iqiyi.com/dongman", tag: "动漫" },
+            { name: "优酷动漫", icon: "fas fa-play", color: "#00BFFF", bg: "#E6F9FF", url: "https://dongman.youku.com", tag: "动漫" },
+            { name: "芒果动漫", icon: "fas fa-film", color: "#FF3388", bg: "#FFE6F2", url: "https://www.mgtv.com/dongman", tag: "动漫" },
+            { name: "动漫岛", icon: "fas fa-palm-tree", color: "#20B2AA", bg: "#E6FFFA", url: "https://www.dmd3.com", tag: "动漫" },
+            { name: "新世界动漫", icon: "fas fa-globe-asia", color: "#FF4500", bg: "#FFE6E0", url: "https://www.xsjdm.com", tag: "动漫" },
+            { name: "Gitee（码云）", icon: "fas fa-code-branch", color: "#C50000", bg: "#FCEEEE", url: "https://gitee.com", tag: "工具" },
+            { name: "开源中国OSCHINA", icon: "fas fa-globe", color: "#4CAF50", bg: "#E8F5E9", url: "https://www.oschina.net", tag: "工具" },
+            { name: "清华开源镜像站", icon: "fas fa-database", color: "#0052D9", bg: "#E8F0FF", url: "https://mirrors.tuna.tsinghua.edu.cn", tag: "工具" },
+            { name: "阿里云开源镜像", icon: "fas fa-cloud", color: "#FF6A00", bg: "#FFF7E6", url: "https://developer.aliyun.com/mirror", tag: "工具" },
+            { name: "腾讯云软件源", icon: "fas fa-server", color: "#00C1DE", bg: "#E6F7FF", url: "https://mirrors.cloud.tencent.com", tag: "工具" },
+            { name: "华为开源镜像站", icon: "fas fa-microchip", color: "#C41E3A", bg: "#FCE8EC", url: "https://mirrors.huaweicloud.com", tag: "工具" },
+            { name: "网易开源镜像", icon: "fas fa-inbox", color: "#FF4500", bg: "#FFF0E6", url: "http://mirrors.163.com", tag: "工具" },
+            { name: "中科大开源镜像", icon: "fas fa-university", color: "#6C5CE7", bg: "#F0F0FF", url: "https://mirrors.ustc.edu.cn", tag: "工具" },
+            { name: "GitCode", icon: "fas fa-code", color: "#0084FF", bg: "#E6F7FF", url: "https://gitcode.com", tag: "工具" },
+            { name: "Halo", icon: "fas fa-blog", color: "#2196F3", bg: "#E3F2FD", url: "https://halo.run", tag: "工具" },
+            { name: "禅道Zentao", icon: "fas fa-tasks", color: "#009688", bg: "#EAF6F6", url: "https://www.zentao.net", tag: "工具" },
+            { name: "OpenI启智社区", icon: "fas fa-robot", color: "#7B1FA2", bg: "#F3E5F5", url: "https://openi.pcl.ac.cn", tag: "工具" },
+            { name: "HBuilderX", icon: "fas fa-code", color: "#0078D4", bg: "#E6F7FF", url: "https://www.dcloud.io", tag: "工具" },
+            { name: "Apache ShenYu", icon: "fas fa-project-diagram", color: "#D32F2F", bg: "#FFEBEE", url: "https://shenyu.apache.org", tag: "工具" },
+            { name: "Zabbix中国社区", icon: "fas fa-chart-line", color: "#0099CC", bg: "#E6F7FF", url: "https://www.zabbix.com/cn", tag: "工具" },
+            { name: "Deepin社区", icon: "fas fa-desktop", color: "#4285F4", bg: "#E8F0FE", url: "https://www.deepin.org", tag: "工具" },
+            { name: "OpenAnolis龙蜥", icon: "fas fa-server", color: "#F4B400", bg: "#FFFBEB", url: "https://openanolis.cn", tag: "工具" },
+            { name: "openEuler欧拉", icon: "fas fa-cogs", color: "#00B42A", bg: "#E6F9E6", url: "https://www.openeuler.org", tag: "工具" },
+            { name: "OpenKylin开放麒麟", icon: "fas fa-laptop", color: "#1A73E8", bg: "#E8F0FE", url: "https://www.openkylin.org", tag: "工具" },
+            { name: "华中大开源镜像", icon: "fas fa-database", color: "#FF9800", bg: "#FFF3E0", url: "http://mirrors.hust.edu.cn", tag: "工具" },
+            { name: "王者荣耀", icon: "fas fa-crown", color: "#d4a843", bg: "#fffdf0", url: "https://pvp.qq.com/", tag: "游戏" },
+            { name: "和平精英", icon: "fas fa-crosshairs", color: "#ff4500", bg: "#fff5ee", url: "https://gp.qq.com/", tag: "游戏" },
+            { name: "原神", icon: "fas fa-star", color: "#ffcc00", bg: "#fffef0", url: "https://ys.mihoyo.com/", tag: "游戏" },
+            { name: "崩坏：星穹铁道", icon: "fas fa-train", color: "#1a9ce8", bg: "#eef8ff", url: "https://sr.mihoyo.com/", tag: "游戏" },
+            { name: "英雄联盟手游", icon: "fas fa-trophy", color: "#c8aa6e", bg: "#fffdf5", url: "https://lolm.qq.com/", tag: "游戏" },
+            { name: "金铲铲之战", icon: "fas fa-chess", color: "#f5a623", bg: "#fffdf0", url: "https://jcc.qq.com/", tag: "游戏" },
+            { name: "火影忍者", icon: "fas fa-fire", color: "#ff6b35", bg: "#fff5f0", url: "https://naruto.qq.com/", tag: "游戏" },
+            { name: "崩坏3", icon: "fas fa-heart", color: "#ff4081", bg: "#fff0f5", url: "https://bh3.mihoyo.com/", tag: "游戏" },
+            { name: "绝区零", icon: "fas fa-bolt", color: "#ff6600", bg: "#fff7ee", url: "https://zzz.mihoyo.com/", tag: "游戏" },
+            { name: "蛋仔派对", icon: "fas fa-egg", color: "#ff69b4", bg: "#fff0f5", url: "https://party.163.com/", tag: "游戏" },
+            { name: "第五人格", icon: "fas fa-ghost", color: "#7c3aed", bg: "#f5f0ff", url: "https://id5.163.com/", tag: "游戏" },
+            { name: "明日方舟", icon: "fas fa-shield-alt", color: "#2d8cf0", bg: "#eef6ff", url: "https://ak.hypergryph.com/", tag: "游戏" },
+            { name: "逆水寒手游", icon: "fas fa-water", color: "#3b82f6", bg: "#eff6ff", url: "https://n.163.com/", tag: "游戏" },
+            { name: "永劫无间手游", icon: "fas fa-fist-raised", color: "#dc2626", bg: "#fff0f0", url: "https://www.yjwujian.cn/", tag: "游戏" },
+            { name: "鸣潮", icon: "fas fa-wave-square", color: "#06b6d4", bg: "#f0fdff", url: "https://mc.kurogames.com/", tag: "游戏" },
+            { name: "幻塔", icon: "fas fa-dice-d6", color: "#6366f1", bg: "#f0f0ff", url: "https://ht.wanmei.com/", tag: "游戏" },
+            { name: "光遇", icon: "fas fa-feather", color: "#f59e0b", bg: "#fffdf0", url: "https://sky.thatgamecompany.com/", tag: "游戏" },
+            { name: "阴阳师", icon: "fas fa-yin-yang", color: "#8b5cf6", bg: "#f5f0ff", url: "https://yys.163.com/", tag: "游戏" },
+            { name: "碧蓝航线", icon: "fas fa-ship", color: "#2196f3", bg: "#eef6ff", url: "https://game.bilibili.com/blhx/", tag: "游戏" },
+            { name: "暗黑破坏神：不朽", icon: "fas fa-skull", color: "#ef4444", bg: "#fff0f0", url: "https://di.blizzard.cn/", tag: "游戏" },
+            { name: "三国志战略版", icon: "fas fa-chess-knight", color: "#d97706", bg: "#fffdf0", url: "https://sgzzlb.lingxigames.com/", tag: "游戏" },
+            { name: "率土之滨", icon: "fas fa-flag", color: "#059669", bg: "#f0fdf5", url: "https://stzb.163.com/", tag: "游戏" },
+            { name: "QQ飞车手游", icon: "fas fa-car", color: "#f97316", bg: "#fff7ee", url: "https://speedm.qq.com/", tag: "游戏" },
+            { name: "穿越火线手游", icon: "fas fa-skull-crossbones", color: "#e74c3c", bg: "#fff0f0", url: "https://cfm.qq.com/", tag: "游戏" },
+            { name: "梦幻西游", icon: "fas fa-dragon", color: "#e0245e", bg: "#fff0f5", url: "https://my.163.com/", tag: "游戏" },
+            { name: "大话西游", icon: "fas fa-mask", color: "#7c2d12", bg: "#fdf5f0", url: "https://dhxy.163.com/", tag: "游戏" },
+            { name: "我的世界", icon: "fas fa-cube", color: "#5d9a3f", bg: "#f0fdf0", url: "https://mc.163.com/", tag: "游戏" },
+            { name: "迷你世界", icon: "fas fa-smile", color: "#ff9800", bg: "#fff8f0", url: "https://www.mini1.cn/", tag: "游戏" },
+            { name: "球球大作战", icon: "fas fa-circle", color: "#00bcd4", bg: "#f0fdff", url: "https://www.battleofballs.com/", tag: "游戏" },
+            { name: "无尽的拉格朗日", icon: "fas fa-rocket", color: "#14b8a6", bg: "#f0fdfa", url: "https://www.neteasegames.com/lglr/", tag: "游戏" },
+            { name: "淘宝", icon: "fas fa-store", color: "#ff5000", bg: "#fff3ee", url: "https://www.taobao.com/", tag: "购物" },
+            { name: "京东", icon: "fas fa-box", color: "#e2231a", bg: "#fff0f0", url: "https://www.jd.com/", tag: "购物" },
+            { name: "拼多多", icon: "fas fa-shopping-bag", color: "#e02e24", bg: "#fff2f2", url: "https://www.pinduoduo.com/", tag: "购物" },
+            { name: "天猫", icon: "fas fa-cat", color: "#ff0036", bg: "#fff0f2", url: "https://www.tmall.com/", tag: "购物" },
+            { name: "闲鱼", icon: "fas fa-fish", color: "#ffc300", bg: "#fffbeb", url: "https://www.goofish.com/", tag: "购物" },
+            { name: "得物", icon: "fas fa-shoe-prints", color: "#1a1a1a", bg: "#f5f5f5", url: "https://www.dewu.com/", tag: "购物" },
+            { name: "转转", icon: "fas fa-sync-alt", color: "#fe4d37", bg: "#fff0f0", url: "https://www.zhuanzhuan.com/", tag: "购物" },
+            { name: "阿里巴巴1688", icon: "fas fa-industry", color: "#ff6c00", bg: "#fff7ee", url: "https://www.1688.com/", tag: "购物" },
+            { name: "苏宁易购", icon: "fas fa-shopping-cart", color: "#ffc000", bg: "#fffce6", url: "https://www.suning.com/", tag: "购物" },
+            { name: "唯品会", icon: "fas fa-tag", color: "#e6196b", bg: "#fff0f5", url: "https://www.vip.com/", tag: "购物" },
+            { name: "蘑菇街", icon: "fas fa-tshirt", color: "#ff4466", bg: "#fff0f2", url: "https://www.mogujie.com/", tag: "购物" },
+            { name: "什么值得买", icon: "fas fa-thumbs-up", color: "#e1251b", bg: "#fff0f0", url: "https://www.smzdm.com/", tag: "购物" },
+            { name: "考拉海购", icon: "fas fa-globe-asia", color: "#c41230", bg: "#fff0f2", url: "https://www.kaola.com/", tag: "购物" },
+            { name: "临时聊天", icon: "fas fa-cloud", color: "#f38020", bg: "#fef6ee", url: "https://chat123.372164885.xyz/", tag: "皮卡" }
+        ];
 
-/* ====== 网站类别渲染逻辑 ====== */
-const APP_STORAGE = {
-  get: (k, d = null) => { try { let v = localStorage.getItem('webdir_' + k); return v ? JSON.parse(v) : d; } catch(e) { return d; } },
-  set: (k, v) => { try { localStorage.setItem('webdir_' + k, JSON.stringify(v)); } catch(e) {} }
-};
+        // 应用专属描述
+        const APP_DESC = {
+            "文件仓库": "皮卡社区文件存储与分享仓库，安全便捷 >>",
+            "抖音": "短视频社交平台，记录美好生活，刷最火短视频 >>",
+            "哔哩哔哩": "国内最大弹幕视频网，动画番剧游戏实况全都有 >>",
+            "腾讯视频": "腾讯旗下综合视频平台，热播剧集综艺动漫全覆盖 >>",
+            "爱奇艺": "高清正版影视平台，海量电视剧电影动漫随心看 >>",
+            "快手": "国民短视频社区，老铁文化看世间百态 >>",
+            "红果免费短剧": "免费短剧平台，海量爽剧随点随看刷到停不下来 >>",
+            "优酷视频": "阿里旗下视频平台，经典剧集与独家综艺 >>",
+            "西瓜视频": "字节旗下综合视频，新鲜有趣点亮生活 >>",
+            "起点读书": "阅文旗下正版小说平台，男频网文发源地 >>",
+            "微信读书": "腾讯出品阅读APP，正版图书社交化阅读体验 >>",
+            "番茄小说": "免费正版小说阅读，看广告免付费畅读海量好书 >>",
+            "QQ阅读": "腾讯旗下海量正版原创小说阅读平台 >>",
+            "晋江文学城": "国内最大女性向原创文学网站，言情纯爱耽美一网打尽 >>",
+            "书旗小说": "阿里旗下免费小说阅读平台，海量好书任你读 >>",
+            "纵横小说": "老牌原创小说网站，男频精品文聚集地 >>",
+            "飞卢小说": "同人二次元原创小说平台，脑洞大开 >>",
+            "七猫免费小说": "免费小说阅读APP，海量正版好书任你读 >>",
+            "掌阅": "老牌数字阅读平台，精品出版与网文兼而有之 >>",
+            "17K小说网": "老牌原创文学网站，精品网络小说聚集地 >>",
+            "微信": "腾讯旗下国民社交应用，连接每一个中国人 >>",
+            "微博": "新浪旗下社交媒体，热搜话题第一时间掌握 >>",
+            "小红书": "年轻人的生活方式社区，种草拔草都在这里 >>",
+            "知乎": "中文互联网高质量问答社区与创作者平台 >>",
+            "豆瓣": "书影音评分社区，找到同好分享你的品味 >>",
+            "QQ官网": "腾讯即时通讯工具官方下载页面 >>",
+            "网易LOFTER": "网易旗下轻博客社区，同人创作与兴趣社交 >>",
+            "虎扑": "直男社区，体育赛事与步行街吃瓜第一线 >>",
+            "汽车之家": "汽车资讯与车主社区，买车用车养车全攻略 >>",
+            "Chrome": "谷歌浏览器，全球最流行的网页浏览工具 >>",
+            "剪映": "抖音官方视频剪辑工具，一键成片轻松创作 >>",
+            "百度网盘": "百度旗下云存储服务，超大空间文件分享 >>",
+            "专搜3D图片": "3D与CG图片反向搜索专用引擎 >>",
+            "多种服务图片搜图": "多引擎聚合搜图，支持多站点同时搜索 >>",
+            "二次元画像详细搜索": "二次元插画反向搜索，精准定位画师与出处 >>",
+            "素材反向识图": "AI驱动的反向图片搜索素材引擎 >>",
+            "素材搜图": "Unsplash高质量免费图片素材库 >>",
+            "谷歌识图镜像网站": "谷歌图片搜索国内可用镜像站点 >>",
+            "必应视觉搜寻": "微软必应以图搜图服务 >>",
+            "老牌识图(被墙)": "TinEye老牌反向图片搜索引擎 >>",
+            "谷歌识图(被墙)": "谷歌图片搜索 >>",
+            "俄罗斯搜索引擎": "Yandex俄语区综合搜索引擎 >>",
+            "专业P站搜二次元识图": "SauceNAO二次元插画精准搜索 >>",
+            "动漫视频截图识别": "trace.moe动漫场景帧识别引擎 >>",
+            "PPBC中国植物图像库": "中国植物图像数据库与识别平台 >>",
+            "百度识图": "百度以图搜图服务 >>",
+            "360识图": "360以图搜图服务 >>",
+            "搜狗识图": "搜狗以图搜图服务 >>",
+            "皮卡备用群": "皮卡社区QQ备用交流群 >>",
+            "皮卡翻车群": "皮卡社区QQ翻车交流群 >>",
+            "皮卡禁言群": "皮卡社区QQ禁言交流群 >>",
+            "皮卡电报群": "皮卡社区Telegram交流群组 >>",
+            "无语群": "QQ交流群组 >>",
+            "IT-tools": "IT开发者常用工具集合站 >>",
+            "搜索引擎🔍": "聚合搜索引擎，多引擎一键搜索 >>",
+            "AI驱动的语音处理平台": "AI语音识别与处理在线平台 >>",
+            "免费图床(5m)": "免费图片托管服务，单图5MB限制 >>",
+            "绘画(abcd123)": "AI绘画生成平台 >>",
+            "皮卡电报频道": "皮卡社区官方Telegram频道，最新公告与资源 >>",
+            "在线修图": "在线图片编辑美化工具合集 >>",
+            "节点": "皮卡社区节点资源页面 >>",
+            "机器人": "皮卡社区智能机器人服务 >>",
+            "芒果TV": "湖南卫视旗下视频平台，综艺与自制剧强势 >>",
+            "1905电影网": "电影频道官方平台，正版电影在线观看 >>",
+            "咪咕视频": "中国移动旗下综合视频平台 >>",
+            "央视网": "中央电视台官方视频网站 >>",
+            "学习强国": "中共中央宣传部主管的学习平台 >>",
+            "Vimeo": "国外高品质视频创作与分享社区 >>",
+            "Netflix": "全球最大流媒体平台，海量原创剧集电影 >>",
+            "Disney+": "迪士尼旗下流媒体，漫威星战皮克斯全家桶 >>",
+            "Amazon Prime Video": "亚马逊旗下流媒体视频服务 >>",
+            "Apple TV+": "苹果原创影视内容流媒体服务 >>",
+            "Max": "HBO Max更名，华纳兄弟旗下流媒体平台 >>",
+            "Hulu": "美国热门流媒体平台，剧集同步更新快 >>",
+            "Peacock": "NBC环球旗下流媒体服务 >>",
+            "Pluto TV": "免费广告支持流媒体电视平台 >>",
+            "Tubi": "免费广告支持流媒体影视平台 >>",
+            "BBC iPlayer": "英国广播公司BBC在线播放平台 >>",
+            "ChatGPT": "OpenAI开发的最强对话AI，无所不答 >>",
+            "Gemini": "Google开发的多模态AI大模型助手 >>",
+            "DeepSeek": "国产开源大模型，深度推理能力出众 >>",
+            "豆包": "字节跳动旗下AI对话助手，日常百事通 >>",
+            "Claude": "Anthropic开发的安全可靠的AI助手 >>",
+            "Kimi": "月之暗面长文本AI智能助手，一次性读完长篇 >>",
+            "通义千问": "阿里云通义大模型AI助手 >>",
+            "文心一言": "百度文心大模型AI对话工具 >>",
+            "Midjourney": "最强AI绘画工具，文字描述即可生成精美图片 >>",
+            "可灵AI": "快手旗下AI视频与图像生成工具 >>",
+            "讯飞星火": "科大讯飞星火认知大模型 >>",
+            "天工AI": "昆仑万维旗下AI大模型助手 >>",
+            "秘塔AI": "无广告结构化AI搜索引擎 >>",
+            "Runway": "AI视频创作工具，Gen视频生成先驱 >>",
+            "Pika": "AI视频生成平台，文字转视频神器 >>",
+            "DALL·E 3": "OpenAI开发的AI图像生成模型 >>",
+            "Stable Diffusion": "开源AI图像生成模型，本地也能跑 >>",
+            "Copilot": "微软GitHub AI编程助手，代码自动补全 >>",
+            "Perplexity": "AI驱动新一代搜索引擎，精准回答每个问题 >>",
+            "Character.AI": "AI虚拟角色对话平台，和任何角色畅聊 >>",
+            "Grammarly": "AI英文写作助手，纠正语法拼写错误 >>",
+            "Sudowrite": "AI故事创作工具，激发你的写作灵感 >>",
+            "Copy AI": "AI文案生成工具，快速产出高质量文本 >>",
+            "Canva": "AI驱动的在线设计平台，轻松做出精美设计 >>",
+            "腾讯动漫": "腾讯旗下动漫平台，国产动画IP孵化地 >>",
+            "哔哩哔哩漫画": "B站旗下正版漫画阅读平台 >>",
+            "快看漫画": "最受年轻人欢迎的漫画阅读社区 >>",
+            "咚漫": "韩国Webtoon中文漫画平台 >>",
+            "咚漫(中国)": "咚漫中国版，韩国条漫尽在掌握 >>",
+            "叭嗒": "叭嗒漫画在线阅读平台 >>",
+            "漫漫漫画": "原创漫画阅读与创作社区 >>",
+            "PODO漫画": "韩国PODO漫画中文平台 >>",
+            "PODO漫画(ACG)": "PODO漫画ACG专区 >>",
+            "知音漫客": "知音漫客杂志官方在线阅读平台 >>",
+            "飒漫画": "少女漫与校园漫为主的漫画平台 >>",
+            "动漫之家": "老牌二次元漫画轻小说社区 >>",
+            "看漫画": "在线漫画阅读平台 >>",
+            "漫客栈": "原创漫画阅读与创作平台 >>",
+            "VIZ": "日本集英社官方英文漫画平台 >>",
+            "MangaPlus": "集英社官方全球免费漫画阅读平台 >>",
+            "刺猬猫": "二次元原创小说与漫画平台 >>",
+            "漫画人": "漫画在线阅读APP >>",
+            "源仓库": "漫画源仓库，图源聚合平台 >>",
+            "樱花动漫": "在线动漫追番网站，新番更新速度飞快 >>",
+            "AGE动漫": "在线动漫资源分享网站 >>",
+            "Anime1": "港澳台地区在线动漫观看平台 >>",
+            "爱奇艺动漫": "爱奇艺动漫频道，热门番剧国漫聚集 >>",
+            "优酷动漫": "优酷动漫频道，经典与新番一应俱全 >>",
+            "芒果动漫": "芒果TV动漫频道 >>",
+            "动漫岛": "在线动漫观看网站 >>",
+            "新世界动漫": "在线动漫资源分享平台 >>",
+            "Gitee（码云）": "国内开源代码托管与协作平台 >>",
+            "开源中国OSCHINA": "开源技术社区，程序员的精神家园 >>",
+            "清华开源镜像站": "清华大学开源软件镜像服务 >>",
+            "阿里云开源镜像": "阿里云开源软件镜像加速服务 >>",
+            "腾讯云软件源": "腾讯云开源软件镜像源 >>",
+            "华为开源镜像站": "华为云开源软件镜像服务 >>",
+            "网易开源镜像": "网易开源软件镜像站 >>",
+            "中科大开源镜像": "中国科学技术大学开源镜像站 >>",
+            "GitCode": "CSDN旗下开源代码托管平台 >>",
+            "Halo": "优秀开源博客系统，搭建个人网站首选 >>",
+            "禅道Zentao": "开源项目管理与Bug追踪工具 >>",
+            "OpenI启智社区": "新一代人工智能开源开放平台 >>",
+            "HBuilderX": "国产跨平台前端开发IDE工具 >>",
+            "Apache ShenYu": "Apache开源API网关项目 >>",
+            "Zabbix中国社区": "开源监控系统中文社区 >>",
+            "Deepin社区": "深度操作系统社区，国产Linux发行版 >>",
+            "OpenAnolis龙蜥": "龙蜥开源操作系统社区 >>",
+            "openEuler欧拉": "华为欧拉开源操作系统社区 >>",
+            "OpenKylin开放麒麟": "开放麒麟开源操作系统社区 >>",
+            "华中大开源镜像": "华中科技大学开源镜像站 >>",
+            "淘宝": "国内最大电商平台，万能的淘宝什么都能买到 >>",
+            "京东": "自营电商平台，正品保障物流快 >>",
+            "拼多多": "社交电商平台，拼着买更便宜 >>",
+            "天猫": "品牌旗舰店聚集地，品质购物上天猫 >>",
+            "闲鱼": "二手闲置交易平台，让你的闲置游起来 >>",
+            "得物": "潮流装备鉴定交易平台，正品保障 >>",
+            "转转": "二手手机数码交易平台，官方验机靠谱 >>",
+            "阿里巴巴1688": "全球领先的采购批发平台 >>",
+            "苏宁易购": "线上线下融合的智慧零售平台 >>",
+            "唯品会": "品牌特卖平台，天天有三折 >>",
+            "蘑菇街": "女性时尚购物平台，穿搭灵感集结 >>",
+            "什么值得买": "消费决策平台，帮你买得值 >>",
+            "考拉海购": "网易旗下跨境海淘平台 >>",
+            "王者荣耀": "国民级5v5公平竞技MOBA手游 >>",
+            "和平精英": "腾讯光子工作室战术竞技手游 >>",
+            "原神": "米哈游开放世界RPG，提瓦特大陆冒险 >>",
+            "崩坏：星穹铁道": "米哈游银河冒险RPG，星穹列车启程 >>",
+            "英雄联盟手游": "经典MOBA正统手游，随时开黑 >>",
+            "金铲铲之战": "英雄联盟云顶之弈正版自走棋手游 >>",
+            "火影忍者": "正版火影格斗手游，忍术对决 >>",
+            "崩坏3": "米哈游3D动作手游，点燃二次元动作之魂 >>",
+            "绝区零": "米哈游都市潮酷动作RPG新作 >>",
+            "蛋仔派对": "网易潮玩休闲竞技手游，欢乐闯关 >>",
+            "第五人格": "网易非对称对抗竞技手游，1v4猫鼠游戏 >>",
+            "明日方舟": "二次元策略塔防手游，罗德岛制药 >>",
+            "逆水寒手游": "网易开放世界武侠手游，会呼吸的江湖 >>",
+            "永劫无间手游": "武侠竞技手游，冷兵器大逃杀 >>",
+            "鸣潮": "库洛开放世界动作RPG，共鸣者集结 >>",
+            "幻塔": "完美世界轻科幻开放世界RPG >>",
+            "光遇": "陈星汉社交冒险手游，温暖治愈的天空王国 >>",
+            "阴阳师": "网易和风卡牌RPG，式神召唤养成 >>",
+            "碧蓝航线": "战舰拟人即时海战手游 >>",
+            "暗黑破坏神：不朽": "暴雪暗黑系列正版手游，地狱大军来袭 >>",
+            "三国志战略版": "光荣正版授权三国策略手游 >>",
+            "率土之滨": "网易三国策略手游，无VIP不卖资源 >>",
+            "QQ飞车手游": "腾讯经典竞速手游，极速漂移 >>",
+            "穿越火线手游": "腾讯经典FPS手游，枪战王者 >>",
+            "梦幻西游": "网易经典回合制手游，梦回大唐 >>",
+            "大话西游": "网易经典回合制RPG，情义江湖 >>",
+            "我的世界": "全球最畅销沙盒游戏，无限创造 >>",
+            "迷你世界": "国产沙盒创造手游，迷你大陆冒险 >>",
+            "球球大作战": "巨人网络休闲竞技手游，大球吃小球 >>",
+            "无尽的拉格朗日": "网易科幻太空策略手游，开拓星系 >>",
+            "临时聊天": "皮卡社区临时在线聊天室 >>"
+        };
 
-let currentSideCat = 'AI', searchQuery = '', pinnedApps = APP_STORAGE.get('pinnedApps', []);
+        // 应用热度值
+        const APP_HOT = {
+            "文件仓库": 100,
+            "微信": 99,
+            "抖音": 98,
+            "淘宝": 97,
+            "拼多多": 96,
+            "京东": 95,
+            "小红书": 92,
+            "哔哩哔哩": 92,
+            "微博": 91,
+            "QQ官网": 90,
+            "快手": 87,
+            "知乎": 86,
+            "腾讯视频": 84,
+            "爱奇艺": 83,
+            "优酷视频": 82,
+            "芒果TV": 81,
+            "闲鱼": 77,
+            "得物": 76,
+            "剪映": 73,
+            "百度网盘": 72,
+            "王者荣耀": 95,
+            "和平精英": 93,
+            "原神": 92,
+            "崩坏：星穹铁道": 90,
+            "英雄联盟手游": 89,
+            "金铲铲之战": 87,
+            "火影忍者": 85,
+            "蛋仔派对": 84,
+            "第五人格": 83,
+            "明日方舟": 82,
+            "阴阳师": 81,
+            "崩坏3": 80,
+            "绝区零": 79,
+            "逆水寒手游": 78,
+            "永劫无间手游": 77,
+            "光遇": 76,
+            "梦幻西游": 75,
+            "QQ飞车手游": 74,
+            "穿越火线手游": 73,
+            "我的世界": 72,
+            "ChatGPT": 95,
+            "DeepSeek": 93,
+            "豆包": 92,
+            "Kimi": 90,
+            "文心一言": 88,
+            "通义千问": 87,
+            "Midjourney": 86,
+            "Gemini": 85,
+            "Claude": 84,
+            "Copilot": 83,
+            "Perplexity": 82,
+            "讯飞星火": 81,
+            "天工AI": 80,
+            "秘塔AI": 79,
+            "Character.AI": 78,
+            "Runway": 77,
+            "Stable Diffusion": 76,
+            "DALL·E 3": 75,
+            "Pika": 74,
+            "可灵AI": 73,
+            "Canva": 72,
+            "起点读书": 78,
+            "番茄小说": 77,
+            "微信读书": 76,
+            "晋江文学城": 75,
+            "QQ阅读": 74,
+            "七猫免费小说": 73,
+            "掌阅": 72,
+            "天猫": 74,
+            "苏宁易购": 70,
+            "唯品会": 68,
+            "蘑菇街": 66,
+            "什么值得买": 65,
+            "阿里巴巴1688": 64,
+            "转转": 63,
+            "考拉海购": 62,
+            "Netflix": 88,
+            "Disney+": 81,
+            "Amazon Prime Video": 79,
+            "Hulu": 78,
+            "豆瓣": 75,
+            "虎扑": 74,
+            "汽车之家": 73,
+            "网易LOFTER": 72,
+            "Chrome": 88,
+            "Gitee（码云）": 78,
+            "开源中国OSCHINA": 75
+        };
 
-const TAG_DESC = {
-  '视频': '热门短视频&长视频平台，海量内容随心刷 >>',
-  '小说': '在线小说阅读平台，热门网文全本畅读 >>',
-  '社交': '热门社交平台，连接好友分享生活点滴 >>',
-  '工具': '实用工具软件，提升工作学习效率 >>',
-  '搜图': '以图搜图引擎，快速定位图片来源 >>',
-  '群友': 'QQ群友聚集地，加入一起交流分享 >>',
-  '网络': '网络加速工具，畅享高速稳定连接 >>',
-  'iOS': 'iOS平台专属应用，苹果用户必备 >>',
-  '皮卡': '皮卡社区专属应用资源 >>',
-  '起飞': '成人视频平台 >>',
-  'AI': '人工智能助手，智能对话与创作工具 >>',
-  '漫画': '在线漫画阅读，海量作品随心看 >>',
-  '动漫': '在线动漫平台，热门番剧一网打尽 >>',
-  '影视': '在线影视平台，热播剧集电影随心看 >>',
-  '海外': '海外流媒体平台，全球影视尽在掌握 >>',
-  '热门': '热门推荐应用，装机必备精选 >>',
-  '电脑': '电脑端应用软件，桌面办公娱乐 >>',
-  '购物': '在线购物平台，海量好货一站购齐 >>',
-  '游戏': '热门手游推荐，随时随地开黑娱乐 >>'
-};
+        // 海外热门集合
+        var OVERSEAS_SET = {
+            'Netflix': 1,
+            'Disney+': 1,
+            'Amazon Prime Video': 1,
+            'Apple TV+': 1,
+            'Max': 1,
+            'Hulu': 1,
+            'Peacock': 1,
+            'Pluto TV': 1,
+            'Tubi': 1,
+            'BBC iPlayer': 1,
+            'Vimeo': 1,
+            'ChatGPT': 1,
+            'Gemini': 1,
+            'Claude': 1,
+            'Copilot': 1,
+            'Perplexity': 1,
+            'Midjourney': 1,
+            'Runway': 1,
+            'Character.AI': 1,
+            'Stable Diffusion': 1,
+            'DALL·E 3': 1,
+            'Pika': 1,
+            'VIZ': 1,
+            'MangaPlus': 1
+        };
 
-// 逐个应用专属描述（有则用，无则回退到 TAG_DESC）
-const APP_DESC = JSON.parse(`{${[
-'"抖音":"短视频社交平台，记录美好生活，刷最火短视频 >>"',
-'"哔哩哔哩":"国内最大弹幕视频网，动画番剧游戏实况全都有 >>"',
-'"腾讯视频":"腾讯旗下综合视频平台，热播剧集综艺动漫全覆盖 >>"',
-'"爱奇艺":"高清正版影视平台，海量电视剧电影动漫随心看 >>"',
-'"快手":"国民短视频社区，老铁文化看世间百态 >>"',
-'"红果免费短剧":"免费短剧平台，海量爽剧随点随看刷到停不下来 >>"',
-'"优酷视频":"阿里旗下视频平台，经典剧集与独家综艺 >>"',
-'"西瓜视频":"字节旗下综合视频，新鲜有趣点亮生活 >>"',
-'"起点读书":"阅文旗下正版小说平台，男频网文发源地 >>"',
-'"微信读书":"腾讯出品阅读APP，正版图书社交化阅读体验 >>"',
-'"番茄小说":"免费正版小说阅读，看广告免付费畅读海量好书 >>"',
-'"QQ阅读":"腾讯旗下海量正版原创小说阅读平台 >>"',
-'"晋江文学城":"国内最大女性向原创文学网站，言情纯爱耽美一网打尽 >>"',
-'"书旗小说":"阿里旗下免费小说阅读平台，海量好书任你读 >>"',
-'"纵横小说":"老牌原创小说网站，男频精品文聚集地 >>"',
-'"飞卢小说":"同人二次元原创小说平台，脑洞大开 >>"',
-'"七猫免费小说":"免费小说阅读APP，海量正版好书任你读 >>"',
-'"掌阅":"老牌数字阅读平台，精品出版与网文兼而有之 >>"',
-'"17K小说网":"老牌原创文学网站，精品网络小说聚集地 >>"',
-'"笔趣阁蓝色版":"热门小说免费阅读，追书神器蓝色皮肤版 >>"',
-'"笔趣阁橙色版":"热门小说免费阅读，追书神器橙色皮肤版 >>"',
-'"微信":"腾讯旗下国民社交应用，连接每一个中国人 >>"',
-'"微博":"新浪旗下社交媒体，热搜话题第一时间掌握 >>"',
-'"小红书":"年轻人的生活方式社区，种草拔草都在这里 >>"',
-'"知乎":"中文互联网高质量问答社区与创作者平台 >>"',
-'"豆瓣":"书影音评分社区，找到同好分享你的品味 >>"',
-'"QQ官网":"腾讯即时通讯工具官方下载页面 >>"',
-'"网易LOFTER":"网易旗下轻博客社区，同人创作与兴趣社交 >>"',
-'"虎扑":"直男社区，体育赛事与步行街吃瓜第一线 >>"',
-'"汽车之家":"汽车资讯与车主社区，买车用车养车全攻略 >>"',
-'"Chrome":"谷歌浏览器，全球最流行的网页浏览工具 >>"',
-'"剪映":"抖音官方视频剪辑工具，一键成片轻松创作 >>"',
-'"百度网盘":"百度旗下云存储服务，超大空间文件分享 >>"',
-'"乐享云":"云存储与文件分享服务平台 >>"',
-'"蓝光过滤":"屏幕蓝光过滤护眼工具，保护视力 >>"',
-'"熊猫视频压缩":"视频文件压缩工具，减小体积不损画质 >>"',
-'"增强图片":"图片画质增强工具，低清秒变高清 >>"',
-'"JPG格式转换器":"图片格式互转工具，支持多种格式互相转换 >>"',
-'"psd文件查看":"PSD源文件查看器，无需安装Photoshop >>"',
-'"zarchiver1.0.9":"安卓文件压缩解压工具经典稳定版 >>"',
-'"zarchiver Pro":"安卓文件压缩解压工具专业增强版 >>"',
-'"万兴PDF":"PDF阅读编辑转换全能工具，办公必备 >>"',
-'"思维笔记":"思维导图与大纲笔记工具，理清思路 >>"',
-'"拼图贴趣":"图片拼图拼接美化工具，轻松制作精美拼图 >>"',
-'"梨园行戏曲":"戏曲欣赏APP，京剧越剧黄梅戏一网打尽 >>"',
-'"神奇脑波":"脑电波音乐助眠放松专注工具 >>"',
-'"百度贴吧":"百度旗下兴趣社区，各类贴吧任你逛 >>"',
-'"谷歌商店":"Google Play官方应用商店客户端 >>"',
-'"专搜3D图片":"3D与CG图片反向搜索专用引擎 >>"',
-'"多种服务图片搜图":"多引擎聚合搜图，支持多站点同时搜索 >>"',
-'"二次元画像详细搜索":"二次元插画反向搜索，精准定位画师与出处 >>"',
-'"素材反向识图":"AI驱动的反向图片搜索素材引擎 >>"',
-'"素材搜图":"Unsplash高质量免费图片素材库 >>"',
-'"谷歌识图镜像网站":"谷歌图片搜索国内可用镜像站点 >>"',
-'"必应视觉搜寻":"微软必应以图搜图服务 >>"',
-'"老牌识图(被墙)":"TinEye老牌反向图片搜索引擎 >>"',
-'"谷歌识图(被墙)":"谷歌图片搜索 >>"',
-'"俄罗斯搜索引擎":"Yandex俄语区综合搜索引擎 >>"',
-'"专业P站搜二次元识图":"SauceNAO二次元插画精准搜索 >>"',
-'"动漫视频截图识别":"trace.moe动漫场景帧识别引擎 >>"',
-'"PPBC中国植物图像库":"中国植物图像数据库与识别平台 >>"',
-'"百度识图":"百度以图搜图服务 >>"',
-'"360识图":"360以图搜图服务 >>"',
-'"搜狗识图":"搜狗以图搜图服务 >>"',
-'"皮卡备用群":"皮卡社区QQ备用交流群 >>"',
-'"皮卡翻车群":"皮卡社区QQ翻车交流群 >>"',
-'"皮卡禁言群":"皮卡社区QQ禁言交流群 >>"',
-'"皮卡电报群":"皮卡社区Telegram交流群组 >>"',
-'"无语群":"QQ交流群组 >>"',
-'"cloudflare-one":"Cloudflare Zero Trust安全代理工具 >>"',
-'"cloudflare-one(iOS)":"Cloudflare安全代理iOS客户端 >>"',
-'"QQ-9.1.60":"QQ历史版本下载（9.1.60）>>"',
-'"绿茶加速器":"网络加速工具，稳定高速连接 >>"',
-'"旋风加速器(iOS)":"网络加速工具iOS版（通过TestFlight安装）>>"',
-'"旋风加速器":"网络加速工具，一键连接畅享网络 >>"',
-'"IT-tools":"IT开发者常用工具集合站 >>"',
-'"搜索引擎🔍":"聚合搜索引擎，多引擎一键搜索 >>"',
-'"AI驱动的语音处理平台":"AI语音识别与处理在线平台 >>"',
-'"免费图床(5m)":"免费图片托管服务，单图5MB限制 >>"',
-'"绘画(abcd123)":"AI绘画生成平台 >>"',
-'"皮卡电报频道":"皮卡社区官方Telegram频道，最新公告与资源 >>"',
-'"在线修图":"在线图片编辑美化工具合集 >>"',
-'"节点":"皮卡社区节点资源页面 >>"',
-'"机器人":"皮卡社区智能机器人服务 >>"',
-'"超涩AI动图(墙)":"E-Hentai动画GIF标签页 >>"',
-'"52视频":"成人视频内容平台 >>"',
-'"羞羞视频":"成人视频内容平台 >>"',
-'"红杏视频":"成人视频内容平台 >>"',
-'"添狗视频":"成人视频内容平台 >>"',
-'"一起草视频":"成人视频内容平台 >>"',
-'"桃子AV视频":"成人视频内容平台 >>"',
-'"想要叉叉视频":"成人视频内容平台 >>"',
-'"红桃视频":"成人视频内容平台 >>"',
-'"91N视频":"成人视频内容平台 >>"',
-'"啪啪视频":"成人视频内容平台 >>"',
-'"香蕉社交视频":"成人视频内容平台 >>"',
-'"蜜桃视频":"成人视频内容平台 >>"',
-'"黑桃视频":"成人视频内容平台 >>"',
-'"快播视频":"成人视频内容平台 >>"',
-'"GG51视频":"成人视频内容平台 >>"',
-'"海角社交":"成人社交内容平台 >>"',
-'"雷霆加速器":"网络加速工具，游戏视频无压力 >>"',
-'"黑洞加速器":"网络加速工具，低延迟高速率 >>"',
-'"绝尘加速器":"网络加速工具，畅游全球网络无阻 >>"',
-'"绝尘加速器(iOS)":"绝尘网络加速iOS客户端 >>"',
-'"魔方加速器":"CyberCube网络加速工具 >>"',
-'"魔方加速器(iOS)":"CyberCube网络加速iOS客户端 >>"',
-'"星星VPN(iOS)":"星星VPN网络代理iOS客户端 >>"',
-'"迷雾通加速器":"Geph迷雾通网络代理工具 >>"',
-'"安易加速器":"网络加速工具，安全可靠稳定连接 >>"',
-'"dragon加速器":"Dragon网络加速工具 >>"',
-'"dragon加速器(iOS)":"Dragon加速器iOS客户端 >>"',
-'"海鸥加速器":"网络加速工具，稳定流畅不掉线 >>"',
-'"小牛加速器":"网络加速工具 >>"',
-'"nthlink加速器":"NthLink网络代理工具 >>"',
-'"nthlink加速器(iOS)":"NthLink网络代理iOS客户端 >>"',
-'"小狐狸加速器":"网络加速工具 >>"',
-'"爱连加速器":"爱连网络加速服务，多端通用 >>"',
-'"proton加速器":"ProtonVPN瑞士加密网络代理工具 >>"',
-'"proton加速器(iOS)":"ProtonVPN加密代理iOS客户端 >>"',
-'"芒果TV":"湖南卫视旗下视频平台，综艺与自制剧强势 >>"',
-'"1905电影网":"电影频道官方平台，正版电影在线观看 >>"',
-'"咪咕视频":"中国移动旗下综合视频平台 >>"',
-'"央视网":"中央电视台官方视频网站 >>"',
-'"学习强国":"中共中央宣传部主管的学习平台 >>"',
-'"Vimeo":"国外高品质视频创作与分享社区 >>"',
-'"Netflix":"全球最大流媒体平台，海量原创剧集电影 >>"',
-'"Disney+":"迪士尼旗下流媒体，漫威星战皮克斯全家桶 >>"',
-'"Amazon Prime Video":"亚马逊旗下流媒体视频服务 >>"',
-'"Apple TV+":"苹果原创影视内容流媒体服务 >>"',
-'"Max":"HBO Max更名，华纳兄弟旗下流媒体平台 >>"',
-'"Hulu":"美国热门流媒体平台，剧集同步更新快 >>"',
-'"Peacock":"NBC环球旗下流媒体服务 >>"',
-'"Pluto TV":"免费广告支持流媒体电视平台 >>"',
-'"Tubi":"免费广告支持流媒体影视平台 >>"',
-'"BBC iPlayer":"英国广播公司BBC在线播放平台 >>"',
-'"ChatGPT":"OpenAI开发的最强对话AI，无所不答 >>"',
-'"Gemini":"Google开发的多模态AI大模型助手 >>"',
-'"DeepSeek":"国产开源大模型，深度推理能力出众 >>"',
-'"豆包":"字节跳动旗下AI对话助手，日常百事通 >>"',
-'"Claude":"Anthropic开发的安全可靠的AI助手 >>"',
-'"Kimi":"月之暗面长文本AI智能助手，一次性读完长篇 >>"',
-'"通义千问":"阿里云通义大模型AI助手 >>"',
-'"文心一言":"百度文心大模型AI对话工具 >>"',
-'"Midjourney":"最强AI绘画工具，文字描述即可生成精美图片 >>"',
-'"可灵AI":"快手旗下AI视频与图像生成工具 >>"',
-'"讯飞星火":"科大讯飞星火认知大模型 >>"',
-'"天工AI":"昆仑万维旗下AI大模型助手 >>"',
-'"秘塔AI":"无广告结构化AI搜索引擎 >>"',
-'"Runway":"AI视频创作工具，Gen视频生成先驱 >>"',
-'"Pika":"AI视频生成平台，文字转视频神器 >>"',
-'"DALL·E 3":"OpenAI开发的AI图像生成模型 >>"',
-'"Stable Diffusion":"开源AI图像生成模型，本地也能跑 >>"',
-'"Copilot":"微软GitHub AI编程助手，代码自动补全 >>"',
-'"Perplexity":"AI驱动新一代搜索引擎，精准回答每个问题 >>"',
-'"Character.AI":"AI虚拟角色对话平台，和任何角色畅聊 >>"',
-'"Grammarly":"AI英文写作助手，纠正语法拼写错误 >>"',
-'"Sudowrite":"AI故事创作工具，激发你的写作灵感 >>"',
-'"Copy AI":"AI文案生成工具，快速产出高质量文本 >>"',
-'"Canva":"AI驱动的在线设计平台，轻松做出精美设计 >>"',
-'"腾讯动漫":"腾讯旗下动漫平台，国产动画IP孵化地 >>"',
-'"哔哩哔哩漫画":"B站旗下正版漫画阅读平台 >>"',
-'"快看漫画":"最受年轻人欢迎的漫画阅读社区 >>"',
-'"咚漫":"韩国Webtoon中文漫画平台 >>"',
-'"咚漫(中国)":"咚漫中国版，韩国条漫尽在掌握 >>"',
-'"叭嗒":"叭嗒漫画在线阅读平台 >>"',
-'"漫漫漫画":"原创漫画阅读与创作社区 >>"',
-'"PODO漫画":"韩国PODO漫画中文平台 >>"',
-'"PODO漫画(ACG)":"PODO漫画ACG专区 >>"',
-'"知音漫客":"知音漫客杂志官方在线阅读平台 >>"',
-'"飒漫画":"少女漫与校园漫为主的漫画平台 >>"',
-'"动漫之家":"老牌二次元漫画轻小说社区 >>"',
-'"看漫画":"在线漫画阅读平台 >>"',
-'"漫客栈":"原创漫画阅读与创作平台 >>"',
-'"VIZ":"日本集英社官方英文漫画平台 >>"',
-'"MangaPlus":"集英社官方全球免费漫画阅读平台 >>"',
-'"刺猬猫":"二次元原创小说与漫画平台 >>"',
-'"漫画人":"漫画在线阅读APP >>"',
-'"E站漫画":"E站漫画客户端下载 >>"',
-'"哗咔漫画":"漫画在线阅读APP >>"',
-'"禁漫天堂":"成人漫画阅读平台 >>"',
-'"源仓库":"漫画源仓库，图源聚合平台 >>"',
-'"禁漫天堂(iOS)":"禁漫天堂iOS客户端下载 >>"',
-'"樱花动漫":"在线动漫追番网站，新番更新速度飞快 >>"',
-'"AGE动漫":"在线动漫资源分享网站 >>"',
-'"Anime1":"港澳台地区在线动漫观看平台 >>"',
-'"爱奇艺动漫":"爱奇艺动漫频道，热门番剧国漫聚集 >>"',
-'"优酷动漫":"优酷动漫频道，经典与新番一应俱全 >>"',
-'"芒果动漫":"芒果TV动漫频道 >>"',
-'"动漫岛":"在线动漫观看网站 >>"',
-'"新世界动漫":"在线动漫资源分享平台 >>"',
-'"Gitee（码云）":"国内开源代码托管与协作平台 >>"',
-'"开源中国OSCHINA":"开源技术社区，程序员的精神家园 >>"',
-'"清华开源镜像站":"清华大学开源软件镜像服务 >>"',
-'"阿里云开源镜像":"阿里云开源软件镜像加速服务 >>"',
-'"腾讯云软件源":"腾讯云开源软件镜像源 >>"',
-'"华为开源镜像站":"华为云开源软件镜像服务 >>"',
-'"网易开源镜像":"网易开源软件镜像站 >>"',
-'"中科大开源镜像":"中国科学技术大学开源镜像站 >>"',
-'"GitCode":"CSDN旗下开源代码托管平台 >>"',
-'"Halo":"优秀开源博客系统，搭建个人网站首选 >>"',
-'"禅道Zentao":"开源项目管理与Bug追踪工具 >>"',
-'"OpenI启智社区":"新一代人工智能开源开放平台 >>"',
-'"HBuilderX":"国产跨平台前端开发IDE工具 >>"',
-'"Apache ShenYu":"Apache开源API网关项目 >>"',
-'"Zabbix中国社区":"开源监控系统中文社区 >>"',
-'"Deepin社区":"深度操作系统社区，国产Linux发行版 >>"',
-'"OpenAnolis龙蜥":"龙蜥开源操作系统社区 >>"',
-'"openEuler欧拉":"华为欧拉开源操作系统社区 >>"',
-'"OpenKylin开放麒麟":"开放麒麟开源操作系统社区 >>"',
-'"华中大开源镜像":"华中科技大学开源镜像站 >>"',
-'"电报中文版":"Telegram中文版客户端下载 >>"',
-'"推特-x":"Twitter/X社交平台客户端 >>"',
-'"pixiv":"日本最大插画创作分享社区 >>"',
-'"Instagram":"全球最火图片短视频社交平台 >>"',
-'"Discord":"游戏玩家与社群沟通平台 >>"',
-'"Google相机":"Google Pixel相机移植版，拍照算法强大 >>"',
-'"Bing":"微软必应搜索引擎客户端 >>"',
-'"YouTube":"全球最大视频分享平台 >>"',
-'"跨设备投屏":"手机电脑跨屏协同投屏工具 >>"',
-'"安易":"安易网络工具电脑版 >>"',
-'"菜鸟":"菜鸟网络工具电脑版 >>"',
-'"dragon(电脑)":"Dragon加速器电脑版客户端 >>"',
-'"nthlink(电脑)":"NthLink代理工具电脑版 >>"',
-'"绝尘(电脑)":"绝尘加速器电脑版客户端 >>"',
-'"魔方(电脑)":"CyberCube网络加速电脑版 >>"',
-'"proton(电脑)":"ProtonVPN电脑版客户端 >>"',
-'"wePE":"微PE工具箱，系统维护U盘制作工具 >>"',
-'"谷歌浏览器":"Google Chrome浏览器电脑版离线安装包 >>"',
-'"cloudflare-one(电脑)":"Cloudflare安全代理电脑版客户端 >>"',
-'"淘宝":"国内最大电商平台，万能的淘宝什么都能买到 >>"',
-'"京东":"自营电商平台，正品保障物流快 >>"',
-'"拼多多":"社交电商平台，拼着买更便宜 >>"',
-'"天猫":"品牌旗舰店聚集地，品质购物上天猫 >>"',
-'"闲鱼":"二手闲置交易平台，让你的闲置游起来 >>"',
-'"得物":"潮流装备鉴定交易平台，正品保障 >>"',
-'"转转":"二手手机数码交易平台，官方验机靠谱 >>"',
-'"阿里巴巴1688":"全球领先的采购批发平台 >>"',
-'"苏宁易购":"线上线下融合的智慧零售平台 >>"',
-'"唯品会":"品牌特卖平台，天天有三折 >>"',
-'"蘑菇街":"女性时尚购物平台，穿搭灵感集结 >>"',
-'"什么值得买":"消费决策平台，帮你买得值 >>"',
-'"考拉海购":"网易旗下跨境海淘平台 >>"',
-'"王者荣耀":"国民级5v5公平竞技MOBA手游 >>"',
-'"和平精英":"腾讯光子工作室战术竞技手游 >>"',
-'"原神":"米哈游开放世界RPG，提瓦特大陆冒险 >>"',
-'"崩坏：星穹铁道":"米哈游银河冒险RPG，星穹列车启程 >>"',
-'"英雄联盟手游":"经典MOBA正统手游，随时开黑 >>"',
-'"金铲铲之战":"英雄联盟云顶之弈正版自走棋手游 >>"',
-'"火影忍者":"正版火影格斗手游，忍术对决 >>"',
-'"崩坏3":"米哈游3D动作手游，点燃二次元动作之魂 >>"',
-'"绝区零":"米哈游都市潮酷动作RPG新作 >>"',
-'"蛋仔派对":"网易潮玩休闲竞技手游，欢乐闯关 >>"',
-'"第五人格":"网易非对称对抗竞技手游，1v4猫鼠游戏 >>"',
-'"明日方舟":"二次元策略塔防手游，罗德岛制药 >>"',
-'"逆水寒手游":"网易开放世界武侠手游，会呼吸的江湖 >>"',
-'"永劫无间手游":"武侠竞技手游，冷兵器大逃杀 >>"',
-'"鸣潮":"库洛开放世界动作RPG，共鸣者集结 >>"',
-'"幻塔":"完美世界轻科幻开放世界RPG >>"',
-'"光遇":"陈星汉社交冒险手游，温暖治愈的天空王国 >>"',
-'"阴阳师":"网易和风卡牌RPG，式神召唤养成 >>"',
-'"碧蓝航线":"战舰拟人即时海战手游 >>"',
-'"暗黑破坏神：不朽":"暴雪暗黑系列正版手游，地狱大军来袭 >>"',
-'"三国志战略版":"光荣正版授权三国策略手游 >>"',
-'"率土之滨":"网易三国策略手游，无VIP不卖资源 >>"',
-'"QQ飞车手游":"腾讯经典竞速手游，极速漂移 >>"',
-'"穿越火线手游":"腾讯经典FPS手游，枪战王者 >>"',
-'"梦幻西游":"网易经典回合制手游，梦回大唐 >>"',
-'"大话西游":"网易经典回合制RPG，情义江湖 >>"',
-'"我的世界":"全球最畅销沙盒游戏，无限创造 >>"',
-'"迷你世界":"国产沙盒创造手游，迷你大陆冒险 >>"',
-'"球球大作战":"巨人网络休闲竞技手游，大球吃小球 >>"',
-'"无尽的拉格朗日":"网易科幻太空策略手游，开拓星系 >>"'
-].join(',')}}`);
-
-function renderCard(app) {
-  let desc = APP_DESC[app.name] || TAG_DESC[app.tag] || (app.tag + '类应用 >>');
-  return `<div class="ai-item" onclick="window.open('${app.url}','_blank')" style="cursor:pointer;">
+        // 渲染卡片
+        function renderCard(app) {
+            let desc = APP_DESC[app.name] || TAG_DESC[app.tag] || (app.tag + '类应用 >>');
+            return `<div class="ai-item" onclick="window.open('${app.url}','_blank')" style="cursor:pointer;">
     <div class="app-icon" style="background:${app.bg};color:${app.color};font-size:22px;width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="${app.icon}"></i></div>
     <div class="app-info">
       <div class="app-name">${app.name}</div>
       <div class="app-desc">${desc}</div>
     </div>
   </div>`;
-}
+        }
 
-function renderCategory(cat) {
-  currentSideCat = cat;
-  let container = document.getElementById('cat-' + cat);
-  if (!container) return;
-  document.querySelectorAll('#catContent > div').forEach(d => d.style.display = 'none');
+        let currentSideCat = 'AI';
+        let searchQuery = '';
 
-  let tags = CAT_TAG_MAP[cat] || [];
-  if (tags.length === 0) {
-    container.style.display = 'block';
-    return;
-  }
-  let list = APP_DATA.filter(a => tags.includes(a.tag));
-  // 搜索时跨全部分类
-  if (searchQuery) {
-    list = APP_DATA.filter(a => a.name.toLowerCase().includes(searchQuery.toLowerCase()));
-  }
-  container.style.display = 'block';
-  container.innerHTML = list.map(renderCard).join('');
-}
+        function renderCategory(cat) {
+            currentSideCat = cat;
+            let container = document.getElementById('cat-' + cat);
+            if (!container) return;
+            document.querySelectorAll('#catContent > div').forEach(d => d.style.display = 'none');
 
-function switchCat(el, cat) {
-  document.querySelectorAll('#catSidebar .sidebar-item').forEach(i => i.classList.remove('active'));
-  el.classList.add('active');
-  renderCategory(cat);
-}
+            let tags = CAT_TAG_MAP[cat] || [];
+            let list;
+            if (searchQuery) {
+                list = APP_DATA.filter(a => a.name.toLowerCase().includes(searchQuery.toLowerCase()));
+            } else if (tags.length === 0) {
+                container.style.display = 'block';
+                container.innerHTML = '';
+                return;
+            } else {
+                list = APP_DATA.filter(a => tags.includes(a.tag));
+            }
+            container.style.display = 'block';
+            container.innerHTML = list.map(renderCard).join('');
+        }
 
-// 顶部搜索引擎
-(function(){
-  var si = document.getElementById('searchInput');
-  var sb = si.parentElement.querySelector('.search-btn');
-  function doSearch() {
-    var q = si.value.trim();
-    if (q) window.open('https://aaa.372164885.xyz/?q=' + encodeURIComponent(q), '_blank');
-  }
-  sb.addEventListener('click', doSearch);
-  si.addEventListener('keydown', function(e) { if (e.key === 'Enter') doSearch(); });
-})();
+        function switchCat(el, cat) {
+            document.querySelectorAll('#catSidebar .sidebar-item').forEach(i => i.classList.remove('active'));
+            el.classList.add('active');
+            renderCategory(cat);
+        }
 
-// 应用搜索（跨全部分类）
-let appSearch = document.getElementById('appSearch'), appSearchClear = document.getElementById('appSearchClear');
-appSearch.addEventListener('input', () => {
-  searchQuery = appSearch.value.trim();
-  appSearchClear.classList.toggle('visible', searchQuery.length > 0);
-  renderCategory(currentSideCat);
-});
-appSearchClear.addEventListener('click', () => {
-  appSearch.value = ''; searchQuery = '';
-  appSearchClear.classList.remove('visible');
-  renderCategory(currentSideCat);
-  appSearch.focus();
-});
+        // 顶部搜索引擎
+        (function() {
+            var si = document.getElementById('searchInput');
+            var sb = si.parentElement.querySelector('.search-btn');
 
-// 初始渲染：AI 分类（全部动态生成，点击即打开）
-(function initAICategory() {
-  let aiContainer = document.getElementById('cat-AI');
-  if (!aiContainer) return;
-  let aiApps = APP_DATA.filter(a => CAT_TAG_MAP['AI'].includes(a.tag));
-  aiContainer.innerHTML = aiApps.map(renderCard).join('');
-})();
+            function doSearch() {
+                var q = si.value.trim();
+                if (q) window.open('https://aaa.372164885.xyz/?q=' + encodeURIComponent(q), '_blank');
+            }
+            sb.addEventListener('click', doSearch);
+            si.addEventListener('keydown', function(e) { if (e.key === 'Enter') doSearch(); });
+        })();
 
-// ====== 热度排行 ======
-const APP_HOT = {
-'微信':99,'抖音':98,'淘宝':97,'拼多多':96,'京东':95,'支付宝':94,'美团':93,
-'小红书':92,'哔哩哔哩':92,'微博':91,'QQ官网':90,'百度':89,'高德地图':88,
-'快手':87,'知乎':86,'网易云音乐':85,'QQ音乐':84,'腾讯视频':84,'爱奇艺':83,
-'优酷':82,'芒果TV':81,'钉钉':80,'企业微信':79,'BOSS直聘':78,'闲鱼':77,
-'得物':76,'Soul':75,'Keep':74,'剪映':73,'百度网盘':72,'WPS':71,
-'王者荣耀':95,'和平精英':93,'原神':92,'崩坏：星穹铁道':90,'英雄联盟手游':89,
-'金铲铲之战':87,'火影忍者':85,'蛋仔派对':84,'第五人格':83,'明日方舟':82,
-'阴阳师':81,'崩坏3':80,'绝区零':79,'逆水寒手游':78,'永劫无间手游':77,
-'光遇':76,'梦幻西游':75,'QQ飞车手游':74,'穿越火线手游':73,'我的世界':72,
-'ChatGPT':95,'DeepSeek':93,'豆包':92,'Kimi':90,'文心一言':88,'通义千问':87,
-'Midjourney':86,'Gemini':85,'Claude':84,'Copilot':83,'Perplexity':82,
-'讯飞星火':81,'天工AI':80,'秘塔AI':79,'Character.AI':78,'Runway':77,
-'Stable Diffusion':76,'DALL·E 3':75,'Pika':74,'可灵AI':73,'Canva':72,
-'起点读书':78,'番茄小说':77,'微信读书':76,'晋江文学城':75,'QQ阅读':74,
-'七猫免费小说':73,'掌阅':72,
-'天猫':74,'苏宁易购':70,'唯品会':68,'蘑菇街':66,'什么值得买':65,'阿里巴巴1688':64,
-'转转':63,'考拉海购':62,
-'Netflix':88,'YouTube':90,'TikTok':91,'Instagram':89,'Facebook':88,
-'Telegram':87,'Twitter':86,'Discord':85,'Spotify':84,'Pinterest':83,
-'pixiv':82,'Disney+':81,'Amazon Prime Video':79,'Hulu':78,
-'电报中文版':86,'推特-x':85,'Google相机':80,'Bing':79,
-'百度贴吧':76,'豆瓣':75,'虎扑':74,'汽车之家':73,'网易LOFTER':72,
-'Chrome':88,'谷歌浏览器':87,'VS Code':84,'GitHub':83,'Gitee（码云）':78,
-'开源中国OSCHINA':75,'CSDN':74,'掘金':73,'牛客网':70
-};
+        // 应用搜索
+        let appSearch = document.getElementById('appSearch'),
+            appSearchClear = document.getElementById('appSearchClear');
+        appSearch.addEventListener('input', () => {
+            searchQuery = appSearch.value.trim();
+            appSearchClear.classList.toggle('visible', searchQuery.length > 0);
+            renderCategory(currentSideCat);
+        });
+        appSearchClear.addEventListener('click', () => {
+            appSearch.value = '';
+            searchQuery = '';
+            appSearchClear.classList.remove('visible');
+            renderCategory(currentSideCat);
+            appSearch.focus();
+        });
 
-function renderHotRanking() {
-  let list = APP_DATA.filter(function(a) { return APP_HOT[a.name]; });
-  list.sort(function(a, b) { return (APP_HOT[b.name]||0) - (APP_HOT[a.name]||0); });
-  let html = '';
-  list.forEach(function(a, i) {
-    var numCls = i < 3 ? 'fire-' + (i+1) : 'normal';
-    var numText = i < 3 ? '🔥' : (i + 1);
-    html += '<div class="rank-item" onclick="window.open(\'' + a.url + '\',\'_blank\')" style="cursor:pointer;">';
-    html += '<div class="rank-num ' + numCls + '">' + numText + '</div>';
-    html += '<div class="rank-icon" style="background:' + a.bg + ';color:' + a.color + ';font-size:22px;display:flex;align-items:center;justify-content:center;"><i class="' + a.icon + '"></i></div>';
-    html += '<div class="rank-info"><div class="rank-name">' + a.name + '</div>';
-    html += '<div class="rank-desc">' + (APP_DESC[a.name] || TAG_DESC[a.tag] || '') + '</div></div></div>';
-  });
-  document.getElementById('rankList').innerHTML = html;
-}
-renderHotRanking();
+        // 初始渲染 AI 分类
+        (function initAICategory() {
+            let aiContainer = document.getElementById('cat-AI');
+            if (!aiContainer) return;
+            let aiApps = APP_DATA.filter(a => CAT_TAG_MAP['AI'].includes(a.tag));
+            aiContainer.innerHTML = aiApps.map(renderCard).join('');
+        })();
 
-// ====== 海外热门排行 ======
-var OVERSEAS_SET = {
-'YouTube':1,'TikTok':1,'Instagram':1,'Facebook':1,'Telegram':1,'Twitter':1,
-'Discord':1,'Spotify':1,'pixiv':1,'Netflix':1,'Disney+':1,'Amazon Prime Video':1,
-'Apple TV+':1,'Max':1,'Hulu':1,'Peacock':1,'Pluto TV':1,'Tubi':1,'BBC iPlayer':1,
-'Vimeo':1,'ChatGPT':1,'Gemini':1,'Claude':1,'Copilot':1,'Perplexity':1,
-'Midjourney':1,'Runway':1,'Character.AI':1,'Stable Diffusion':1,'DALL\u00b7E 3':1,
-'Pika':1,'电报中文版':1,'推特-x':1,'Bing':1,'Google相机':1,'VIZ':1,'MangaPlus':1
-};
-(function renderOverseas() {
-  var list = APP_DATA.filter(function(a) { return OVERSEAS_SET[a.name]; });
-  list.sort(function(a, b) { return (APP_HOT[b.name]||0) - (APP_HOT[a.name]||0); });
-  var html = '';
-  list.forEach(function(a, i) {
-    html += '<div class="app-item" onclick="window.open(\'' + a.url + '\',\'_blank\')" style="cursor:pointer;">';
-    html += '<div class="app-icon" style="background:' + a.bg + ';color:' + a.color + ';font-size:22px;display:flex;align-items:center;justify-content:center;border-radius:12px;flex-shrink:0;"><i class="' + a.icon + '"></i></div>';
-    html += '<div class="app-info"><div class="app-name">' + a.name + '</div>';
-    html += '<div class="app-desc">' + (APP_DESC[a.name] || TAG_DESC[a.tag] || '') + '</div></div>';
-    html += '<button class="install-btn open">打开</button></div>';
-  });
-  document.getElementById('overseasList').innerHTML = html;
-})();
-</script>
+        // 渲染热度排行
+        function renderHotRanking() {
+            let list = APP_DATA.filter(function(a) { return APP_HOT[a.name]; });
+            list.sort(function(a, b) { return (APP_HOT[b.name] || 0) - (APP_HOT[a.name] || 0); });
+            let html = '';
+            list.forEach(function(a, i) {
+                var numCls = i < 3 ? 'fire-' + (i + 1) : 'normal';
+                var numText = i < 3 ? '🔥' : (i + 1);
+                html += '<div class="rank-item" onclick="window.open(\'' + a.url +
+                    '\',\'_blank\')" style="cursor:pointer;">';
+                html += '<div class="rank-num ' + numCls + '">' + numText + '</div>';
+                html += '<div class="rank-icon" style="background:' + a.bg + ';color:' + a.color +
+                    ';font-size:22px;display:flex;align-items:center;justify-content:center;"><i class="' + a.icon +
+                    '"></i></div>';
+                html += '<div class="rank-info"><div class="rank-name">' + a.name + '</div>';
+                html += '<div class="rank-desc">' + (APP_DESC[a.name] || TAG_DESC[a.tag] || '') + '</div></div></div>';
+            });
+            document.getElementById('rankList').innerHTML = html;
+        }
+        renderHotRanking();
+
+        // 渲染海外热门
+        (function renderOverseas() {
+            var list = APP_DATA.filter(function(a) { return OVERSEAS_SET[a.name]; });
+            list.sort(function(a, b) { return (APP_HOT[b.name] || 0) - (APP_HOT[a.name] || 0); });
+            var html = '';
+            list.forEach(function(a) {
+                html += '<div class="app-item" onclick="window.open(\'' + a.url +
+                    '\',\'_blank\')" style="cursor:pointer;">';
+                html += '<div class="app-icon" style="background:' + a.bg + ';color:' + a.color +
+                    ';font-size:22px;display:flex;align-items:center;justify-content:center;border-radius:12px;flex-shrink:0;"><i class="' +
+                    a.icon + '"></i></div>';
+                html += '<div class="app-info"><div class="app-name">' + a.name + '</div>';
+                html += '<div class="app-desc">' + (APP_DESC[a.name] || TAG_DESC[a.tag] || '') + '</div></div>';
+                html += '<button class="install-btn open">打开</button></div>';
+            });
+            document.getElementById('overseasList').innerHTML = html;
+        })();
+    </script>
 </body>
 </html>
