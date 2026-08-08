@@ -2,1274 +2,1659 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>网站大全</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>✨ 我的电脑 · 分类管理</title>
     <style>
-        :root {
-            --primary: #ff4d6d;
-            --primary-light: #ff8fa3;
-            --accent: #4cc9f0;
-            --green: #2ecc71;
-            --bg: #fff5f7;
-            --card-bg: #ffffff;
-            --text: #1a1a2e;
-            --text-muted: #888;
-            --border: #f0e0e5;
-            --tab-active: #ff4d6d;
-            --shadow: 0 2px 12px rgba(255, 77, 109, 0.08);
-            --iframe-bg: #ffffff;
-        }
-
-        [data-theme="dark"] {
-            --primary: #ff6b81;
-            --primary-light: #ff8fa3;
-            --accent: #4cc9f0;
-            --green: #2ecc71;
-            --bg: #111111;
-            --card-bg: #1a1a1a;
-            --text: #e0e0e0;
-            --text-muted: #999;
-            --border: #2a2a2a;
-            --tab-active: #ff6b81;
-            --shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
-            --iframe-bg: #1a1a1a;
-        }
-
+        /* ===== 全局重置 ===== */
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
-
         body {
-            font-family: 'Noto Sans SC', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            background: #0b0e1a;
+            color: #fff;
+            touch-action: none;
         }
 
-        .header {
+        /* ===== 桌面背景 ===== */
+        #desktop {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(ellipse at 30% 40%, #1a1f3a, #0b0e1a 70%);
+            overflow: hidden;
+            touch-action: none;
+        }
+        .star {
+            position: absolute;
+            border-radius: 50%;
             background: #fff;
-            padding: 16px 20px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 1px 0 var(--border);
+            animation: twinkle var(--dur) ease-in-out infinite alternate;
         }
-        [data-theme="dark"] .header {
-            background: #1a1a1a;
-            box-shadow: 0 1px 0 var(--border);
+        @keyframes twinkle {
+            0% { opacity: 0.15; transform: scale(0.7); }
+            100% { opacity: 1; transform: scale(1.3); }
         }
 
-        .header-title {
-            text-align: center;
+        /* ===== 桌面上的“我的电脑”大图标 (左上角) ===== */
+        #myComputerDesktop {
+            position: absolute;
+            left: 36px;
+            top: 36px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+            touch-action: manipulation;
+            padding: 16px 12px 12px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            width: 130px;
+            height: 130px;
+        }
+        #myComputerDesktop:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: scale(1.04);
+        }
+        #myComputerDesktop:active {
+            transform: scale(0.94);
+        }
+        #myComputerDesktop .big-icon {
+            font-size: 72px;
+            line-height: 1;
+            filter: drop-shadow(0 8px 24px rgba(0,0,0,0.6));
+            margin-bottom: 8px;
+        }
+        #myComputerDesktop .big-label {
             font-size: 18px;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 12px;
-            letter-spacing: 1px;
+            font-weight: 500;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.8);
+            letter-spacing: 0.5px;
+            background: rgba(0,0,0,0.30);
+            padding: 2px 16px;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+        }
+        @media (max-width: 768px) {
+            #myComputerDesktop {
+                left: 20px;
+                top: 20px;
+                width: 100px;
+                height: 100px;
+                padding: 12px 10px 10px;
+            }
+            #myComputerDesktop .big-icon { font-size: 52px; }
+            #myComputerDesktop .big-label { font-size: 15px; padding: 2px 12px; }
+        }
+        @media (max-width: 480px) {
+            #myComputerDesktop {
+                left: 14px;
+                top: 14px;
+                width: 80px;
+                height: 80px;
+                padding: 8px 6px 6px;
+                border-radius: 12px;
+            }
+            #myComputerDesktop .big-icon { font-size: 40px; }
+            #myComputerDesktop .big-label { font-size: 12px; padding: 1px 10px; }
         }
 
-        .search-bar {
+        /* ===== 窗口容器 ===== */
+        #windows {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: calc(100% - 52px);
+            pointer-events: none;
+            z-index: 100;
+        }
+        #windows>* { pointer-events: auto; }
+
+        .window {
+            position: absolute;
+            min-width: 300px;
+            min-height: 200px;
+            max-width: 92vw;
+            max-height: 85vh;
+            background: rgba(22, 28, 50, 0.78);
+            backdrop-filter: blur(24px) saturate(1.2);
+            border: 1px solid rgba(255,255,255,0.13);
+            border-radius: 16px;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04) inset;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            animation: windowIn 0.26s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: box-shadow 0.25s;
+            touch-action: none;
+        }
+        .window.active {
+            box-shadow: 0 28px 96px rgba(0,0,0,0.85), 0 0 0 1px rgba(255,255,255,0.10) inset;
+        }
+        .window.fullscreen {
+            width: 100% !important;
+            height: 100% !important;
+            max-width: 100% !important;
+            max-height: 100% !important;
+            top: 0 !important;
+            left: 0 !important;
+            border-radius: 0;
+            z-index: 9999 !important;
+        }
+        @keyframes windowIn {
+            0% { opacity: 0; transform: scale(0.92) translateY(18px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .win-titlebar {
             display: flex;
             align-items: center;
-            background: #f8f0f2;
-            border-radius: 24px;
-            padding: 8px 16px;
-            gap: 8px;
-            margin-bottom: 12px;
-            border: 1.5px solid var(--border);
+            justify-content: space-between;
+            padding: 10px 14px 8px 18px;
+            background: rgba(255,255,255,0.04);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            flex-shrink: 0;
+            cursor: grab;
+            min-height: 44px;
+            touch-action: none;
         }
-        [data-theme="dark"] .search-bar {
-            background: #111;
-        }
-        .search-bar input {
-            flex: 1;
-            border: none;
-            background: transparent;
-            font-size: 14px;
-            color: var(--text);
-            outline: none;
-            font-family: inherit;
-        }
-        [data-theme="dark"] .search-bar input {
-            color: #e0e0e0;
-        }
-        .search-bar .google-logo {
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-        .google-logo span:nth-child(1) {
-            color: #4285F4;
-        }
-        .google-logo span:nth-child(2) {
-            color: #EA4335;
-        }
-        .google-logo span:nth-child(3) {
-            color: #FBBC05;
-        }
-        .google-logo span:nth-child(4) {
-            color: #4285F4;
-        }
-        .google-logo span:nth-child(5) {
-            color: #34A853;
-        }
-        .google-logo span:nth-child(6) {
-            color: #EA4335;
-        }
-        [data-theme="dark"] .google-logo {
-            color: #e0e0e0;
-        }
-        .search-btn {
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            border-radius: 12px;
-            padding: 4px 12px;
-            font-size: 13px;
-            cursor: pointer;
-            font-family: inherit;
-        }
-        [data-theme="dark"] .search-btn {
-            background: var(--primary);
-            color: #fff;
-        }
-
-        .tabs {
+        .win-titlebar:active { cursor: grabbing; }
+        .win-title {
             display: flex;
-            gap: 0;
-            border-bottom: 2px solid var(--border);
-        }
-        [data-theme="dark"] .tabs {
-            border-bottom-color: var(--border);
-        }
-        .tab {
-            flex: 1;
-            text-align: center;
-            padding: 10px 0;
+            align-items: center;
+            gap: 10px;
             font-size: 14px;
-            cursor: pointer;
-            color: var(--text-muted);
-            font-weight: 500;
-            transition: all 0.2s;
-            position: relative;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            color: rgba(255,255,255,0.88);
         }
-        [data-theme="dark"] .tab {
-            color: #999;
-        }
-        .tab.active {
-            color: var(--primary);
-            font-weight: 700;
-        }
-        [data-theme="dark"] .tab.active {
-            color: var(--primary);
-        }
-        .tab.active::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 20%;
-            width: 60%;
-            height: 2px;
-            background: var(--primary);
-            border-radius: 2px;
-        }
-
-        .main {
+        .win-title .win-icon { font-size: 18px; opacity: 0.8; }
+        .win-controls {
             display: flex;
-            max-width: 960px;
-            margin: 0 auto;
-        }
-
-        .sidebar {
-            width: 72px;
-            background: #fff;
-            min-height: calc(100vh - 120px);
-            padding: 8px 0;
-            border-right: 1px solid var(--border);
+            gap: 6px;
             flex-shrink: 0;
         }
-        [data-theme="dark"] .sidebar {
-            background: #1a1a1a;
-            border-right-color: var(--border);
-        }
-        .sidebar-item {
-            padding: 12px 8px;
-            text-align: center;
-            font-size: 13px;
-            color: var(--text-muted);
+        .win-controls button {
+            width: 30px;
+            height: 30px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.06);
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
             cursor: pointer;
-            transition: all 0.15s;
-            border-radius: 0;
+            transition: background 0.2s, transform 0.15s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            touch-action: manipulation;
         }
-        [data-theme="dark"] .sidebar-item {
-            color: #999;
+        .win-controls button:hover {
+            background: rgba(255,255,255,0.14);
+            color: #fff;
         }
-        .sidebar-item:hover {
-            background: var(--bg);
-            color: var(--primary);
+        .win-controls .btn-fullscreen:hover {
+            background: rgba(76, 201, 240, 0.3);
+            color: #4cc9f0;
         }
-        [data-theme="dark"] .sidebar-item:hover {
-            background: #111;
+        .win-controls .btn-close:hover {
+            background: #e74c3c;
+            color: #fff;
+            transform: scale(1.08);
         }
-        .sidebar-item.active {
-            background: #fff0f3;
-            color: var(--primary);
-            font-weight: 700;
-            border-right: 3px solid var(--primary);
-        }
-        [data-theme="dark"] .sidebar-item.active {
-            background: #2a1018;
-            border-right-color: var(--primary);
+        .win-controls .btn-min:hover {
+            background: rgba(255,255,255,0.18);
         }
 
-        .content {
+        .win-body {
             flex: 1;
+            padding: 16px 20px 20px;
+            overflow-y: auto;
+            color: rgba(255,255,255,0.92);
+            font-size: 14px;
+            line-height: 1.6;
+            -webkit-overflow-scrolling: touch;
+        }
+        .win-body::-webkit-scrollbar { width: 4px; }
+        .win-body::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.20);
+            border-radius: 8px;
+        }
+        .win-body.iframe-body {
             padding: 0;
+            overflow: hidden;
         }
-
-        .panel {
-            display: none;
-        }
-        .panel.active {
+        .win-body.iframe-body iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
             display: block;
         }
 
-        .rank-list {
-            padding: 8px 0;
+        /* ===== 缩放手柄 ===== */
+        .win-resize {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            width: 18px;
+            height: 18px;
+            cursor: nwse-resize;
+            background: transparent;
+            z-index: 10;
+            touch-action: none;
         }
-        .rank-item {
-            display: flex;
-            align-items: center;
-            padding: 12px 16px;
-            background: #fff;
-            border-bottom: 1px solid var(--border);
-            gap: 12px;
-            cursor: pointer;
-            transition: background 0.15s;
+        .win-resize::after {
+            content: "";
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 12px;
+            height: 12px;
+            border-right: 2px solid rgba(255,255,255,0.25);
+            border-bottom: 2px solid rgba(255,255,255,0.25);
+            border-radius: 0 0 4px 0;
+            transition: border-color 0.2s;
         }
-        [data-theme="dark"] .rank-item {
-            background: #1a1a1a;
-            border-bottom-color: var(--border);
-        }
-        .rank-item:hover {
-            background: #fff5f7;
-        }
-        [data-theme="dark"] .rank-item:hover {
-            background: #222;
+        .win-resize:hover::after,
+        .win-resize:active::after {
+            border-color: rgba(255,255,255,0.6);
         }
 
-        .rank-num {
-            width: 26px;
-            height: 26px;
+        /* ===== “我的电脑”窗口内容样式 ===== */
+        .mycomputer-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            height: 100%;
+        }
+        .mycomputer-container .toolbar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+        }
+        .mycomputer-container .add-btn {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
             border-radius: 8px;
+            padding: 8px 18px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 13px;
-            font-weight: 700;
-            flex-shrink: 0;
+            gap: 8px;
+            touch-action: manipulation;
         }
-        .rank-num.fire-1 {
-            background: #ff4d6d;
-            color: #fff;
+        .mycomputer-container .add-btn:hover {
+            background: rgba(255,255,255,0.16);
         }
-        .rank-num.fire-2 {
-            background: #ff8c42;
-            color: #fff;
-        }
-        .rank-num.fire-3 {
-            background: #ffd166;
-            color: #fff;
-        }
-        .rank-num.normal {
-            background: #f0e8ea;
-            color: #888;
-        }
-        [data-theme="dark"] .rank-num.normal {
-            background: #2a2a2a;
-            color: #999;
+        .mycomputer-container .add-btn:active {
+            transform: scale(0.96);
         }
 
-        .rank-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
-            object-fit: cover;
-            flex-shrink: 0;
-            overflow: hidden;
+        /* ===== 文件夹网格 ===== */
+        .folder-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 12px;
+            flex: 1;
+            align-content: start;
+        }
+        .folder-item {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
-            font-weight: 700;
+            padding: 16px 8px 12px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s, transform 0.15s;
+            touch-action: manipulation;
         }
-        .rank-info {
-            flex: 1;
-            min-width: 0;
+        .folder-item:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.15);
         }
-        .rank-name {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text);
+        .folder-item:active {
+            transform: scale(0.94);
         }
-        [data-theme="dark"] .rank-name {
-            color: #e0e0e0;
+        .folder-item .folder-emoji {
+            font-size: 42px;
+            line-height: 1.2;
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
         }
-        .rank-desc {
-            font-size: 12px;
-            color: var(--text-muted);
+        .folder-item .folder-name {
+            font-size: 13px;
+            font-weight: 500;
+            margin-top: 6px;
+            text-align: center;
+            color: rgba(255,255,255,0.85);
+        }
+        .folder-item .folder-count {
+            font-size: 11px;
+            color: rgba(255,255,255,0.35);
             margin-top: 2px;
-            white-space: nowrap;
+        }
+
+        /* ===== 分类视图 ===== */
+        .category-view {
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            height: 100%;
+        }
+        .category-view.active {
+            display: flex;
+        }
+        .category-view .back-btn {
+            background: rgba(255,255,255,0.06);
+            border: none;
+            color: rgba(255,255,255,0.7);
+            padding: 6px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-family: inherit;
+            transition: background 0.2s;
+            align-self: flex-start;
+            touch-action: manipulation;
+        }
+        .category-view .back-btn:hover {
+            background: rgba(255,255,255,0.12);
+        }
+        .category-view .cat-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .category-view .link-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 12px;
+            flex: 1;
+            align-content: start;
+        }
+        .category-view .link-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 4px 8px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.04);
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s, transform 0.15s;
+            touch-action: manipulation;
+        }
+        .category-view .link-item:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.10);
+        }
+        .category-view .link-item:active {
+            transform: scale(0.94);
+        }
+        .category-view .link-item .link-emoji {
+            font-size: 28px;
+            line-height: 1.2;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
+        }
+        .category-view .link-item .link-label {
+            font-size: 11px;
+            font-weight: 500;
+            text-align: center;
+            margin-top: 4px;
+            max-width: 100%;
             overflow: hidden;
             text-overflow: ellipsis;
-        }
-        [data-theme="dark"] .rank-desc {
-            color: #999;
+            white-space: nowrap;
+            color: rgba(255,255,255,0.85);
         }
 
-        .app-list {
-            padding: 8px 0;
-            background: var(--bg);
-        }
-        [data-theme="dark"] .app-list {
-            background: transparent;
-        }
-        .app-item {
-            display: flex;
-            align-items: center;
-            padding: 12px 16px;
-            background: #fff;
-            border-bottom: 1px solid var(--border);
-            gap: 12px;
-            cursor: pointer;
-            transition: background 0.15s;
-        }
-        [data-theme="dark"] .app-item {
-            background: #1a1a1a;
-            border-bottom-color: var(--border);
-        }
-        .app-item:hover {
-            background: #fff5f7;
-        }
-        [data-theme="dark"] .app-item:hover {
-            background: #222;
-        }
-        .app-icon {
-            width: 52px;
+        /* ===== 底部任务栏 ===== */
+        #taskbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
             height: 52px;
-            border-radius: 12px;
-            flex-shrink: 0;
+            background: rgba(11,14,26,0.75);
+            backdrop-filter: blur(20px) saturate(1.4);
+            border-top: 1px solid rgba(255,255,255,0.06);
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 26px;
-            overflow: hidden;
+            padding: 0 12px;
+            z-index: 999;
+            gap: 6px;
+            touch-action: manipulation;
         }
-        .app-info {
+        #taskbar .tb-items {
+            display: flex;
+            gap: 4px;
             flex: 1;
-            min-width: 0;
+            overflow-x: auto;
+            padding: 0 4px;
+            -webkit-overflow-scrolling: touch;
         }
-        .app-name {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text);
+        #taskbar .tb-items::-webkit-scrollbar { height: 0; }
+        .tb-btn {
+            padding: 4px 14px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.06);
+            color: rgba(255,255,255,0.75);
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            white-space: nowrap;
+            font-family: inherit;
             display: flex;
             align-items: center;
             gap: 6px;
+            touch-action: manipulation;
         }
-        [data-theme="dark"] .app-name {
-            color: #e0e0e0;
-        }
-        .badge {
-            font-size: 10px;
-            background: #ff4d6d;
-            color: #fff;
-            border-radius: 4px;
-            padding: 1px 5px;
-            font-weight: 500;
-        }
-        [data-theme="dark"] .badge {
+        .tb-btn:hover {
+            background: rgba(255,255,255,0.14);
             color: #fff;
         }
-        .app-desc {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-top: 3px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-align: left;
-        }
-        .install-btn {
-            background: var(--green);
+        .tb-btn.active {
+            background: rgba(255,255,255,0.16);
             color: #fff;
-            border: none;
-            border-radius: 18px;
-            padding: 7px 18px;
+        }
+        #taskbar .tb-time {
             font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
+            color: rgba(255,255,255,0.65);
+            padding: 0 6px;
+            white-space: nowrap;
             flex-shrink: 0;
-            font-family: inherit;
-            transition: opacity 0.15s;
-        }
-        .install-btn:hover {
-            opacity: 0.85;
-        }
-        .install-btn.open {
-            background: #4cc9f0;
-        }
-        [data-theme="dark"] .install-btn {
-            color: #fff;
         }
 
-        .app-search-wrap {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 12px;
-            padding: 8px 14px;
-            background: #fff;
-            border: 1.5px solid var(--border);
-            border-radius: 24px;
-        }
-        [data-theme="dark"] .app-search-wrap {
-            background: #1a1a1a;
-            border-color: var(--border);
-        }
-        .app-search-wrap input {
-            flex: 1;
-            border: none;
-            background: transparent;
-            outline: none;
-            font-size: 14px;
-            color: var(--text);
-            font-family: inherit;
-        }
-        [data-theme="dark"] .app-search-wrap input {
-            color: #e0e0e0;
-        }
-        .app-search-wrap input::placeholder {
-            color: #aaa;
-        }
-        .app-search-clear {
-            background: none;
-            border: none;
-            color: #ccc;
-            cursor: pointer;
-            font-size: 16px;
+        /* ===== 右键菜单 ===== */
+        #ctxMenu {
             display: none;
+            position: fixed;
+            z-index: 9999;
+            background: rgba(22,28,50,0.92);
+            backdrop-filter: blur(20px) saturate(1.6);
+            border-radius: 12px;
+            padding: 6px 0;
+            min-width: 180px;
+            border: 1px solid rgba(255,255,255,0.10);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+            animation: menuIn 0.15s ease;
+            touch-action: manipulation;
         }
-        [data-theme="dark"] .app-search-clear {
-            color: #999;
+        @keyframes menuIn {
+            0% { opacity: 0; transform: scale(0.96) translateY(-4px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
         }
-        .app-search-clear.visible {
-            display: block;
-        }
-
-        .ai-item {
-            display: flex;
-            align-items: center;
-            padding: 12px 16px;
-            background: #fff;
-            border-bottom: 1px solid var(--border);
-            gap: 12px;
+        #ctxMenu .ctx-item {
+            padding: 10px 20px;
+            font-size: 14px;
+            color: rgba(255,255,255,0.85);
             cursor: pointer;
             transition: background 0.15s;
-        }
-        [data-theme="dark"] .ai-item {
-            background: #1a1a1a;
-            border-bottom-color: var(--border);
-        }
-        .ai-item:hover {
-            background: #fff5f7;
-        }
-        [data-theme="dark"] .ai-item:hover {
-            background: #242424;
-        }
-
-        @media (max-width: 600px) {
-            .sidebar {
-                width: 60px;
-            }
-        }
-
-        [data-theme="dark"] .rank-list {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: none;
             background: transparent;
+            width: 100%;
+            text-align: left;
+            font-family: inherit;
+            touch-action: manipulation;
         }
-        [data-theme="dark"] .header-title {
-            color: #e0e0e0;
+        #ctxMenu .ctx-item:hover {
+            background: rgba(255,255,255,0.08);
         }
-        [data-theme="dark"] .rank-icon {
-            color: #e0e0e0;
+        #ctxMenu .ctx-item.danger:hover {
+            background: rgba(231,76,60,0.25);
+            color: #ff7a6b;
         }
-        [data-theme="dark"] .app-icon {
-            color: #e0e0e0;
+        #ctxMenu .ctx-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.06);
+            margin: 4px 12px;
+        }
+
+        @media (max-width: 768px) {
+            #taskbar { height: 48px; }
+            #windows { height: calc(100% - 48px); }
+            .window { min-width: 260px; min-height: 160px; max-width: 94vw; max-height: 78vh; }
+            .win-title { font-size: 13px; }
+            .win-controls button { width: 28px; height: 28px; font-size: 13px; }
+            .tb-btn { font-size: 12px; padding: 3px 10px; }
+            #taskbar .tb-time { font-size: 12px; }
+            .win-resize { width: 16px; height: 16px; bottom: 3px; right: 3px; }
+            .win-resize::after { width: 10px; height: 10px; bottom: 1px; right: 1px; }
+            .folder-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+            .category-view .link-grid { grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); }
+        }
+        @media (max-width: 480px) {
+            #taskbar { height: 44px; padding: 0 4px; gap: 4px; }
+            #windows { height: calc(100% - 44px); }
+            .window { min-width: 200px; min-height: 140px; max-width: 96vw; max-height: 70vh; }
+            .win-title { font-size: 12px; }
+            .win-controls button { width: 24px; height: 24px; font-size: 11px; }
+            .win-body { padding: 12px 14px 16px; font-size: 13px; }
+            #taskbar .tb-time { font-size: 11px; padding: 0 4px; }
+            .tb-btn { padding: 2px 8px; font-size: 11px; }
+            .win-resize { width: 14px; height: 14px; bottom: 2px; right: 2px; }
+            .win-resize::after { width: 8px; height: 8px; bottom: 1px; right: 1px; }
+            .folder-grid { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
+            .category-view .link-grid { grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); }
+            .mycomputer-container .add-btn { padding: 6px 14px; font-size: 13px; }
+            .folder-item .folder-emoji { font-size: 32px; }
+            .folder-item .folder-name { font-size: 11px; }
+        }
+        @media (hover: none) {
+            .folder-item:hover { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.06); }
+            .folder-item:active { transform: scale(0.94); }
+            .category-view .link-item:hover { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.04); }
+            .category-view .link-item:active { transform: scale(0.94); }
+            .tb-btn:hover { background: rgba(255,255,255,0.06); }
+            .win-controls button:hover { background: rgba(255,255,255,0.06); }
+            .win-resize:hover::after { border-color: rgba(255,255,255,0.25); }
+            #myComputerDesktop:hover { background: rgba(255,255,255,0.03); transform: scale(1); }
+            #myComputerDesktop:active { transform: scale(0.94); }
         }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <div class="header-title">网站大全
-            <button class="nav-icon-btn theme-btn" id="themeBtn" style="width:28px;height:28px;font-size:14px;vertical-align:middle;margin-left:4px;" title="切换日夜模式">🌙</button>
-        </div>
-        <div class="search-bar">
-            <svg width="16" height="16" fill="none" stroke="#aaa" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-            <input type="text" placeholder="输入你的问题" id="searchInput">
-            <div class="google-logo">
-                <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
-            </div>
-            <button class="search-btn">搜索</button>
-        </div>
-        <div class="tabs">
-            <div class="tab active" onclick="switchMainTab(this,'hot')">热度排行</div>
-            <div class="tab" onclick="switchMainTab(this,'category')">网站类别</div>
-            <div class="tab" onclick="switchMainTab(this,'cracked')">海外热门</div>
+    <!-- ===== 桌面 ===== -->
+    <div id="desktop">
+        <div id="myComputerDesktop" title="打开我的电脑">
+            <div class="big-icon">💻</div>
+            <div class="big-label">我的电脑</div>
         </div>
     </div>
 
-    <!-- HOT RANKING TAB -->
-    <div class="panel active" id="panel-hot">
-        <div class="rank-list" id="rankList"></div>
+    <!-- ===== 窗口容器 ===== -->
+    <div id="windows"></div>
+
+    <!-- ===== 底部任务栏 ===== -->
+    <div id="taskbar">
+        <div class="tb-items" id="tbItems"></div>
+        <div class="tb-time" id="tbTime">--:--:--</div>
     </div>
 
-    <!-- CATEGORY TAB -->
-    <div class="panel" id="panel-category">
-        <div class="app-search-wrap" style="margin:0 0 10px 0;">
-            <svg width="14" height="14" fill="none" stroke="#aaa" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-            <input type="text" placeholder="搜索应用..." id="appSearch">
-            <button class="app-search-clear" id="appSearchClear">✕</button>
-        </div>
-        <div style="display:flex;">
-            <div class="sidebar" id="catSidebar">
-                <div class="sidebar-item active" onclick="switchCat(this,'AI')">AI</div>
-                <div class="sidebar-item" onclick="switchCat(this,'video')">视频</div>
-                <div class="sidebar-item" onclick="switchCat(this,'anime')">动漫</div>
-                <div class="sidebar-item" onclick="switchCat(this,'novel')">小说</div>
-                <div class="sidebar-item" onclick="switchCat(this,'social')">社交</div>
-                <div class="sidebar-item" onclick="switchCat(this,'game')">游戏</div>
-                <div class="sidebar-item" onclick="switchCat(this,'biz')">皮卡</div>
-                <div class="sidebar-item" onclick="switchCat(this,'other')">其他</div>
-            </div>
-            <div style="flex:1;" id="catContent">
-                <div id="cat-AI"></div>
-                <div id="cat-video" style="display:none;" class="cat-apps-grid"></div>
-                <div id="cat-anime" style="display:none;" class="cat-apps-grid"></div>
-                <div id="cat-novel" style="display:none;" class="cat-apps-grid"></div>
-                <div id="cat-social" style="display:none;" class="cat-apps-grid"></div>
-                <div id="cat-game" style="display:none;" class="cat-apps-grid"></div>
-                <div id="cat-biz" style="display:none;" class="cat-apps-grid"></div>
-                <div id="cat-other" style="display:none;" class="cat-apps-grid"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- OVERSEAS HOT TAB -->
-    <div class="panel" id="panel-cracked">
-        <div class="app-list" id="overseasList"></div>
+    <!-- ===== 右键菜单 ===== -->
+    <div id="ctxMenu">
+        <button class="ctx-item" data-action="open">📂 打开</button>
+        <button class="ctx-item" data-action="rename">✏️ 重命名</button>
+        <button class="ctx-item danger" data-action="delete">🗑️ 删除</button>
+        <div class="ctx-divider"></div>
+        <button class="ctx-item" data-action="newLink">🔗 新建快捷方式</button>
     </div>
 
     <script>
-        // 日夜模式
-        (function() {
-            let dark = localStorage.getItem('webdir_dark');
-            if (dark === null) dark = '1';
-            document.documentElement.setAttribute('data-theme', dark === '1' ? 'dark' : '');
-            document.getElementById('themeBtn').textContent = dark === '1' ? '☀️' : '🌙';
-            document.getElementById('themeBtn').addEventListener('click', function() {
-                let isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-                if (isDark) {
-                    document.documentElement.setAttribute('data-theme', '');
-                    this.textContent = '🌙';
-                    localStorage.setItem('webdir_dark', '0');
-                } else {
-                    document.documentElement.setAttribute('data-theme', 'dark');
-                    this.textContent = '☀️';
-                    localStorage.setItem('webdir_dark', '1');
-                }
-            });
-        })();
+        // ===================================================================
+        //  数据：从网站大全转换过来的链接，按分类组织
+        // ===================================================================
 
-        function switchMainTab(el, tab) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            el.classList.add('active');
-            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-            var panel = document.getElementById('panel-' + tab);
-            if (panel) panel.classList.add('active');
-        }
-
-        // 侧边栏分类 → APP_DATA tag 映射
-        const CAT_TAG_MAP = {
-            AI: ['AI'],
-            video: ['视频', '影视', '海外'],
-            anime: ['动漫', '漫画'],
-            novel: ['小说'],
-            social: ['社交'],
-            game: ['游戏'],
-            biz: ['皮卡', '群友'],
-            other: ['工具', '搜图', '购物', '电脑', 'iOS', '网络', '热门', '起飞']
+        const CATEGORIES = {
+            'AI': { emoji: '🤖', label: 'AI工具' },
+            '视频': { emoji: '🎬', label: '视频平台' },
+            '动漫': { emoji: '🎨', label: '动漫漫画' },
+            '小说': { emoji: '📖', label: '小说阅读' },
+            '社交': { emoji: '💬', label: '社交社区' },
+            '游戏': { emoji: '🎮', label: '热门游戏' },
+            '购物': { emoji: '🛒', label: '购物电商' },
+            '工具': { emoji: '🔧', label: '实用工具' },
+            '搜图': { emoji: '🔍', label: '识图搜索' },
+            '海外': { emoji: '🌍', label: '海外流媒体' },
+            '影视': { emoji: '📺', label: '影视资源' },
+            '群友': { emoji: '👥', label: '皮卡群组' },
+            '皮卡': { emoji: '⚡', label: '皮卡资源' }
         };
 
-        // 标签描述
-        const TAG_DESC = {
-            '视频': '热门短视频&长视频平台，海量内容随心刷 >>',
-            '小说': '在线小说阅读平台，热门网文全本畅读 >>',
-            '社交': '热门社交平台，连接好友分享生活点滴 >>',
-            '工具': '实用工具软件，提升工作学习效率 >>',
-            '搜图': '以图搜图引擎，快速定位图片来源 >>',
-            '群友': 'QQ群友聚集地，加入一起交流分享 >>',
-            'iOS': 'iOS平台专属应用，苹果用户必备 >>',
-            '皮卡': '皮卡社区专属应用资源 >>',
-            '起飞': '成人视频平台 >>',
-            'AI': '人工智能助手，智能对话与创作工具 >>',
-            '漫画': '在线漫画阅读，海量作品随心看 >>',
-            '动漫': '在线动漫平台，热门番剧一网打尽 >>',
-            '影视': '在线影视平台，热播剧集电影随心看 >>',
-            '海外': '海外流媒体平台，全球影视尽在掌握 >>',
-            '热门': '热门推荐应用，装机必备精选 >>',
-            '电脑': '电脑端应用软件，桌面办公娱乐 >>',
-            '购物': '在线购物平台，海量好货一站购齐 >>',
-            '游戏': '热门手游推荐，随时随地开黑娱乐 >>',
-            '热度排行': '皮卡社区文件存储与分享仓库，安全便捷 >>',
-            '网络': '网络相关应用与工具 >>'
-        };
-
-        // 应用数据
-        const APP_DATA = [
-            { name: "文件仓库", icon: "fas fa-cloud", color: "#f38020", bg: "#fef6ee", url: "https://zzz.372164885.xyz/", tag: "热度排行" },
-            { name: "抖音", icon: "fab fa-tiktok", color: "#010101", bg: "#fefefe", url: "https://www.douyin.com/", tag: "视频" },
-            { name: "哔哩哔哩", icon: "fas fa-tv", color: "#fb7299", bg: "#fff1f5", url: "https://www.bilibili.com/", tag: "视频" },
-            { name: "腾讯视频", icon: "fas fa-film", color: "#0052d9", bg: "#e8f0ff", url: "https://v.qq.com/", tag: "视频" },
-            { name: "爱奇艺", icon: "fas fa-video", color: "#00be06", bg: "#f0fff0", url: "https://www.iqiyi.com/", tag: "视频" },
-            { name: "快手", icon: "fas fa-bolt", color: "#ff4906", bg: "#fff3f0", url: "https://kuaishou.com/", tag: "视频" },
-            { name: "红果免费短剧", icon: "fas fa-film", color: "#ff3b30", bg: "#fff0f0", url: "https://www.hongguoduanju.com/", tag: "视频" },
-            { name: "优酷视频", icon: "fas fa-play-circle", color: "#00b0ff", bg: "#e6f7ff", url: "https://www.youku.com/", tag: "视频" },
-            { name: "西瓜视频", icon: "fas fa-water", color: "#ff6a00", bg: "#fff7e6", url: "https://ixigua.com/", tag: "视频" },
-            { name: "起点读书", icon: "fas fa-book", color: "#f5a623", bg: "#fff5e0", url: "https://www.qidian.com/", tag: "小说" },
-            { name: "微信读书", icon: "fas fa-book-open", color: "#07c160", bg: "#edfaf3", url: "https://weread.qq.com/", tag: "小说" },
-            { name: "番茄小说", icon: "fas fa-leaf", color: "#ff5722", bg: "#fff3f0", url: "https://fanqienovel.com/", tag: "小说" },
-            { name: "QQ阅读", icon: "fas fa-book", color: "#00adfc", bg: "#e6f7ff", url: "https://book.qq.com/", tag: "小说" },
-            { name: "晋江文学城", icon: "fas fa-book-open", color: "#e66465", bg: "#fff0f2", url: "https://www.jjwxc.net/", tag: "小说" },
-            { name: "书旗小说", icon: "fas fa-bookmark", color: "#ff7a45", bg: "#fff2e6", url: "https://www.shuqi.com/", tag: "小说" },
-            { name: "纵横小说", icon: "fas fa-feather-alt", color: "#2d6cef", bg: "#edf2ff", url: "https://www.zongheng.com/", tag: "小说" },
-            { name: "飞卢小说", icon: "fas fa-pen-fancy", color: "#ff4d4f", bg: "#fff0f0", url: "https://www.feilu.com/", tag: "小说" },
-            { name: "七猫免费小说", icon: "fas fa-cat", color: "#1da36f", bg: "#e6f7f0", url: "https://www.qimao.com/", tag: "小说" },
-            { name: "掌阅", icon: "fas fa-book-reader", color: "#ff6034", bg: "#fff2e6", url: "https://www.zhangyue.com/", tag: "小说" },
-            { name: "17K小说网", icon: "fas fa-keyboard", color: "#198cf0", bg: "#e6f4ff", url: "https://www.17k.com/", tag: "小说" },
-            { name: "微信", icon: "fab fa-weixin", color: "#07c160", bg: "#edfaf3", url: "https://weixin.qq.com/", tag: "社交" },
-            { name: "微博", icon: "fab fa-weibo", color: "#e6162d", bg: "#fff0f1", url: "https://weibo.com/", tag: "社交" },
-            { name: "小红书", icon: "fas fa-heart", color: "#fe2c55", bg: "#fff0f2", url: "https://www.xiaohongshu.com/", tag: "社交" },
-            { name: "知乎", icon: "fas fa-question-circle", color: "#0F88EB", bg: "#E6F7FF", url: "https://www.zhihu.com/", tag: "社交" },
-            { name: "豆瓣", icon: "fas fa-leaf", color: "#4D9040", bg: "#F5FAF4", url: "https://www.douban.com/", tag: "社交" },
-            { name: "QQ官网", icon: "fas fa-comment", color: "#12B7F5", bg: "#E6F7FF", url: "https://im.qq.com/", tag: "社交" },
-            { name: "网易LOFTER", icon: "fas fa-heart", color: "#F5A623", bg: "#FFF7E6", url: "https://www.lofter.com/", tag: "社交" },
-            { name: "虎扑", icon: "fas fa-baseball-ball", color: "#F9A602", bg: "#FFF9E6", url: "https://www.hupu.com/", tag: "社交" },
-            { name: "汽车之家", icon: "fas fa-car", color: "#0066B3", bg: "#E6F7FF", url: "https://club.autohome.com.cn/", tag: "社交" },
-            { name: "Chrome", icon: "fab fa-chrome", color: "#4285f4", bg: "#eef2ff", url: "https://www.google.com/chrome/", tag: "工具" },
-            { name: "剪映", icon: "fas fa-scissors", color: "#1a1a1a", bg: "#f5f5f5", url: "https://www.capcut.com/", tag: "工具" },
-            { name: "百度网盘", icon: "fas fa-cloud", color: "#2869e6", bg: "#edf2ff", url: "https://pan.baidu.com/", tag: "工具" },
-            { name: "专搜3D图片", icon: "fas fa-cube", color: "#2869e6", bg: "#edf2ff", url: "http://3d.iqdb.org/", tag: "搜图" },
-            { name: "多种服务图片搜图", icon: "fas fa-search-plus", color: "#2869e6", bg: "#edf2ff", url: "http://iqdb.org/", tag: "搜图" },
-            { name: "二次元画像详细搜索", icon: "fas fa-user-circle", color: "#2869e6", bg: "#edf2ff", url: "https://ascii2d.net/", tag: "搜图" },
-            { name: "素材反向识图", icon: "fas fa-search-plus", color: "#2869e6", bg: "#edf2ff", url: "https://www.everypixel.com/", tag: "搜图" },
-            { name: "素材搜图", icon: "fas fa-search-plus", color: "#2869e6", bg: "#edf2ff", url: "https://unsplash.com/", tag: "搜图" },
-            { name: "谷歌识图镜像网站", icon: "fas fa-search", color: "#2869e6", bg: "#edf2ff", url: "https://soik.top/", tag: "搜图" },
-            { name: "必应视觉搜寻", icon: "fas fa-camera", color: "#2869e6", bg: "#edf2ff", url: "https://cn.bing.com/visualsearch", tag: "搜图" },
-            { name: "老牌识图(被墙)", icon: "fas fa-search-plus", color: "#2869e6", bg: "#edf2ff", url: "https://tineye.com/", tag: "搜图" },
-            { name: "谷歌识图(被墙)", icon: "fas fa-search", color: "#2869e6", bg: "#edf2ff", url: "https://www.google.com.hk/imghp", tag: "搜图" },
-            { name: "俄罗斯搜索引擎", icon: "fas fa-search-plus", color: "#2869e6", bg: "#edf2ff", url: "https://ya.ru/?utm_referrer=https%3A%2F%2Fwww.google.com%2F", tag: "搜图" },
-            { name: "专业P站搜二次元识图", icon: "fas fa-search", color: "#2869e6", bg: "#edf2ff", url: "https://saucenao.com/", tag: "搜图" },
-            { name: "动漫视频截图识别", icon: "fas fa-search-plus", color: "#2869e6", bg: "#edf2ff", url: "https://trace.moe/", tag: "搜图" },
-            { name: "PPBC中国植物图像库", icon: "fas fa-search-plus", color: "#2869e6", bg: "#edf2ff", url: "https://ppbc.iplant.cn/", tag: "搜图" },
-            { name: "百度识图", icon: "fas fa-cloud", color: "#2869e6", bg: "#edf2ff", url: "https://graph.baidu.com/pcpage/index?tpl_from=pc/", tag: "搜图" },
-            { name: "360识图", icon: "fas fa-image", color: "#2869e6", bg: "#edf2ff", url: "https://m.image.so.com/", tag: "搜图" },
-            { name: "搜狗识图", icon: "fas fa-image", color: "#2869e6", bg: "#edf2ff", url: "https://pic.sogou.com/pic/index.jsp?v=5/", tag: "搜图" },
-            { name: "皮卡备用群", icon: "fas fa-comments", color: "#2b8eff", bg: "#eef6ff", url: "https://qun.qq.com/universal-share/share?ac=1&authKey=Xld9l791HF7rsivEh%2FQHOCq3T%2FkUGp84QYDKZOliUcQUAlBccjL4VOJ98PRana%2F3&busi_data=eyJncm91cENvZGUiOiIxMDQ5NTUwOTI1IiwidG9rZW4iOiJvOUdkcDZ1OFRua3Z4Wmg5WVkzRjRoTURjcHR3ZldsRm85QzJRYXdxWjIrNTRUUGpvbzRyaGw2OXlCRWRXNnFRIiwidWluIjoiMTk2NjMzMDMxOSJ9&data=NlQKjt4AzXJQU8zoFaDXBWB-L-26e5lVnjpw_c0e-FGQDu1oMf4Yv0HMaXn3yVX-0w6KMFZXo_NSCsZILOMHwg&svctype=4&tempid=h5_group_info", tag: "群友" },
-            { name: "皮卡翻车群", icon: "fas fa-comments", color: "#ff6d00", bg: "#fff7e6", url: "https://qun.qq.com/universal-share/share?ac=1&authKey=1H7F1EMVtmdMrv1CzYxKwFEJpRQEtXWYo5NymTsfD60RgqfmcLAqYx2kJUBpVeta&busi_data=eyJncm91cENvZGUiOiI1Njg4NzE0MjYiLCJ0b2tlbiI6Im1YMjg3YnBncU9ibEx0cktmTHdMNGY5OE5nMWVjTDRsZkpMdTZwM2N5cElFdExEa3I5MUROSVZsTjJQTEl1SVkiLCJ1aW4iOiIxOTY2MzMwMzE5In0%3D&data=2kh6zsaP4Doa-Jl-KccfFc19LCpsFI1NTPlynFYqUPLj3RgonL8BEg2mEtGGU7CzqwSN6bdHq_SWD9hijXZ9dQ&svctype=4&tempid=h5_group_info", tag: "群友" },
-            { name: "皮卡禁言群", icon: "fas fa-users", color: "#e53935", bg: "#fef2f2", url: "https://qun.qq.com/universal-share/share?ac=1&authKey=CfKOKp6Sc7CP%2BH6hZZ9PpeveC%2FNcfE7iSGwVsMSpfhCGCWOuPjeswNS7Cv5vtCGA&busi_data=eyJncm91cENvZGUiOiIxMDQxMjQ0MjI5IiwidG9rZW4iOiJYb2lqRHQrQ2Y4L2xyMEt5Z2dFNkphT3BONHhPLy92bUNJYjBLeWFNMjJ5WmNlSFU2ZFJ6YkpxLy9nSHg4b0poIiwidWluIjoiMTk2NjMzMDMxOSJ9&data=1UsMWD3H0fkwy-X2lVTwriyc_Va_4M76mJvFSw2HfpmpjSdtsGEybhi3JGw7tTopgZYXPVcyes6wiUHd1eznSw&svctype=4&tempid=h5_group_info", tag: "群友" },
-            { name: "皮卡电报群", icon: "fas fa-paper-plane", color: "#2ea6ff", bg: "#eef8ff", url: "https://t.me/+qiezQCcGXswzYTM1", tag: "群友" },
-            { name: "无语群", icon: "fas fa-comments", color: "#7c3aed", bg: "#f5f3ff", url: "https://qun.qq.com/universal-share/share?ac=1&authKey=1MapCqFxxqy%2BOOXbkM6%2Fz3ZC3G%2BIe%2BOHkXURAf8Zy3yRH8MzazejEb3mGPY7C64m&busi_data=eyJncm91cENvZGUiOiI2MDQ1NzQyMzciLCJ0b2tlbiI6InFyMHVScWw3QzlCbzVNM1VHaEVyVDlQNDRiMThUVVJIcWtJalprOTh3Zjc3S015czdOYTVjK2k4WjhobG91T3AiLCJ1aW4iOiIxMDA1Mzg0NDE4In0%3D&data=mkN0qLE6LehMHkAdQSgjzbHFi20B9fGIKuy2jhRKEIOUD5XFikhrZwZ4UNK-PB-uCwiQicXzFFbTVn8tYHkCLg&svctype=4&tempid=h5_group_info", tag: "群友" },
-            { name: "IT-tools", icon: "fas fa-tools", color: "#6366f1", bg: "#eef2ff", url: "https://sss.372164885.xyz", tag: "皮卡" },
-            { name: "搜索引擎🔍", icon: "fas fa-search", color: "#3b82f6", bg: "#eff6ff", url: "https://aaa.372164885.xyz", tag: "皮卡" },
-            { name: "AI驱动的语音处理平台", icon: "fas fa-brain", color: "#8b5cf6", bg: "#f5f3ff", url: "https://123.372164885.xyz", tag: "皮卡" },
-            { name: "免费图床(5m)", icon: "fas fa-image", color: "#f59e0b", bg: "#fffbeb", url: "https://svip.372164885.xyz", tag: "皮卡" },
-            { name: "绘画(abcd123)", icon: "fas fa-palette", color: "#ec4899", bg: "#fdf2f8", url: "https://o.372164885.xyz", tag: "皮卡" },
-            { name: "皮卡电报频道", icon: "fas fa-paper-plane", color: "#2ea6ff", bg: "#eef8ff", url: "https://t.me/s/pkpk158/", tag: "皮卡" },
-            { name: "在线修图", icon: "fas fa-paint-brush", color: "#ff6b9d", bg: "#fff0f5", url: "https://huixiao666.github.io/cxc/", tag: "皮卡" },
-            { name: "节点", icon: "fas fa-link", color: "#6366f1", bg: "#f0f0ff", url: "https://pn.372164885.xyz", tag: "皮卡" },
-            { name: "机器人", icon: "fas fa-robot", color: "#10a37f", bg: "#e6f7f2", url: "#", tag: "皮卡" },
-            { name: "芒果TV", icon: "fas fa-tv", color: "#FF6A00", bg: "#FFF7E6", url: "https://www.mgtv.com", tag: "影视" },
-            { name: "1905电影网", icon: "fas fa-clapperboard", color: "#005A9E", bg: "#E6F7FF", url: "https://www.1905.com", tag: "影视" },
-            { name: "咪咕视频", icon: "fas fa-wifi", color: "#0087DE", bg: "#E6F7FF", url: "https://www.miguvideo.com", tag: "影视" },
-            { name: "央视网", icon: "fas fa-tower-broadcast", color: "#D9272E", bg: "#FDEDED", url: "https://tv.cctv.com", tag: "影视" },
-            { name: "学习强国", icon: "fas fa-book-open", color: "#D9272E", bg: "#FDEDED", url: "https://www.xuexi.cn", tag: "影视" },
-            { name: "Vimeo", icon: "fas fa-vimeo-v", color: "#1AB7E4", bg: "#E6F7FF", url: "https://vimeo.com", tag: "影视" },
-            { name: "Netflix", icon: "fas fa-play-circle", color: "#E50914", bg: "#FFE6E6", url: "https://www.netflix.com", tag: "海外" },
-            { name: "Disney+", icon: "fas fa-star", color: "#1A1A1A", bg: "#F0F0F0", url: "https://www.disneyplus.com", tag: "海外" },
-            { name: "Amazon Prime Video", icon: "fas fa-shopping-cart", color: "#FF9900", bg: "#FFF7E6", url: "https://primevideo.com", tag: "海外" },
-            { name: "Apple TV+", icon: "fas fa-apple", color: "#000000", bg: "#F0F0F0", url: "https://tv.apple.com", tag: "海外" },
-            { name: "Max", icon: "fas fa-w", color: "#FF0000", bg: "#FDEDED", url: "https://www.max.com", tag: "海外" },
-            { name: "Hulu", icon: "fas fa-h", color: "#1D70A4", bg: "#E6F7FF", url: "https://www.hulu.com", tag: "海外" },
-            { name: "Peacock", icon: "fas fa-feather", color: "#00A3FF", bg: "#E6F7FF", url: "https://www.peacocktv.com", tag: "海外" },
-            { name: "Pluto TV", icon: "fas fa-tv", color: "#007AFF", bg: "#E6F7FF", url: "https://pluto.tv", tag: "海外" },
-            { name: "Tubi", icon: "fas fa-film", color: "#00A3FF", bg: "#E6F7FF", url: "https://tubitv.com", tag: "海外" },
-            { name: "BBC iPlayer", icon: "fas fa-b", color: "#B30094", bg: "#FDEDED", url: "https://www.bbc.co.uk/iplayer", tag: "海外" },
-            { name: "ChatGPT", icon: "fas fa-robot", color: "#10a37f", bg: "#e6f7f2", url: "https://chat.openai.com", tag: "AI" },
-            { name: "Gemini", icon: "fas fa-gem", color: "#4285f4", bg: "#eef2ff", url: "https://gemini.google.com", tag: "AI" },
-            { name: "DeepSeek", icon: "fas fa-brain", color: "#4A90E2", bg: "#eef4ff", url: "https://deepseek.com", tag: "AI" },
-            { name: "豆包", icon: "fas fa-comment", color: "#E6162D", bg: "#FFE6E9", url: "https://doubao.com", tag: "AI" },
-            { name: "Claude", icon: "fas fa-cloud", color: "#d97706", bg: "#fffbeb", url: "https://claude.ai", tag: "AI" },
-            { name: "Kimi", icon: "fas fa-file-alt", color: "#8b5cf6", bg: "#f5f3ff", url: "https://kimi.moonshot.cn", tag: "AI" },
-            { name: "通义千问", icon: "fas fa-lightbulb", color: "#6366f1", bg: "#eef2ff", url: "https://tongyi.aliyun.com", tag: "AI" },
-            { name: "文心一言", icon: "fas fa-feather", color: "#3b82f6", bg: "#eff6ff", url: "https://yiyan.baidu.com", tag: "AI" },
-            { name: "Midjourney", icon: "fas fa-palette", color: "#6366f1", bg: "#eef2ff", url: "https://www.midjourney.com", tag: "AI" },
-            { name: "可灵AI", icon: "fas fa-film", color: "#06b6d4", bg: "#ecfeff", url: "https://klingai.com", tag: "AI" },
-            { name: "讯飞星火", icon: "fas fa-comments", color: "#2563eb", bg: "#eef2ff", url: "https://xinghuo.xfyun.cn", tag: "AI" },
-            { name: "天工AI", icon: "fas fa-cogs", color: "#0ea5e9", bg: "#f0f9ff", url: "https://www.tiangong.cn", tag: "AI" },
-            { name: "秘塔AI", icon: "fas fa-shield-alt", color: "#00A3FF", bg: "#E6F7FF", url: "https://www.metaso.cn", tag: "AI" },
-            { name: "Runway", icon: "fas fa-video", color: "#000000", bg: "#f5f5f5", url: "https://runwayml.com", tag: "AI" },
-            { name: "Pika", icon: "fas fa-film", color: "#ec4899", bg: "#fdf2f8", url: "https://pika.art", tag: "AI" },
-            { name: "DALL·E 3", icon: "fas fa-paint-brush", color: "#10a37f", bg: "#e6f7f2", url: "https://openai.com/dall-e-3", tag: "AI" },
-            { name: "Stable Diffusion", icon: "fas fa-images", color: "#a855f7", bg: "#faf5ff", url: "https://stablediffusionweb.com", tag: "AI" },
-            { name: "Copilot", icon: "fas fa-code", color: "#7c3aed", bg: "#f5f3ff", url: "https://copilot.microsoft.com", tag: "AI" },
-            { name: "Perplexity", icon: "fas fa-search", color: "#14b8a6", bg: "#f0fdfa", url: "https://www.perplexity.ai", tag: "AI" },
-            { name: "Character.AI", icon: "fas fa-user-circle", color: "#ef4444", bg: "#fef2f2", url: "https://character.ai", tag: "AI" },
-            { name: "Grammarly", icon: "fas fa-spell-check", color: "#15c39a", bg: "#e6fdf5", url: "https://www.grammarly.com/", tag: "AI" },
-            { name: "Sudowrite", icon: "fas fa-feather-alt", color: "#f7971e", bg: "#fffdf0", url: "https://www.sudowrite.com/", tag: "AI" },
-            { name: "Copy AI", icon: "fas fa-copy", color: "#19c37d", bg: "#e6fdf5", url: "https://www.copy.ai/", tag: "AI" },
-            { name: "Canva", icon: "fas fa-paint-brush", color: "#00c4cc", bg: "#e6fdff", url: "https://www.canva.com/", tag: "AI" },
-            { name: "腾讯动漫", icon: "fas fa-book", color: "#12B7F5", bg: "#E6F7FF", url: "https://ac.qq.com", tag: "漫画" },
-            { name: "哔哩哔哩漫画", icon: "fas fa-book-open", color: "#FB7299", bg: "#FFE6EF", url: "https://manga.bilibili.com", tag: "漫画" },
-            { name: "快看漫画", icon: "fas fa-heart", color: "#FF4F88", bg: "#FFE6ED", url: "https://www.kuaikanmanhua.com", tag: "漫画" },
-            { name: "咚漫", icon: "fas fa-fire", color: "#FF6C37", bg: "#FFF2E6", url: "https://www.dongmanmanhua.com", tag: "漫画" },
-            { name: "咚漫(中国)", icon: "fas fa-comments", color: "#36D399", bg: "#E6FFFA", url: "https://www.dongmanmanhua.cn", tag: "漫画" },
-            { name: "叭嗒", icon: "fas fa-star", color: "#722ED1", bg: "#F3E6FF", url: "https://www.pidou.cc", tag: "漫画" },
-            { name: "漫漫漫画", icon: "fas fa-smile", color: "#FF9A2E", bg: "#FFF5E6", url: "https://www.manmanapp.com", tag: "漫画" },
-            { name: "PODO漫画", icon: "fas fa-pen", color: "#14C9C9", bg: "#E6FFFA", url: "https://www.podoapp.com", tag: "漫画" },
-            { name: "PODO漫画(ACG)", icon: "fas fa-star", color: "#FF6F61", bg: "#FFE6E6", url: "https://www.podoacg.com", tag: "漫画" },
-            { name: "知音漫客", icon: "fas fa-feather", color: "#E63946", bg: "#FFE6E9", url: "https://www.zymk.cn", tag: "漫画" },
-            { name: "飒漫画", icon: "fas fa-palette", color: "#8E44AD", bg: "#F4E6FF", url: "https://www.samanhua.net", tag: "漫画" },
-            { name: "动漫之家", icon: "fas fa-home", color: "#3498DB", bg: "#E6F4FF", url: "https://www.dmzj.com", tag: "漫画" },
-            { name: "看漫画", icon: "fas fa-eye", color: "#2ECC71", bg: "#E6FFED", url: "https://www.kanman.com", tag: "漫画" },
-            { name: "漫客栈", icon: "fas fa-umbrella", color: "#F39C12", bg: "#FFF5E6", url: "https://www.mankezhan.com", tag: "漫画" },
-            { name: "VIZ", icon: "fas fa-bookmark", color: "#E74C3C", bg: "#FFE6E6", url: "https://www.viz.com", tag: "漫画" },
-            { name: "MangaPlus", icon: "fas fa-bolt", color: "#F1C40F", bg: "#FFF9E6", url: "https://mangaplus.shueisha.co.jp", tag: "漫画" },
-            { name: "刺猬猫", icon: "fas fa-cat", color: "#9B59B6", bg: "#F6E6FF", url: "https://www.ciweimao.com", tag: "漫画" },
-            { name: "漫画人", icon: "fas fa-user", color: "#FF8C00", bg: "#FFF2E6", url: "https://www.manhuaren.com", tag: "漫画" },
-            { name: "源仓库", icon: "fas fa-file-image", color: "#ef4444", bg: "#fef2f2", url: "https://www.yckceo.com/", tag: "漫画" },
-            { name: "樱花动漫", icon: "fas fa-film", color: "#FF5C7F", bg: "#FFE6EA", url: "https://www.yinhuadm.one/", tag: "动漫" },
-            { name: "AGE动漫", icon: "fas fa-play", color: "#FF7D00", bg: "#FFF2E6", url: "https://www.agedm.io/", tag: "动漫" },
-            { name: "Anime1", icon: "fas fa-video", color: "#1E88E5", bg: "#E6F4FF", url: "https://anime1.me", tag: "动漫" },
-            { name: "爱奇艺动漫", icon: "fas fa-tv", color: "#00A7E1", bg: "#E6F7FF", url: "https://www.iqiyi.com/dongman", tag: "动漫" },
-            { name: "优酷动漫", icon: "fas fa-play", color: "#00BFFF", bg: "#E6F9FF", url: "https://dongman.youku.com", tag: "动漫" },
-            { name: "芒果动漫", icon: "fas fa-film", color: "#FF3388", bg: "#FFE6F2", url: "https://www.mgtv.com/dongman", tag: "动漫" },
-            { name: "动漫岛", icon: "fas fa-palm-tree", color: "#20B2AA", bg: "#E6FFFA", url: "https://www.dmd3.com", tag: "动漫" },
-            { name: "新世界动漫", icon: "fas fa-globe-asia", color: "#FF4500", bg: "#FFE6E0", url: "https://www.xsjdm.com", tag: "动漫" },
-            { name: "Gitee（码云）", icon: "fas fa-code-branch", color: "#C50000", bg: "#FCEEEE", url: "https://gitee.com", tag: "工具" },
-            { name: "开源中国OSCHINA", icon: "fas fa-globe", color: "#4CAF50", bg: "#E8F5E9", url: "https://www.oschina.net", tag: "工具" },
-            { name: "清华开源镜像站", icon: "fas fa-database", color: "#0052D9", bg: "#E8F0FF", url: "https://mirrors.tuna.tsinghua.edu.cn", tag: "工具" },
-            { name: "阿里云开源镜像", icon: "fas fa-cloud", color: "#FF6A00", bg: "#FFF7E6", url: "https://developer.aliyun.com/mirror", tag: "工具" },
-            { name: "腾讯云软件源", icon: "fas fa-server", color: "#00C1DE", bg: "#E6F7FF", url: "https://mirrors.cloud.tencent.com", tag: "工具" },
-            { name: "华为开源镜像站", icon: "fas fa-microchip", color: "#C41E3A", bg: "#FCE8EC", url: "https://mirrors.huaweicloud.com", tag: "工具" },
-            { name: "网易开源镜像", icon: "fas fa-inbox", color: "#FF4500", bg: "#FFF0E6", url: "http://mirrors.163.com", tag: "工具" },
-            { name: "中科大开源镜像", icon: "fas fa-university", color: "#6C5CE7", bg: "#F0F0FF", url: "https://mirrors.ustc.edu.cn", tag: "工具" },
-            { name: "GitCode", icon: "fas fa-code", color: "#0084FF", bg: "#E6F7FF", url: "https://gitcode.com", tag: "工具" },
-            { name: "Halo", icon: "fas fa-blog", color: "#2196F3", bg: "#E3F2FD", url: "https://halo.run", tag: "工具" },
-            { name: "禅道Zentao", icon: "fas fa-tasks", color: "#009688", bg: "#EAF6F6", url: "https://www.zentao.net", tag: "工具" },
-            { name: "OpenI启智社区", icon: "fas fa-robot", color: "#7B1FA2", bg: "#F3E5F5", url: "https://openi.pcl.ac.cn", tag: "工具" },
-            { name: "HBuilderX", icon: "fas fa-code", color: "#0078D4", bg: "#E6F7FF", url: "https://www.dcloud.io", tag: "工具" },
-            { name: "Apache ShenYu", icon: "fas fa-project-diagram", color: "#D32F2F", bg: "#FFEBEE", url: "https://shenyu.apache.org", tag: "工具" },
-            { name: "Zabbix中国社区", icon: "fas fa-chart-line", color: "#0099CC", bg: "#E6F7FF", url: "https://www.zabbix.com/cn", tag: "工具" },
-            { name: "Deepin社区", icon: "fas fa-desktop", color: "#4285F4", bg: "#E8F0FE", url: "https://www.deepin.org", tag: "工具" },
-            { name: "OpenAnolis龙蜥", icon: "fas fa-server", color: "#F4B400", bg: "#FFFBEB", url: "https://openanolis.cn", tag: "工具" },
-            { name: "openEuler欧拉", icon: "fas fa-cogs", color: "#00B42A", bg: "#E6F9E6", url: "https://www.openeuler.org", tag: "工具" },
-            { name: "OpenKylin开放麒麟", icon: "fas fa-laptop", color: "#1A73E8", bg: "#E8F0FE", url: "https://www.openkylin.org", tag: "工具" },
-            { name: "华中大开源镜像", icon: "fas fa-database", color: "#FF9800", bg: "#FFF3E0", url: "http://mirrors.hust.edu.cn", tag: "工具" },
-            { name: "王者荣耀", icon: "fas fa-crown", color: "#d4a843", bg: "#fffdf0", url: "https://pvp.qq.com/", tag: "游戏" },
-            { name: "和平精英", icon: "fas fa-crosshairs", color: "#ff4500", bg: "#fff5ee", url: "https://gp.qq.com/", tag: "游戏" },
-            { name: "原神", icon: "fas fa-star", color: "#ffcc00", bg: "#fffef0", url: "https://ys.mihoyo.com/", tag: "游戏" },
-            { name: "崩坏：星穹铁道", icon: "fas fa-train", color: "#1a9ce8", bg: "#eef8ff", url: "https://sr.mihoyo.com/", tag: "游戏" },
-            { name: "英雄联盟手游", icon: "fas fa-trophy", color: "#c8aa6e", bg: "#fffdf5", url: "https://lolm.qq.com/", tag: "游戏" },
-            { name: "金铲铲之战", icon: "fas fa-chess", color: "#f5a623", bg: "#fffdf0", url: "https://jcc.qq.com/", tag: "游戏" },
-            { name: "火影忍者", icon: "fas fa-fire", color: "#ff6b35", bg: "#fff5f0", url: "https://naruto.qq.com/", tag: "游戏" },
-            { name: "崩坏3", icon: "fas fa-heart", color: "#ff4081", bg: "#fff0f5", url: "https://bh3.mihoyo.com/", tag: "游戏" },
-            { name: "绝区零", icon: "fas fa-bolt", color: "#ff6600", bg: "#fff7ee", url: "https://zzz.mihoyo.com/", tag: "游戏" },
-            { name: "蛋仔派对", icon: "fas fa-egg", color: "#ff69b4", bg: "#fff0f5", url: "https://party.163.com/", tag: "游戏" },
-            { name: "第五人格", icon: "fas fa-ghost", color: "#7c3aed", bg: "#f5f0ff", url: "https://id5.163.com/", tag: "游戏" },
-            { name: "明日方舟", icon: "fas fa-shield-alt", color: "#2d8cf0", bg: "#eef6ff", url: "https://ak.hypergryph.com/", tag: "游戏" },
-            { name: "逆水寒手游", icon: "fas fa-water", color: "#3b82f6", bg: "#eff6ff", url: "https://n.163.com/", tag: "游戏" },
-            { name: "永劫无间手游", icon: "fas fa-fist-raised", color: "#dc2626", bg: "#fff0f0", url: "https://www.yjwujian.cn/", tag: "游戏" },
-            { name: "鸣潮", icon: "fas fa-wave-square", color: "#06b6d4", bg: "#f0fdff", url: "https://mc.kurogames.com/", tag: "游戏" },
-            { name: "幻塔", icon: "fas fa-dice-d6", color: "#6366f1", bg: "#f0f0ff", url: "https://ht.wanmei.com/", tag: "游戏" },
-            { name: "光遇", icon: "fas fa-feather", color: "#f59e0b", bg: "#fffdf0", url: "https://sky.thatgamecompany.com/", tag: "游戏" },
-            { name: "阴阳师", icon: "fas fa-yin-yang", color: "#8b5cf6", bg: "#f5f0ff", url: "https://yys.163.com/", tag: "游戏" },
-            { name: "碧蓝航线", icon: "fas fa-ship", color: "#2196f3", bg: "#eef6ff", url: "https://game.bilibili.com/blhx/", tag: "游戏" },
-            { name: "暗黑破坏神：不朽", icon: "fas fa-skull", color: "#ef4444", bg: "#fff0f0", url: "https://di.blizzard.cn/", tag: "游戏" },
-            { name: "三国志战略版", icon: "fas fa-chess-knight", color: "#d97706", bg: "#fffdf0", url: "https://sgzzlb.lingxigames.com/", tag: "游戏" },
-            { name: "率土之滨", icon: "fas fa-flag", color: "#059669", bg: "#f0fdf5", url: "https://stzb.163.com/", tag: "游戏" },
-            { name: "QQ飞车手游", icon: "fas fa-car", color: "#f97316", bg: "#fff7ee", url: "https://speedm.qq.com/", tag: "游戏" },
-            { name: "穿越火线手游", icon: "fas fa-skull-crossbones", color: "#e74c3c", bg: "#fff0f0", url: "https://cfm.qq.com/", tag: "游戏" },
-            { name: "梦幻西游", icon: "fas fa-dragon", color: "#e0245e", bg: "#fff0f5", url: "https://my.163.com/", tag: "游戏" },
-            { name: "大话西游", icon: "fas fa-mask", color: "#7c2d12", bg: "#fdf5f0", url: "https://dhxy.163.com/", tag: "游戏" },
-            { name: "我的世界", icon: "fas fa-cube", color: "#5d9a3f", bg: "#f0fdf0", url: "https://mc.163.com/", tag: "游戏" },
-            { name: "迷你世界", icon: "fas fa-smile", color: "#ff9800", bg: "#fff8f0", url: "https://www.mini1.cn/", tag: "游戏" },
-            { name: "球球大作战", icon: "fas fa-circle", color: "#00bcd4", bg: "#f0fdff", url: "https://www.battleofballs.com/", tag: "游戏" },
-            { name: "无尽的拉格朗日", icon: "fas fa-rocket", color: "#14b8a6", bg: "#f0fdfa", url: "https://www.neteasegames.com/lglr/", tag: "游戏" },
-            { name: "淘宝", icon: "fas fa-store", color: "#ff5000", bg: "#fff3ee", url: "https://www.taobao.com/", tag: "购物" },
-            { name: "京东", icon: "fas fa-box", color: "#e2231a", bg: "#fff0f0", url: "https://www.jd.com/", tag: "购物" },
-            { name: "拼多多", icon: "fas fa-shopping-bag", color: "#e02e24", bg: "#fff2f2", url: "https://www.pinduoduo.com/", tag: "购物" },
-            { name: "天猫", icon: "fas fa-cat", color: "#ff0036", bg: "#fff0f2", url: "https://www.tmall.com/", tag: "购物" },
-            { name: "闲鱼", icon: "fas fa-fish", color: "#ffc300", bg: "#fffbeb", url: "https://www.goofish.com/", tag: "购物" },
-            { name: "得物", icon: "fas fa-shoe-prints", color: "#1a1a1a", bg: "#f5f5f5", url: "https://www.dewu.com/", tag: "购物" },
-            { name: "转转", icon: "fas fa-sync-alt", color: "#fe4d37", bg: "#fff0f0", url: "https://www.zhuanzhuan.com/", tag: "购物" },
-            { name: "阿里巴巴1688", icon: "fas fa-industry", color: "#ff6c00", bg: "#fff7ee", url: "https://www.1688.com/", tag: "购物" },
-            { name: "苏宁易购", icon: "fas fa-shopping-cart", color: "#ffc000", bg: "#fffce6", url: "https://www.suning.com/", tag: "购物" },
-            { name: "唯品会", icon: "fas fa-tag", color: "#e6196b", bg: "#fff0f5", url: "https://www.vip.com/", tag: "购物" },
-            { name: "蘑菇街", icon: "fas fa-tshirt", color: "#ff4466", bg: "#fff0f2", url: "https://www.mogujie.com/", tag: "购物" },
-            { name: "什么值得买", icon: "fas fa-thumbs-up", color: "#e1251b", bg: "#fff0f0", url: "https://www.smzdm.com/", tag: "购物" },
-            { name: "考拉海购", icon: "fas fa-globe-asia", color: "#c41230", bg: "#fff0f2", url: "https://www.kaola.com/", tag: "购物" },
-            { name: "临时聊天", icon: "fas fa-cloud", color: "#f38020", bg: "#fef6ee", url: "https://chat123.372164885.xyz/", tag: "皮卡" }
+        const LINK_DATA = [
+            // AI工具
+            { name: "ChatGPT", emoji: "🤖", url: "https://chat.openai.com", category: "AI" },
+            { name: "Gemini", emoji: "💎", url: "https://gemini.google.com", category: "AI" },
+            { name: "DeepSeek", emoji: "🧠", url: "https://deepseek.com", category: "AI" },
+            { name: "豆包", emoji: "💬", url: "https://doubao.com", category: "AI" },
+            { name: "Claude", emoji: "☁️", url: "https://claude.ai", category: "AI" },
+            { name: "Kimi", emoji: "📄", url: "https://kimi.moonshot.cn", category: "AI" },
+            { name: "通义千问", emoji: "💡", url: "https://tongyi.aliyun.com", category: "AI" },
+            { name: "文心一言", emoji: "🪶", url: "https://yiyan.baidu.com", category: "AI" },
+            { name: "Midjourney", emoji: "🎨", url: "https://www.midjourney.com", category: "AI" },
+            { name: "可灵AI", emoji: "🎞️", url: "https://klingai.com", category: "AI" },
+            { name: "讯飞星火", emoji: "🔥", url: "https://xinghuo.xfyun.cn", category: "AI" },
+            { name: "天工AI", emoji: "⚙️", url: "https://www.tiangong.cn", category: "AI" },
+            { name: "秘塔AI", emoji: "🛡️", url: "https://www.metaso.cn", category: "AI" },
+            { name: "Runway", emoji: "🎬", url: "https://runwayml.com", category: "AI" },
+            { name: "Pika", emoji: "🎥", url: "https://pika.art", category: "AI" },
+            { name: "DALL·E 3", emoji: "🖌️", url: "https://openai.com/dall-e-3", category: "AI" },
+            { name: "Stable Diffusion", emoji: "🖼️", url: "https://stablediffusionweb.com", category: "AI" },
+            { name: "Copilot", emoji: "💻", url: "https://copilot.microsoft.com", category: "AI" },
+            { name: "Perplexity", emoji: "🔎", url: "https://www.perplexity.ai", category: "AI" },
+            { name: "Character.AI", emoji: "👤", url: "https://character.ai", category: "AI" },
+            { name: "Grammarly", emoji: "✏️", url: "https://www.grammarly.com/", category: "AI" },
+            { name: "Sudowrite", emoji: "🪶", url: "https://www.sudowrite.com/", category: "AI" },
+            { name: "Copy AI", emoji: "📋", url: "https://www.copy.ai/", category: "AI" },
+            { name: "Canva", emoji: "🖌️", url: "https://www.canva.com/", category: "AI" },
+            // 视频平台
+            { name: "抖音", emoji: "🎵", url: "https://www.douyin.com/", category: "视频" },
+            { name: "哔哩哔哩", emoji: "📺", url: "https://www.bilibili.com/", category: "视频" },
+            { name: "腾讯视频", emoji: "🎬", url: "https://v.qq.com/", category: "视频" },
+            { name: "爱奇艺", emoji: "🎥", url: "https://www.iqiyi.com/", category: "视频" },
+            { name: "快手", emoji: "⚡", url: "https://kuaishou.com/", category: "视频" },
+            { name: "红果免费短剧", emoji: "🍎", url: "https://www.hongguoduanju.com/", category: "视频" },
+            { name: "优酷视频", emoji: "▶️", url: "https://www.youku.com/", category: "视频" },
+            { name: "西瓜视频", emoji: "🍉", url: "https://ixigua.com/", category: "视频" },
+            // 动漫漫画
+            { name: "樱花动漫", emoji: "🌸", url: "https://www.yinhuadm.one/", category: "动漫" },
+            { name: "AGE动漫", emoji: "🎞️", url: "https://www.agedm.io/", category: "动漫" },
+            { name: "Anime1", emoji: "📺", url: "https://anime1.me", category: "动漫" },
+            { name: "爱奇艺动漫", emoji: "📱", url: "https://www.iqiyi.com/dongman", category: "动漫" },
+            { name: "优酷动漫", emoji: "▶️", url: "https://dongman.youku.com", category: "动漫" },
+            { name: "芒果动漫", emoji: "🥭", url: "https://www.mgtv.com/dongman", category: "动漫" },
+            { name: "动漫岛", emoji: "🏝️", url: "https://www.dmd3.com", category: "动漫" },
+            { name: "新世界动漫", emoji: "🌍", url: "https://www.xsjdm.com", category: "动漫" },
+            { name: "腾讯动漫", emoji: "📚", url: "https://ac.qq.com", category: "动漫" },
+            { name: "哔哩哔哩漫画", emoji: "📖", url: "https://manga.bilibili.com", category: "动漫" },
+            { name: "快看漫画", emoji: "❤️", url: "https://www.kuaikanmanhua.com", category: "动漫" },
+            { name: "咚漫", emoji: "🔥", url: "https://www.dongmanmanhua.com", category: "动漫" },
+            { name: "咚漫(中国)", emoji: "💬", url: "https://www.dongmanmanhua.cn", category: "动漫" },
+            { name: "叭嗒", emoji: "⭐", url: "https://www.pidou.cc", category: "动漫" },
+            { name: "漫漫漫画", emoji: "😊", url: "https://www.manmanapp.com", category: "动漫" },
+            { name: "PODO漫画", emoji: "🖊️", url: "https://www.podoapp.com", category: "动漫" },
+            { name: "知音漫客", emoji: "🪶", url: "https://www.zymk.cn", category: "动漫" },
+            { name: "飒漫画", emoji: "🎨", url: "https://www.samanhua.net", category: "动漫" },
+            { name: "动漫之家", emoji: "🏠", url: "https://www.dmzj.com", category: "动漫" },
+            { name: "看漫画", emoji: "👀", url: "https://www.kanman.com", category: "动漫" },
+            { name: "漫客栈", emoji: "☂️", url: "https://www.mankezhan.com", category: "动漫" },
+            { name: "VIZ", emoji: "🔖", url: "https://www.viz.com", category: "动漫" },
+            { name: "MangaPlus", emoji: "⚡", url: "https://mangaplus.shueisha.co.jp", category: "动漫" },
+            { name: "刺猬猫", emoji: "🐱", url: "https://www.ciweimao.com", category: "动漫" },
+            { name: "漫画人", emoji: "👤", url: "https://www.manhuaren.com", category: "动漫" },
+            { name: "源仓库", emoji: "📁", url: "https://www.yckceo.com/", category: "动漫" },
+            // 小说阅读
+            { name: "起点读书", emoji: "📚", url: "https://www.qidian.com/", category: "小说" },
+            { name: "微信读书", emoji: "📖", url: "https://weread.qq.com/", category: "小说" },
+            { name: "番茄小说", emoji: "🍅", url: "https://fanqienovel.com/", category: "小说" },
+            { name: "QQ阅读", emoji: "📕", url: "https://book.qq.com/", category: "小说" },
+            { name: "晋江文学城", emoji: "📝", url: "https://www.jjwxc.net/", category: "小说" },
+            { name: "书旗小说", emoji: "🔖", url: "https://www.shuqi.com/", category: "小说" },
+            { name: "纵横小说", emoji: "🪶", url: "https://www.zongheng.com/", category: "小说" },
+            { name: "飞卢小说", emoji: "✒️", url: "https://www.feilu.com/", category: "小说" },
+            { name: "七猫免费小说", emoji: "🐱", url: "https://www.qimao.com/", category: "小说" },
+            { name: "掌阅", emoji: "📗", url: "https://www.zhangyue.com/", category: "小说" },
+            { name: "17K小说网", emoji: "⌨️", url: "https://www.17k.com/", category: "小说" },
+            // 社交社区
+            { name: "微信", emoji: "💬", url: "https://weixin.qq.com/", category: "社交" },
+            { name: "微博", emoji: "📱", url: "https://weibo.com/", category: "社交" },
+            { name: "小红书", emoji: "❤️", url: "https://www.xiaohongshu.com/", category: "社交" },
+            { name: "知乎", emoji: "❓", url: "https://www.zhihu.com/", category: "社交" },
+            { name: "豆瓣", emoji: "🌿", url: "https://www.douban.com/", category: "社交" },
+            { name: "QQ官网", emoji: "💬", url: "https://im.qq.com/", category: "社交" },
+            { name: "网易LOFTER", emoji: "❤️", url: "https://www.lofter.com/", category: "社交" },
+            { name: "虎扑", emoji: "🏀", url: "https://www.hupu.com/", category: "社交" },
+            { name: "汽车之家", emoji: "🚗", url: "https://club.autohome.com.cn/", category: "社交" },
+            // 热门游戏
+            { name: "王者荣耀", emoji: "👑", url: "https://pvp.qq.com/", category: "游戏" },
+            { name: "和平精英", emoji: "🎯", url: "https://gp.qq.com/", category: "游戏" },
+            { name: "原神", emoji: "⭐", url: "https://ys.mihoyo.com/", category: "游戏" },
+            { name: "崩坏：星穹铁道", emoji: "🚂", url: "https://sr.mihoyo.com/", category: "游戏" },
+            { name: "英雄联盟手游", emoji: "🏆", url: "https://lolm.qq.com/", category: "游戏" },
+            { name: "金铲铲之战", emoji: "♟️", url: "https://jcc.qq.com/", category: "游戏" },
+            { name: "火影忍者", emoji: "🔥", url: "https://naruto.qq.com/", category: "游戏" },
+            { name: "崩坏3", emoji: "❤️", url: "https://bh3.mihoyo.com/", category: "游戏" },
+            { name: "绝区零", emoji: "⚡", url: "https://zzz.mihoyo.com/", category: "游戏" },
+            { name: "蛋仔派对", emoji: "🥚", url: "https://party.163.com/", category: "游戏" },
+            { name: "第五人格", emoji: "👻", url: "https://id5.163.com/", category: "游戏" },
+            { name: "明日方舟", emoji: "🛡️", url: "https://ak.hypergryph.com/", category: "游戏" },
+            { name: "逆水寒手游", emoji: "🌊", url: "https://n.163.com/", category: "游戏" },
+            { name: "永劫无间手游", emoji: "✊", url: "https://www.yjwujian.cn/", category: "游戏" },
+            { name: "鸣潮", emoji: "🌊", url: "https://mc.kurogames.com/", category: "游戏" },
+            { name: "幻塔", emoji: "🎲", url: "https://ht.wanmei.com/", category: "游戏" },
+            { name: "光遇", emoji: "🪶", url: "https://sky.thatgamecompany.com/", category: "游戏" },
+            { name: "阴阳师", emoji: "☯️", url: "https://yys.163.com/", category: "游戏" },
+            { name: "碧蓝航线", emoji: "🚢", url: "https://game.bilibili.com/blhx/", category: "游戏" },
+            { name: "暗黑破坏神：不朽", emoji: "💀", url: "https://di.blizzard.cn/", category: "游戏" },
+            { name: "三国志战略版", emoji: "♞", url: "https://sgzzlb.lingxigames.com/", category: "游戏" },
+            { name: "率土之滨", emoji: "🏴", url: "https://stzb.163.com/", category: "游戏" },
+            { name: "QQ飞车手游", emoji: "🚗", url: "https://speedm.qq.com/", category: "游戏" },
+            { name: "穿越火线手游", emoji: "💀", url: "https://cfm.qq.com/", category: "游戏" },
+            { name: "梦幻西游", emoji: "🐉", url: "https://my.163.com/", category: "游戏" },
+            { name: "大话西游", emoji: "🎭", url: "https://dhxy.163.com/", category: "游戏" },
+            { name: "我的世界", emoji: "🧊", url: "https://mc.163.com/", category: "游戏" },
+            { name: "迷你世界", emoji: "😊", url: "https://www.mini1.cn/", category: "游戏" },
+            { name: "球球大作战", emoji: "⚪", url: "https://www.battleofballs.com/", category: "游戏" },
+            { name: "无尽的拉格朗日", emoji: "🚀", url: "https://www.neteasegames.com/lglr/", category: "游戏" },
+            // 购物电商
+            { name: "淘宝", emoji: "🏪", url: "https://www.taobao.com/", category: "购物" },
+            { name: "京东", emoji: "📦", url: "https://www.jd.com/", category: "购物" },
+            { name: "拼多多", emoji: "🛍️", url: "https://www.pinduoduo.com/", category: "购物" },
+            { name: "天猫", emoji: "🐱", url: "https://www.tmall.com/", category: "购物" },
+            { name: "闲鱼", emoji: "🐟", url: "https://www.goofish.com/", category: "购物" },
+            { name: "得物", emoji: "👟", url: "https://www.dewu.com/", category: "购物" },
+            { name: "转转", emoji: "🔄", url: "https://www.zhuanzhuan.com/", category: "购物" },
+            { name: "阿里巴巴1688", emoji: "🏭", url: "https://www.1688.com/", category: "购物" },
+            { name: "苏宁易购", emoji: "🛒", url: "https://www.suning.com/", category: "购物" },
+            { name: "唯品会", emoji: "🏷️", url: "https://www.vip.com/", category: "购物" },
+            { name: "蘑菇街", emoji: "👕", url: "https://www.mogujie.com/", category: "购物" },
+            { name: "什么值得买", emoji: "👍", url: "https://www.smzdm.com/", category: "购物" },
+            { name: "考拉海购", emoji: "🌏", url: "https://www.kaola.com/", category: "购物" },
+            // 实用工具
+            { name: "Chrome", emoji: "🌐", url: "https://www.google.com/chrome/", category: "工具" },
+            { name: "剪映", emoji: "✂️", url: "https://www.capcut.com/", category: "工具" },
+            { name: "百度网盘", emoji: "☁️", url: "https://pan.baidu.com/", category: "工具" },
+            { name: "Gitee", emoji: "🔀", url: "https://gitee.com", category: "工具" },
+            { name: "开源中国", emoji: "🌐", url: "https://www.oschina.net", category: "工具" },
+            { name: "清华开源镜像", emoji: "💾", url: "https://mirrors.tuna.tsinghua.edu.cn", category: "工具" },
+            { name: "阿里云镜像", emoji: "☁️", url: "https://developer.aliyun.com/mirror", category: "工具" },
+            { name: "腾讯云镜像", emoji: "🖥️", url: "https://mirrors.cloud.tencent.com", category: "工具" },
+            { name: "华为开源镜像", emoji: "🔌", url: "https://mirrors.huaweicloud.com", category: "工具" },
+            { name: "网易开源镜像", emoji: "📥", url: "http://mirrors.163.com", category: "工具" },
+            { name: "中科大开源镜像", emoji: "🏛️", url: "https://mirrors.ustc.edu.cn", category: "工具" },
+            { name: "GitCode", emoji: "📝", url: "https://gitcode.com", category: "工具" },
+            { name: "Halo", emoji: "📝", url: "https://halo.run", category: "工具" },
+            { name: "禅道Zentao", emoji: "📋", url: "https://www.zentao.net", category: "工具" },
+            { name: "OpenI启智社区", emoji: "🤖", url: "https://openi.pcl.ac.cn", category: "工具" },
+            { name: "HBuilderX", emoji: "💻", url: "https://www.dcloud.io", category: "工具" },
+            { name: "Apache ShenYu", emoji: "🔀", url: "https://shenyu.apache.org", category: "工具" },
+            { name: "Zabbix中国社区", emoji: "📊", url: "https://www.zabbix.com/cn", category: "工具" },
+            { name: "Deepin社区", emoji: "🖥️", url: "https://www.deepin.org", category: "工具" },
+            { name: "OpenAnolis龙蜥", emoji: "🦎", url: "https://openanolis.cn", category: "工具" },
+            { name: "openEuler欧拉", emoji: "⚙️", url: "https://www.openeuler.org", category: "工具" },
+            { name: "OpenKylin开放麒麟", emoji: "💻", url: "https://www.openkylin.org", category: "工具" },
+            // 识图搜索
+            { name: "专搜3D图片", emoji: "🧊", url: "http://3d.iqdb.org/", category: "搜图" },
+            { name: "IQDB搜图", emoji: "🔍", url: "http://iqdb.org/", category: "搜图" },
+            { name: "Ascii2D", emoji: "👤", url: "https://ascii2d.net/", category: "搜图" },
+            { name: "EveryPixel", emoji: "🔎", url: "https://www.everypixel.com/", category: "搜图" },
+            { name: "Unsplash", emoji: "📷", url: "https://unsplash.com/", category: "搜图" },
+            { name: "谷歌识图镜像", emoji: "🔍", url: "https://soik.top/", category: "搜图" },
+            { name: "必应视觉搜索", emoji: "📷", url: "https://cn.bing.com/visualsearch", category: "搜图" },
+            { name: "TinEye", emoji: "👁️", url: "https://tineye.com/", category: "搜图" },
+            { name: "谷歌识图", emoji: "🔍", url: "https://www.google.com.hk/imghp", category: "搜图" },
+            { name: "Yandex", emoji: "🔎", url: "https://ya.ru/", category: "搜图" },
+            { name: "SauceNAO", emoji: "🔍", url: "https://saucenao.com/", category: "搜图" },
+            { name: "Trace.moe", emoji: "🎬", url: "https://trace.moe/", category: "搜图" },
+            { name: "PPBC植物图像库", emoji: "🌿", url: "https://ppbc.iplant.cn/", category: "搜图" },
+            { name: "百度识图", emoji: "☁️", url: "https://graph.baidu.com/pcpage/index?tpl_from=pc/", category: "搜图" },
+            { name: "360识图", emoji: "🖼️", url: "https://m.image.so.com/", category: "搜图" },
+            { name: "搜狗识图", emoji: "🖼️", url: "https://pic.sogou.com/pic/index.jsp?v=5/", category: "搜图" },
+            // 海外流媒体
+            { name: "Netflix", emoji: "▶️", url: "https://www.netflix.com", category: "海外" },
+            { name: "Disney+", emoji: "⭐", url: "https://www.disneyplus.com", category: "海外" },
+            { name: "Amazon Prime Video", emoji: "🛒", url: "https://primevideo.com", category: "海外" },
+            { name: "Apple TV+", emoji: "🍎", url: "https://tv.apple.com", category: "海外" },
+            { name: "Max", emoji: "🔴", url: "https://www.max.com", category: "海外" },
+            { name: "Hulu", emoji: "📺", url: "https://www.hulu.com", category: "海外" },
+            { name: "Peacock", emoji: "🪶", url: "https://www.peacocktv.com", category: "海外" },
+            { name: "Pluto TV", emoji: "📺", url: "https://pluto.tv", category: "海外" },
+            { name: "Tubi", emoji: "🎬", url: "https://tubitv.com", category: "海外" },
+            { name: "BBC iPlayer", emoji: "📡", url: "https://www.bbc.co.uk/iplayer", category: "海外" },
+            { name: "Vimeo", emoji: "🎥", url: "https://vimeo.com", category: "海外" },
+            // 影视资源
+            { name: "芒果TV", emoji: "🥭", url: "https://www.mgtv.com", category: "影视" },
+            { name: "1905电影网", emoji: "🎬", url: "https://www.1905.com", category: "影视" },
+            { name: "咪咕视频", emoji: "📶", url: "https://www.miguvideo.com", category: "影视" },
+            { name: "央视网", emoji: "📡", url: "https://tv.cctv.com", category: "影视" },
+            { name: "学习强国", emoji: "📖", url: "https://www.xuexi.cn", category: "影视" },
+            // 皮卡群组
+            { name: "皮卡备用群", emoji: "💬", url: "https://qun.qq.com/universal-share/share?ac=1&authKey=Xld9l791HF7rsivEh%2FQHOCq3T%2FkUGp84QYDKZOliUcQUAlBccjL4VOJ98PRana%2F3&busi_data=eyJncm91cENvZGUiOiIxMDQ5NTUwOTI1IiwidG9rZW4iOiJvOUdkcDZ1OFRua3Z4Wmg5WVkzRjRoTURjcHR3ZldsRm85QzJRYXdxWjIrNTRUUGpvbzRyaGw2OXlCRWRXNnFRIiwidWluIjoiMTk2NjMzMDMxOSJ9&data=NlQKjt4AzXJQU8zoFaDXBWB-L-26e5lVnjpw_c0e-FGQDu1oMf4Yv0HMaXn3yVX-0w6KMFZXo_NSCsZILOMHwg&svctype=4&tempid=h5_group_info", category: "群友" },
+            { name: "皮卡翻车群", emoji: "💬", url: "https://qun.qq.com/universal-share/share?ac=1&authKey=1H7F1EMVtmdMrv1CzYxKwFEJpRQEtXWYo5NymTsfD60RgqfmcLAqYx2kJUBpVeta&busi_data=eyJncm91cENvZGUiOiI1Njg4NzE0MjYiLCJ0b2tlbiI6Im1YMjg3YnBncU9ibEx0cktmTHdMNGY5OE5nMWVjTDRsZkpMdTZwM2N5cElFdExEa3I5MUROSVZsTjJQTEl1SVkiLCJ1aW4iOiIxOTY2MzMwMzE5In0%3D&data=2kh6zsaP4Doa-Jl-KccfFc19LCpsFI1NTPlynFYqUPLj3RgonL8BEg2mEtGGU7CzqwSN6bdHq_SWD9hijXZ9dQ&svctype=4&tempid=h5_group_info", category: "群友" },
+            { name: "皮卡禁言群", emoji: "👥", url: "https://qun.qq.com/universal-share/share?ac=1&authKey=CfKOKp6Sc7CP%2BH6hZZ9PpeveC%2FNcfE7iSGwVsMSpfhCGCWOuPjeswNS7Cv5vtCGA&busi_data=eyJncm91cENvZGUiOiIxMDQxMjQ0MjI5IiwidG9rZW4iOiJYb2lqRHQrQ2Y4L2xyMEt5Z2dFNkphT3BONHhPLy92bUNJYjBLeWFNMjJ5WmNlSFU2ZFJ6YkpxLy9nSHg4b0poIiwidWluIjoiMTk2NjMzMDMxOSJ9&data=1UsMWD3H0fkwy-X2lVTwriyc_Va_4M76mJvFSw2HfpmpjSdtsGEybhi3JGw7tTopgZYXPVcyes6wiUHd1eznSw&svctype=4&tempid=h5_group_info", category: "群友" },
+            { name: "皮卡电报群", emoji: "📨", url: "https://t.me/+qiezQCcGXswzYTM1", category: "群友" },
+            { name: "无语群", emoji: "💬", url: "https://qun.qq.com/universal-share/share?ac=1&authKey=1MapCqFxxqy%2BOOXbkM6%2Fz3ZC3G%2BIe%2BOHkXURAf8Zy3yRH8MzazejEb3mGPY7C64m&busi_data=eyJncm91cENvZGUiOiI2MDQ1NzQyMzciLCJ0b2tlbiI6InFyMHVScWw3QzlCbzVNM1VHaEVyVDlQNDRiMThUVVJIcWtJalprOTh3Zjc3S015czdOYTVjK2k4WjhobG91T3AiLCJ1aW4iOiIxMDA1Mzg0NDE4In0%3D&data=mkN0qLE6LehMHkAdQSgjzbHFi20B9fGIKuy2jhRKEIOUD5XFikhrZwZ4UNK-PB-uCwiQicXzFFbTVn8tYHkCLg&svctype=4&tempid=h5_group_info", category: "群友" },
+            // 皮卡资源
+            { name: "文件仓库", emoji: "☁️", url: "https://zzz.372164885.xyz/", category: "皮卡" },
+            { name: "IT-tools", emoji: "🔧", url: "https://sss.372164885.xyz", category: "皮卡" },
+            { name: "搜索引擎🔍", emoji: "🔎", url: "https://aaa.372164885.xyz", category: "皮卡" },
+            { name: "AI语音处理平台", emoji: "🧠", url: "https://123.372164885.xyz", category: "皮卡" },
+            { name: "免费图床(5m)", emoji: "🖼️", url: "https://svip.372164885.xyz", category: "皮卡" },
+            { name: "绘画(abcd123)", emoji: "🎨", url: "https://o.372164885.xyz", category: "皮卡" },
+            { name: "皮卡电报频道", emoji: "📨", url: "https://t.me/s/pkpk158/", category: "皮卡" },
+            { name: "在线修图", emoji: "🖌️", url: "https://huixiao666.github.io/cxc/", category: "皮卡" },
+            { name: "节点", emoji: "🔗", url: "https://pn.372164885.xyz", category: "皮卡" },
+            { name: "临时聊天", emoji: "💬", url: "https://chat123.372164885.xyz/", category: "皮卡" }
         ];
 
-        // 应用专属描述
-        const APP_DESC = {
-            "文件仓库": "皮卡社区文件存储与分享仓库，安全便捷 >>",
-            "抖音": "短视频社交平台，记录美好生活，刷最火短视频 >>",
-            "哔哩哔哩": "国内最大弹幕视频网，动画番剧游戏实况全都有 >>",
-            "腾讯视频": "腾讯旗下综合视频平台，热播剧集综艺动漫全覆盖 >>",
-            "爱奇艺": "高清正版影视平台，海量电视剧电影动漫随心看 >>",
-            "快手": "国民短视频社区，老铁文化看世间百态 >>",
-            "红果免费短剧": "免费短剧平台，海量爽剧随点随看刷到停不下来 >>",
-            "优酷视频": "阿里旗下视频平台，经典剧集与独家综艺 >>",
-            "西瓜视频": "字节旗下综合视频，新鲜有趣点亮生活 >>",
-            "起点读书": "阅文旗下正版小说平台，男频网文发源地 >>",
-            "微信读书": "腾讯出品阅读APP，正版图书社交化阅读体验 >>",
-            "番茄小说": "免费正版小说阅读，看广告免付费畅读海量好书 >>",
-            "QQ阅读": "腾讯旗下海量正版原创小说阅读平台 >>",
-            "晋江文学城": "国内最大女性向原创文学网站，言情纯爱耽美一网打尽 >>",
-            "书旗小说": "阿里旗下免费小说阅读平台，海量好书任你读 >>",
-            "纵横小说": "老牌原创小说网站，男频精品文聚集地 >>",
-            "飞卢小说": "同人二次元原创小说平台，脑洞大开 >>",
-            "七猫免费小说": "免费小说阅读APP，海量正版好书任你读 >>",
-            "掌阅": "老牌数字阅读平台，精品出版与网文兼而有之 >>",
-            "17K小说网": "老牌原创文学网站，精品网络小说聚集地 >>",
-            "微信": "腾讯旗下国民社交应用，连接每一个中国人 >>",
-            "微博": "新浪旗下社交媒体，热搜话题第一时间掌握 >>",
-            "小红书": "年轻人的生活方式社区，种草拔草都在这里 >>",
-            "知乎": "中文互联网高质量问答社区与创作者平台 >>",
-            "豆瓣": "书影音评分社区，找到同好分享你的品味 >>",
-            "QQ官网": "腾讯即时通讯工具官方下载页面 >>",
-            "网易LOFTER": "网易旗下轻博客社区，同人创作与兴趣社交 >>",
-            "虎扑": "直男社区，体育赛事与步行街吃瓜第一线 >>",
-            "汽车之家": "汽车资讯与车主社区，买车用车养车全攻略 >>",
-            "Chrome": "谷歌浏览器，全球最流行的网页浏览工具 >>",
-            "剪映": "抖音官方视频剪辑工具，一键成片轻松创作 >>",
-            "百度网盘": "百度旗下云存储服务，超大空间文件分享 >>",
-            "专搜3D图片": "3D与CG图片反向搜索专用引擎 >>",
-            "多种服务图片搜图": "多引擎聚合搜图，支持多站点同时搜索 >>",
-            "二次元画像详细搜索": "二次元插画反向搜索，精准定位画师与出处 >>",
-            "素材反向识图": "AI驱动的反向图片搜索素材引擎 >>",
-            "素材搜图": "Unsplash高质量免费图片素材库 >>",
-            "谷歌识图镜像网站": "谷歌图片搜索国内可用镜像站点 >>",
-            "必应视觉搜寻": "微软必应以图搜图服务 >>",
-            "老牌识图(被墙)": "TinEye老牌反向图片搜索引擎 >>",
-            "谷歌识图(被墙)": "谷歌图片搜索 >>",
-            "俄罗斯搜索引擎": "Yandex俄语区综合搜索引擎 >>",
-            "专业P站搜二次元识图": "SauceNAO二次元插画精准搜索 >>",
-            "动漫视频截图识别": "trace.moe动漫场景帧识别引擎 >>",
-            "PPBC中国植物图像库": "中国植物图像数据库与识别平台 >>",
-            "百度识图": "百度以图搜图服务 >>",
-            "360识图": "360以图搜图服务 >>",
-            "搜狗识图": "搜狗以图搜图服务 >>",
-            "皮卡备用群": "皮卡社区QQ备用交流群 >>",
-            "皮卡翻车群": "皮卡社区QQ翻车交流群 >>",
-            "皮卡禁言群": "皮卡社区QQ禁言交流群 >>",
-            "皮卡电报群": "皮卡社区Telegram交流群组 >>",
-            "无语群": "QQ交流群组 >>",
-            "IT-tools": "IT开发者常用工具集合站 >>",
-            "搜索引擎🔍": "聚合搜索引擎，多引擎一键搜索 >>",
-            "AI驱动的语音处理平台": "AI语音识别与处理在线平台 >>",
-            "免费图床(5m)": "免费图片托管服务，单图5MB限制 >>",
-            "绘画(abcd123)": "AI绘画生成平台 >>",
-            "皮卡电报频道": "皮卡社区官方Telegram频道，最新公告与资源 >>",
-            "在线修图": "在线图片编辑美化工具合集 >>",
-            "节点": "皮卡社区节点资源页面 >>",
-            "机器人": "皮卡社区智能机器人服务 >>",
-            "芒果TV": "湖南卫视旗下视频平台，综艺与自制剧强势 >>",
-            "1905电影网": "电影频道官方平台，正版电影在线观看 >>",
-            "咪咕视频": "中国移动旗下综合视频平台 >>",
-            "央视网": "中央电视台官方视频网站 >>",
-            "学习强国": "中共中央宣传部主管的学习平台 >>",
-            "Vimeo": "国外高品质视频创作与分享社区 >>",
-            "Netflix": "全球最大流媒体平台，海量原创剧集电影 >>",
-            "Disney+": "迪士尼旗下流媒体，漫威星战皮克斯全家桶 >>",
-            "Amazon Prime Video": "亚马逊旗下流媒体视频服务 >>",
-            "Apple TV+": "苹果原创影视内容流媒体服务 >>",
-            "Max": "HBO Max更名，华纳兄弟旗下流媒体平台 >>",
-            "Hulu": "美国热门流媒体平台，剧集同步更新快 >>",
-            "Peacock": "NBC环球旗下流媒体服务 >>",
-            "Pluto TV": "免费广告支持流媒体电视平台 >>",
-            "Tubi": "免费广告支持流媒体影视平台 >>",
-            "BBC iPlayer": "英国广播公司BBC在线播放平台 >>",
-            "ChatGPT": "OpenAI开发的最强对话AI，无所不答 >>",
-            "Gemini": "Google开发的多模态AI大模型助手 >>",
-            "DeepSeek": "国产开源大模型，深度推理能力出众 >>",
-            "豆包": "字节跳动旗下AI对话助手，日常百事通 >>",
-            "Claude": "Anthropic开发的安全可靠的AI助手 >>",
-            "Kimi": "月之暗面长文本AI智能助手，一次性读完长篇 >>",
-            "通义千问": "阿里云通义大模型AI助手 >>",
-            "文心一言": "百度文心大模型AI对话工具 >>",
-            "Midjourney": "最强AI绘画工具，文字描述即可生成精美图片 >>",
-            "可灵AI": "快手旗下AI视频与图像生成工具 >>",
-            "讯飞星火": "科大讯飞星火认知大模型 >>",
-            "天工AI": "昆仑万维旗下AI大模型助手 >>",
-            "秘塔AI": "无广告结构化AI搜索引擎 >>",
-            "Runway": "AI视频创作工具，Gen视频生成先驱 >>",
-            "Pika": "AI视频生成平台，文字转视频神器 >>",
-            "DALL·E 3": "OpenAI开发的AI图像生成模型 >>",
-            "Stable Diffusion": "开源AI图像生成模型，本地也能跑 >>",
-            "Copilot": "微软GitHub AI编程助手，代码自动补全 >>",
-            "Perplexity": "AI驱动新一代搜索引擎，精准回答每个问题 >>",
-            "Character.AI": "AI虚拟角色对话平台，和任何角色畅聊 >>",
-            "Grammarly": "AI英文写作助手，纠正语法拼写错误 >>",
-            "Sudowrite": "AI故事创作工具，激发你的写作灵感 >>",
-            "Copy AI": "AI文案生成工具，快速产出高质量文本 >>",
-            "Canva": "AI驱动的在线设计平台，轻松做出精美设计 >>",
-            "腾讯动漫": "腾讯旗下动漫平台，国产动画IP孵化地 >>",
-            "哔哩哔哩漫画": "B站旗下正版漫画阅读平台 >>",
-            "快看漫画": "最受年轻人欢迎的漫画阅读社区 >>",
-            "咚漫": "韩国Webtoon中文漫画平台 >>",
-            "咚漫(中国)": "咚漫中国版，韩国条漫尽在掌握 >>",
-            "叭嗒": "叭嗒漫画在线阅读平台 >>",
-            "漫漫漫画": "原创漫画阅读与创作社区 >>",
-            "PODO漫画": "韩国PODO漫画中文平台 >>",
-            "PODO漫画(ACG)": "PODO漫画ACG专区 >>",
-            "知音漫客": "知音漫客杂志官方在线阅读平台 >>",
-            "飒漫画": "少女漫与校园漫为主的漫画平台 >>",
-            "动漫之家": "老牌二次元漫画轻小说社区 >>",
-            "看漫画": "在线漫画阅读平台 >>",
-            "漫客栈": "原创漫画阅读与创作平台 >>",
-            "VIZ": "日本集英社官方英文漫画平台 >>",
-            "MangaPlus": "集英社官方全球免费漫画阅读平台 >>",
-            "刺猬猫": "二次元原创小说与漫画平台 >>",
-            "漫画人": "漫画在线阅读APP >>",
-            "源仓库": "漫画源仓库，图源聚合平台 >>",
-            "樱花动漫": "在线动漫追番网站，新番更新速度飞快 >>",
-            "AGE动漫": "在线动漫资源分享网站 >>",
-            "Anime1": "港澳台地区在线动漫观看平台 >>",
-            "爱奇艺动漫": "爱奇艺动漫频道，热门番剧国漫聚集 >>",
-            "优酷动漫": "优酷动漫频道，经典与新番一应俱全 >>",
-            "芒果动漫": "芒果TV动漫频道 >>",
-            "动漫岛": "在线动漫观看网站 >>",
-            "新世界动漫": "在线动漫资源分享平台 >>",
-            "Gitee（码云）": "国内开源代码托管与协作平台 >>",
-            "开源中国OSCHINA": "开源技术社区，程序员的精神家园 >>",
-            "清华开源镜像站": "清华大学开源软件镜像服务 >>",
-            "阿里云开源镜像": "阿里云开源软件镜像加速服务 >>",
-            "腾讯云软件源": "腾讯云开源软件镜像源 >>",
-            "华为开源镜像站": "华为云开源软件镜像服务 >>",
-            "网易开源镜像": "网易开源软件镜像站 >>",
-            "中科大开源镜像": "中国科学技术大学开源镜像站 >>",
-            "GitCode": "CSDN旗下开源代码托管平台 >>",
-            "Halo": "优秀开源博客系统，搭建个人网站首选 >>",
-            "禅道Zentao": "开源项目管理与Bug追踪工具 >>",
-            "OpenI启智社区": "新一代人工智能开源开放平台 >>",
-            "HBuilderX": "国产跨平台前端开发IDE工具 >>",
-            "Apache ShenYu": "Apache开源API网关项目 >>",
-            "Zabbix中国社区": "开源监控系统中文社区 >>",
-            "Deepin社区": "深度操作系统社区，国产Linux发行版 >>",
-            "OpenAnolis龙蜥": "龙蜥开源操作系统社区 >>",
-            "openEuler欧拉": "华为欧拉开源操作系统社区 >>",
-            "OpenKylin开放麒麟": "开放麒麟开源操作系统社区 >>",
-            "华中大开源镜像": "华中科技大学开源镜像站 >>",
-            "淘宝": "国内最大电商平台，万能的淘宝什么都能买到 >>",
-            "京东": "自营电商平台，正品保障物流快 >>",
-            "拼多多": "社交电商平台，拼着买更便宜 >>",
-            "天猫": "品牌旗舰店聚集地，品质购物上天猫 >>",
-            "闲鱼": "二手闲置交易平台，让你的闲置游起来 >>",
-            "得物": "潮流装备鉴定交易平台，正品保障 >>",
-            "转转": "二手手机数码交易平台，官方验机靠谱 >>",
-            "阿里巴巴1688": "全球领先的采购批发平台 >>",
-            "苏宁易购": "线上线下融合的智慧零售平台 >>",
-            "唯品会": "品牌特卖平台，天天有三折 >>",
-            "蘑菇街": "女性时尚购物平台，穿搭灵感集结 >>",
-            "什么值得买": "消费决策平台，帮你买得值 >>",
-            "考拉海购": "网易旗下跨境海淘平台 >>",
-            "王者荣耀": "国民级5v5公平竞技MOBA手游 >>",
-            "和平精英": "腾讯光子工作室战术竞技手游 >>",
-            "原神": "米哈游开放世界RPG，提瓦特大陆冒险 >>",
-            "崩坏：星穹铁道": "米哈游银河冒险RPG，星穹列车启程 >>",
-            "英雄联盟手游": "经典MOBA正统手游，随时开黑 >>",
-            "金铲铲之战": "英雄联盟云顶之弈正版自走棋手游 >>",
-            "火影忍者": "正版火影格斗手游，忍术对决 >>",
-            "崩坏3": "米哈游3D动作手游，点燃二次元动作之魂 >>",
-            "绝区零": "米哈游都市潮酷动作RPG新作 >>",
-            "蛋仔派对": "网易潮玩休闲竞技手游，欢乐闯关 >>",
-            "第五人格": "网易非对称对抗竞技手游，1v4猫鼠游戏 >>",
-            "明日方舟": "二次元策略塔防手游，罗德岛制药 >>",
-            "逆水寒手游": "网易开放世界武侠手游，会呼吸的江湖 >>",
-            "永劫无间手游": "武侠竞技手游，冷兵器大逃杀 >>",
-            "鸣潮": "库洛开放世界动作RPG，共鸣者集结 >>",
-            "幻塔": "完美世界轻科幻开放世界RPG >>",
-            "光遇": "陈星汉社交冒险手游，温暖治愈的天空王国 >>",
-            "阴阳师": "网易和风卡牌RPG，式神召唤养成 >>",
-            "碧蓝航线": "战舰拟人即时海战手游 >>",
-            "暗黑破坏神：不朽": "暴雪暗黑系列正版手游，地狱大军来袭 >>",
-            "三国志战略版": "光荣正版授权三国策略手游 >>",
-            "率土之滨": "网易三国策略手游，无VIP不卖资源 >>",
-            "QQ飞车手游": "腾讯经典竞速手游，极速漂移 >>",
-            "穿越火线手游": "腾讯经典FPS手游，枪战王者 >>",
-            "梦幻西游": "网易经典回合制手游，梦回大唐 >>",
-            "大话西游": "网易经典回合制RPG，情义江湖 >>",
-            "我的世界": "全球最畅销沙盒游戏，无限创造 >>",
-            "迷你世界": "国产沙盒创造手游，迷你大陆冒险 >>",
-            "球球大作战": "巨人网络休闲竞技手游，大球吃小球 >>",
-            "无尽的拉格朗日": "网易科幻太空策略手游，开拓星系 >>",
-            "临时聊天": "皮卡社区临时在线聊天室 >>"
-        };
+        let iconData = [
+            { id: 'computer', emoji: '💻', label: '我的电脑', type: 'app', url: null }
+        ];
 
-        // 应用热度值
-        const APP_HOT = {
-            "文件仓库": 100,
-            "微信": 99,
-            "抖音": 98,
-            "淘宝": 97,
-            "拼多多": 96,
-            "京东": 95,
-            "小红书": 92,
-            "哔哩哔哩": 92,
-            "微博": 91,
-            "QQ官网": 90,
-            "快手": 87,
-            "知乎": 86,
-            "腾讯视频": 84,
-            "爱奇艺": 83,
-            "优酷视频": 82,
-            "芒果TV": 81,
-            "闲鱼": 77,
-            "得物": 76,
-            "剪映": 73,
-            "百度网盘": 72,
-            "王者荣耀": 95,
-            "和平精英": 93,
-            "原神": 92,
-            "崩坏：星穹铁道": 90,
-            "英雄联盟手游": 89,
-            "金铲铲之战": 87,
-            "火影忍者": 85,
-            "蛋仔派对": 84,
-            "第五人格": 83,
-            "明日方舟": 82,
-            "阴阳师": 81,
-            "崩坏3": 80,
-            "绝区零": 79,
-            "逆水寒手游": 78,
-            "永劫无间手游": 77,
-            "光遇": 76,
-            "梦幻西游": 75,
-            "QQ飞车手游": 74,
-            "穿越火线手游": 73,
-            "我的世界": 72,
-            "ChatGPT": 95,
-            "DeepSeek": 93,
-            "豆包": 92,
-            "Kimi": 90,
-            "文心一言": 88,
-            "通义千问": 87,
-            "Midjourney": 86,
-            "Gemini": 85,
-            "Claude": 84,
-            "Copilot": 83,
-            "Perplexity": 82,
-            "讯飞星火": 81,
-            "天工AI": 80,
-            "秘塔AI": 79,
-            "Character.AI": 78,
-            "Runway": 77,
-            "Stable Diffusion": 76,
-            "DALL·E 3": 75,
-            "Pika": 74,
-            "可灵AI": 73,
-            "Canva": 72,
-            "起点读书": 78,
-            "番茄小说": 77,
-            "微信读书": 76,
-            "晋江文学城": 75,
-            "QQ阅读": 74,
-            "七猫免费小说": 73,
-            "掌阅": 72,
-            "天猫": 74,
-            "苏宁易购": 70,
-            "唯品会": 68,
-            "蘑菇街": 66,
-            "什么值得买": 65,
-            "阿里巴巴1688": 64,
-            "转转": 63,
-            "考拉海购": 62,
-            "Netflix": 88,
-            "Disney+": 81,
-            "Amazon Prime Video": 79,
-            "Hulu": 78,
-            "豆瓣": 75,
-            "虎扑": 74,
-            "汽车之家": 73,
-            "网易LOFTER": 72,
-            "Chrome": 88,
-            "Gitee（码云）": 78,
-            "开源中国OSCHINA": 75
-        };
+        // ===================================================================
+        //  状态
+        // ===================================================================
 
-        // 海外热门集合
-        var OVERSEAS_SET = {
-            'Netflix': 1,
-            'Disney+': 1,
-            'Amazon Prime Video': 1,
-            'Apple TV+': 1,
-            'Max': 1,
-            'Hulu': 1,
-            'Peacock': 1,
-            'Pluto TV': 1,
-            'Tubi': 1,
-            'BBC iPlayer': 1,
-            'Vimeo': 1,
-            'ChatGPT': 1,
-            'Gemini': 1,
-            'Claude': 1,
-            'Copilot': 1,
-            'Perplexity': 1,
-            'Midjourney': 1,
-            'Runway': 1,
-            'Character.AI': 1,
-            'Stable Diffusion': 1,
-            'DALL·E 3': 1,
-            'Pika': 1,
-            'VIZ': 1,
-            'MangaPlus': 1
-        };
+        let winZIndex = 100;
+        const openWindows = [];
+        let dragData = null;
+        let resizeData = null;
+        let contextTargetId = null;
+        let longPressTimer = null;
+        let isLongPress = false;
+        let currentCategory = null;
 
-        // 渲染卡片
-        function renderCard(app) {
-            let desc = APP_DESC[app.name] || TAG_DESC[app.tag] || (app.tag + '类应用 >>');
-            return `<div class="ai-item" onclick="window.open('${app.url}','_blank')" style="cursor:pointer;">
-    <div class="app-icon" style="background:${app.bg};color:${app.color};font-size:22px;width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="${app.icon}"></i></div>
-    <div class="app-info">
-      <div class="app-name">${app.name}</div>
-      <div class="app-desc">${desc}</div>
-    </div>
-  </div>`;
+        // ===================================================================
+        //  工具
+        // ===================================================================
+
+        function $(sel, ctx = document) { return ctx.querySelector(sel); }
+        function $$(sel, ctx = document) { return [...ctx.querySelectorAll(sel)]; }
+        function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
+        function random(min, max) { return Math.random() * (max - min) + min; }
+
+        // ===================================================================
+        //  星星
+        // ===================================================================
+
+        function createStars() {
+            const desktop = document.getElementById('desktop');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const size = random(0.6, 2.6);
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.left = random(0, 100) + '%';
+                star.style.top = random(0, 100) + '%';
+                star.style.setProperty('--dur', random(2, 6) + 's');
+                star.style.animationDelay = random(0, 5) + 's';
+                star.style.opacity = random(0.2, 0.9);
+                desktop.appendChild(star);
+            }
         }
+        createStars();
 
-        let currentSideCat = 'AI';
-        let searchQuery = '';
+        // ===================================================================
+        //  时钟
+        // ===================================================================
 
-        function renderCategory(cat) {
-            currentSideCat = cat;
-            let container = document.getElementById('cat-' + cat);
-            if (!container) return;
-            document.querySelectorAll('#catContent > div').forEach(d => d.style.display = 'none');
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('tbTime').textContent = now.toTimeString().slice(0, 8);
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
 
-            let tags = CAT_TAG_MAP[cat] || [];
-            let list;
-            if (searchQuery) {
-                list = APP_DATA.filter(a => a.name.toLowerCase().includes(searchQuery.toLowerCase()));
-            } else if (tags.length === 0) {
-                container.style.display = 'block';
-                container.innerHTML = '';
+        // ===================================================================
+        //  窗口系统
+        // ===================================================================
+
+        const windowsContainer = document.getElementById('windows');
+        const tbItems = document.getElementById('tbItems');
+
+        function openWindow(iconId) {
+            const icon = getIconById(iconId);
+            if (!icon || icon.type !== 'app') return;
+
+            const existing = openWindows.find(w => w.id === iconId);
+            if (existing) {
+                focusWindow(existing.element);
                 return;
+            }
+
+            const winCfg = getWindowConfig(iconId);
+            if (!winCfg) return;
+            const win = createAppWindow(iconId, winCfg);
+            windowsContainer.appendChild(win);
+
+            const winData = {
+                id: iconId,
+                element: win,
+                title: winCfg.title,
+                icon: icon.emoji,
+                minimized: false,
+                isFullscreen: false
+            };
+            openWindows.push(winData);
+            updateTaskbar();
+            focusWindow(win);
+            centerWindow(win);
+            addResizeHandle(win);
+        }
+
+        function getWindowConfig(iconId) {
+            const map = {
+                computer: { title: '💻 我的电脑', width: 700, height: 500, content: 'mycomputer' }
+            };
+            return map[iconId] || null;
+        }
+
+        function createAppWindow(iconId, cfg) {
+            const win = document.createElement('div');
+            win.className = 'window';
+            win.style.width = cfg.width + 'px';
+            win.style.height = cfg.height + 'px';
+            win.dataset.winId = iconId;
+
+            const titlebar = document.createElement('div');
+            titlebar.className = 'win-titlebar';
+            const titleText = cfg.title.replace(/^.{1,2}\s/, '');
+            titlebar.innerHTML = `
+            <div class="win-title">
+              <span class="win-icon">${cfg.title.match(/^.{1,2}/)?.[0] || '📄'}</span>
+              <span>${titleText}</span>
+            </div>
+            <div class="win-controls">
+              <button class="btn-min" title="最小化">─</button>
+              <button class="btn-fullscreen" title="全屏">⛶</button>
+              <button class="btn-close" title="关闭">✕</button>
+            </div>
+          `;
+            // 关闭
+            titlebar.querySelector('.btn-close').addEventListener('click', (e) => {
+                e.stopPropagation();
+                closeWindow(iconId);
+            });
+            // 最小化（缩小到任务栏）
+            titlebar.querySelector('.btn-min').addEventListener('click', (e) => {
+                e.stopPropagation();
+                minimizeWindow(iconId);
+            });
+            // 全屏
+            titlebar.querySelector('.btn-fullscreen').addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleFullscreen(win);
+            });
+            titlebar.addEventListener('mousedown', (e) => {
+                if (e.target.closest('.win-controls')) return;
+                startDrag(e, win);
+            });
+            titlebar.addEventListener('touchstart', (e) => {
+                if (e.target.closest('.win-controls')) return;
+                if (e.touches.length === 1) {
+                    startDrag(e, win);
+                }
+            }, { passive: false });
+
+            win.appendChild(titlebar);
+
+            const body = document.createElement('div');
+            body.className = 'win-body';
+            body.innerHTML = renderAppContent(cfg.content, iconId);
+            win.appendChild(body);
+
+            win.addEventListener('mousedown', () => focusWindow(win));
+            win.addEventListener('touchstart', () => focusWindow(win), { passive: true });
+
+            return win;
+        }
+
+        // ---- 全屏切换 ----
+        function toggleFullscreen(win) {
+            const winData = openWindows.find(w => w.element === win);
+            if (!winData) return;
+            winData.isFullscreen = !winData.isFullscreen;
+            if (winData.isFullscreen) {
+                win.classList.add('fullscreen');
+                // 如果有iframe，确保iframe也全屏
+                const iframe = win.querySelector('iframe');
+                if (iframe) {
+                    try {
+                        if (iframe.requestFullscreen) {
+                            iframe.requestFullscreen();
+                        }
+                    } catch (e) {}
+                }
             } else {
-                list = APP_DATA.filter(a => tags.includes(a.tag));
+                win.classList.remove('fullscreen');
+                // 恢复窗口大小
+                const cfg = getWindowConfig(win.dataset.winId);
+                if (cfg) {
+                    win.style.width = cfg.width + 'px';
+                    win.style.height = cfg.height + 'px';
+                }
+                centerWindow(win);
+                try {
+                    if (document.fullscreenElement) {
+                        document.exitFullscreen();
+                    }
+                } catch (e) {}
             }
-            container.style.display = 'block';
-            container.innerHTML = list.map(renderCard).join('');
-        }
-
-        function switchCat(el, cat) {
-            document.querySelectorAll('#catSidebar .sidebar-item').forEach(i => i.classList.remove('active'));
-            el.classList.add('active');
-            renderCategory(cat);
-        }
-
-        // 顶部搜索引擎
-        (function() {
-            var si = document.getElementById('searchInput');
-            var sb = si.parentElement.querySelector('.search-btn');
-
-            function doSearch() {
-                var q = si.value.trim();
-                if (q) window.open('https://aaa.372164885.xyz/?q=' + encodeURIComponent(q), '_blank');
+            // 更新按钮文字
+            const btn = win.querySelector('.btn-fullscreen');
+            if (btn) {
+                btn.textContent = winData.isFullscreen ? '⛶' : '⛶';
+                btn.title = winData.isFullscreen ? '退出全屏' : '全屏';
             }
-            sb.addEventListener('click', doSearch);
-            si.addEventListener('keydown', function(e) { if (e.key === 'Enter') doSearch(); });
-        })();
-
-        // 应用搜索
-        let appSearch = document.getElementById('appSearch'),
-            appSearchClear = document.getElementById('appSearchClear');
-        appSearch.addEventListener('input', () => {
-            searchQuery = appSearch.value.trim();
-            appSearchClear.classList.toggle('visible', searchQuery.length > 0);
-            renderCategory(currentSideCat);
-        });
-        appSearchClear.addEventListener('click', () => {
-            appSearch.value = '';
-            searchQuery = '';
-            appSearchClear.classList.remove('visible');
-            renderCategory(currentSideCat);
-            appSearch.focus();
-        });
-
-        // 初始渲染 AI 分类
-        (function initAICategory() {
-            let aiContainer = document.getElementById('cat-AI');
-            if (!aiContainer) return;
-            let aiApps = APP_DATA.filter(a => CAT_TAG_MAP['AI'].includes(a.tag));
-            aiContainer.innerHTML = aiApps.map(renderCard).join('');
-        })();
-
-        // 渲染热度排行
-        function renderHotRanking() {
-            let list = APP_DATA.filter(function(a) { return APP_HOT[a.name]; });
-            list.sort(function(a, b) { return (APP_HOT[b.name] || 0) - (APP_HOT[a.name] || 0); });
-            let html = '';
-            list.forEach(function(a, i) {
-                var numCls = i < 3 ? 'fire-' + (i + 1) : 'normal';
-                var numText = i < 3 ? '🔥' : (i + 1);
-                html += '<div class="rank-item" onclick="window.open(\'' + a.url +
-                    '\',\'_blank\')" style="cursor:pointer;">';
-                html += '<div class="rank-num ' + numCls + '">' + numText + '</div>';
-                html += '<div class="rank-icon" style="background:' + a.bg + ';color:' + a.color +
-                    ';font-size:22px;display:flex;align-items:center;justify-content:center;"><i class="' + a.icon +
-                    '"></i></div>';
-                html += '<div class="rank-info"><div class="rank-name">' + a.name + '</div>';
-                html += '<div class="rank-desc">' + (APP_DESC[a.name] || TAG_DESC[a.tag] || '') + '</div></div></div>';
-            });
-            document.getElementById('rankList').innerHTML = html;
         }
-        renderHotRanking();
 
-        // 渲染海外热门
-        (function renderOverseas() {
-            var list = APP_DATA.filter(function(a) { return OVERSEAS_SET[a.name]; });
-            list.sort(function(a, b) { return (APP_HOT[b.name] || 0) - (APP_HOT[a.name] || 0); });
-            var html = '';
-            list.forEach(function(a) {
-                html += '<div class="app-item" onclick="window.open(\'' + a.url +
-                    '\',\'_blank\')" style="cursor:pointer;">';
-                html += '<div class="app-icon" style="background:' + a.bg + ';color:' + a.color +
-                    ';font-size:22px;display:flex;align-items:center;justify-content:center;border-radius:12px;flex-shrink:0;"><i class="' +
-                    a.icon + '"></i></div>';
-                html += '<div class="app-info"><div class="app-name">' + a.name + '</div>';
-                html += '<div class="app-desc">' + (APP_DESC[a.name] || TAG_DESC[a.tag] || '') + '</div></div>';
-                html += '<button class="install-btn open">打开</button></div>';
+        // ---- 渲染内容 ----
+        function renderAppContent(type, iconId) {
+            if (type === 'mycomputer') {
+                return renderFolderView();
+            }
+            return '<p>内容不可用</p>';
+        }
+
+        function renderFolderView() {
+            const catKeys = Object.keys(CATEGORIES);
+            let html = `
+                <div class="mycomputer-container">
+                    <div class="toolbar">
+                        <button class="add-btn" onclick="window.addCustomLink()">➕ 添加快捷方式</button>
+                    </div>
+                    <div class="folder-grid">
+            `;
+            catKeys.forEach(key => {
+                const cat = CATEGORIES[key];
+                const count = LINK_DATA.filter(item => item.category === key).length;
+                html += `
+                    <div class="folder-item" onclick="window.openCategory('${key}')">
+                        <div class="folder-emoji">📁</div>
+                        <div class="folder-name">${cat.emoji} ${cat.label}</div>
+                        <div class="folder-count">${count} 个链接</div>
+                    </div>
+                `;
             });
-            document.getElementById('overseasList').innerHTML = html;
-        })();
+            html += `
+                    <div class="folder-item" onclick="window.openCategory('all')">
+                        <div class="folder-emoji">📂</div>
+                        <div class="folder-name">🌟 全部链接</div>
+                        <div class="folder-count">${LINK_DATA.length} 个链接</div>
+                    </div>
+            `;
+            html += `
+                    </div>
+                </div>
+            `;
+            return html;
+        }
+
+        function renderCategoryView(categoryKey) {
+            let links;
+            let title;
+            if (categoryKey === 'all') {
+                links = LINK_DATA;
+                title = '🌟 全部链接';
+            } else {
+                links = LINK_DATA.filter(item => item.category === categoryKey);
+                const cat = CATEGORIES[categoryKey];
+                title = cat ? `${cat.emoji} ${cat.label}` : categoryKey;
+            }
+
+            let html = `
+                <div class="category-view active">
+                    <button class="back-btn" onclick="window.backToFolders()">← 返回</button>
+                    <div class="cat-title">${title}</div>
+                    <div class="link-grid">
+            `;
+            if (links.length === 0) {
+                html += `<div style="grid-column:1/-1;text-align:center;color:rgba(255,255,255,0.3);padding:40px 0;">此分类暂无链接</div>`;
+            } else {
+                links.forEach(item => {
+                    html += `
+                        <div class="link-item" onclick="window.openLink('${item.url}')">
+                            <div class="link-emoji">${item.emoji}</div>
+                            <div class="link-label">${item.name}</div>
+                        </div>
+                    `;
+                });
+            }
+            html += `
+                    </div>
+                </div>
+            `;
+            return html;
+        }
+
+        // ---- 全局函数 ----
+        window.openCategory = function(key) {
+            currentCategory = key;
+            const winData = openWindows.find(w => w.id === 'computer');
+            if (!winData) return;
+            const body = winData.element.querySelector('.win-body');
+            if (body) {
+                body.innerHTML = renderCategoryView(key);
+            }
+        };
+
+        window.backToFolders = function() {
+            currentCategory = null;
+            const winData = openWindows.find(w => w.id === 'computer');
+            if (!winData) return;
+            const body = winData.element.querySelector('.win-body');
+            if (body) {
+                body.innerHTML = renderFolderView();
+            }
+        };
+
+        window.openLink = function(url) {
+            // 以弹窗方式打开链接
+            const winId = 'link_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
+            const win = document.createElement('div');
+            win.className = 'window';
+            win.dataset.winId = winId;
+
+            const maxW = window.innerWidth * 0.88;
+            const maxH = window.innerHeight * 0.80;
+            const w = Math.min(800, maxW);
+            const h = Math.min(600, maxH);
+            win.style.width = w + 'px';
+            win.style.height = h + 'px';
+
+            const titlebar = document.createElement('div');
+            titlebar.className = 'win-titlebar';
+            titlebar.innerHTML = `
+                <div class="win-title">
+                    <span class="win-icon">🌐</span>
+                    <span>网页</span>
+                </div>
+                <div class="win-controls">
+                    <button class="btn-min" title="最小化">─</button>
+                    <button class="btn-fullscreen" title="全屏">⛶</button>
+                    <button class="btn-close" title="关闭">✕</button>
+                </div>
+            `;
+            titlebar.querySelector('.btn-close').addEventListener('click', (e) => {
+                e.stopPropagation();
+                const idx = openWindows.findIndex(w => w.element === win);
+                if (idx !== -1) openWindows.splice(idx, 1);
+                win.remove();
+                updateTaskbar();
+                if (openWindows.length > 0) {
+                    focusWindow(openWindows[openWindows.length - 1].element);
+                }
+            });
+            titlebar.querySelector('.btn-min').addEventListener('click', (e) => {
+                e.stopPropagation();
+                const wData = openWindows.find(w => w.element === win);
+                if (wData) {
+                    if (wData.minimized) {
+                        win.style.display = 'flex';
+                        wData.minimized = false;
+                    } else {
+                        win.style.display = 'none';
+                        wData.minimized = true;
+                    }
+                    updateTaskbar();
+                    if (wData.minimized && win.classList.contains('active')) {
+                        const others = openWindows.filter(w => w.id !== winId && !w.minimized);
+                        if (others.length > 0) focusWindow(others[others.length - 1].element);
+                    }
+                }
+            });
+            titlebar.querySelector('.btn-fullscreen').addEventListener('click', (e) => {
+                e.stopPropagation();
+                const wData = openWindows.find(w => w.element === win);
+                if (wData) {
+                    wData.isFullscreen = !wData.isFullscreen;
+                    if (wData.isFullscreen) {
+                        win.classList.add('fullscreen');
+                        const iframe = win.querySelector('iframe');
+                        if (iframe) {
+                            try { iframe.requestFullscreen(); } catch (e) {}
+                        }
+                    } else {
+                        win.classList.remove('fullscreen');
+                        win.style.width = w + 'px';
+                        win.style.height = h + 'px';
+                        centerWindow(win);
+                        try { if (document.fullscreenElement) document.exitFullscreen(); } catch (e) {}
+                    }
+                    const btn = win.querySelector('.btn-fullscreen');
+                    if (btn) {
+                        btn.textContent = wData.isFullscreen ? '⛶' : '⛶';
+                        btn.title = wData.isFullscreen ? '退出全屏' : '全屏';
+                    }
+                }
+            });
+            titlebar.addEventListener('mousedown', (e) => {
+                if (e.target.closest('.win-controls')) return;
+                startDrag(e, win);
+            });
+            titlebar.addEventListener('touchstart', (e) => {
+                if (e.target.closest('.win-controls')) return;
+                if (e.touches.length === 1) {
+                    startDrag(e, win);
+                }
+            }, { passive: false });
+
+            win.appendChild(titlebar);
+
+            const body = document.createElement('div');
+            body.className = 'win-body iframe-body';
+            const iframe = document.createElement('iframe');
+            iframe.src = url;
+            iframe.sandbox = 'allow-scripts allow-same-origin allow-forms allow-popups';
+            iframe.loading = 'eager';
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            iframe.style.border = 'none';
+            iframe.onerror = () => {
+                body.innerHTML = `
+                    <div style="display:flex;justify-content:center;align-items:center;height:100%;color:rgba(255,255,255,0.6);flex-direction:column;gap:8px;">
+                        <span style="font-size:48px;">⚠️</span>
+                        <span>无法加载该网页（可能禁止嵌入）</span>
+                        <span style="font-size:12px;opacity:0.5;">${url}</span>
+                    </div>
+                `;
+                body.className = 'win-body';
+            };
+            body.appendChild(iframe);
+            win.appendChild(body);
+
+            windowsContainer.appendChild(win);
+
+            const winData = {
+                id: winId,
+                element: win,
+                title: '网页',
+                icon: '🌐',
+                minimized: false,
+                isFullscreen: false
+            };
+            openWindows.push(winData);
+            updateTaskbar();
+            focusWindow(win);
+            centerWindow(win);
+            addResizeHandle(win);
+        };
+
+        window.addCustomLink = function() {
+            const name = prompt('请输入链接名称：', '我的网站');
+            if (name && name.trim() !== '') {
+                const url = prompt('请输入网址 (包含 http:// 或 https://)：', 'https://example.com');
+                if (url && url.trim() !== '') {
+                    let finalUrl = url.trim();
+                    if (!finalUrl.startsWith('http://') && !finalUrl.startsWith('https://')) {
+                        finalUrl = 'https://' + finalUrl;
+                    }
+                    const emoji = prompt('请输入图标表情符号（如 🌐）：', '🌐') || '🌐';
+                    const category = prompt('请输入分类（AI/视频/动漫/小说/社交/游戏/购物/工具/搜图/海外/影视/群友/皮卡）：', '工具');
+                    const validCategories = Object.keys(CATEGORIES);
+                    const finalCategory = validCategories.includes(category) ? category : '工具';
+                    LINK_DATA.push({
+                        name: name.trim(),
+                        emoji: emoji,
+                        url: finalUrl,
+                        category: finalCategory
+                    });
+                    if (currentCategory) {
+                        const winData = openWindows.find(w => w.id === 'computer');
+                        if (winData) {
+                            const body = winData.element.querySelector('.win-body');
+                            if (body) body.innerHTML = renderCategoryView(currentCategory);
+                        }
+                    } else {
+                        const winData = openWindows.find(w => w.id === 'computer');
+                        if (winData) {
+                            const body = winData.element.querySelector('.win-body');
+                            if (body) body.innerHTML = renderFolderView();
+                        }
+                    }
+                }
+            }
+        };
+
+        // ---- 窗口操作 ----
+        function focusWindow(win) {
+            winZIndex += 1;
+            win.style.zIndex = winZIndex;
+            win.classList.add('active');
+            $$('.window').forEach(w => { if (w !== win) w.classList.remove('active'); });
+            const id = win.dataset.winId;
+            $$('.tb-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.winId === id);
+            });
+        }
+
+        function closeWindow(iconId) {
+            const idx = openWindows.findIndex(w => w.id === iconId);
+            if (idx === -1) return;
+            openWindows[idx].element.remove();
+            openWindows.splice(idx, 1);
+            updateTaskbar();
+            if (openWindows.length > 0) {
+                focusWindow(openWindows[openWindows.length - 1].element);
+            }
+        }
+
+        function minimizeWindow(iconId) {
+            const winData = openWindows.find(w => w.id === iconId);
+            if (!winData) return;
+            const win = winData.element;
+            if (winData.minimized) {
+                win.style.display = 'flex';
+                winData.minimized = false;
+            } else {
+                win.style.display = 'none';
+                winData.minimized = true;
+            }
+            updateTaskbar();
+            if (winData.minimized && win.classList.contains('active')) {
+                const others = openWindows.filter(w => w.id !== iconId && !w.minimized);
+                if (others.length > 0) focusWindow(others[others.length - 1].element);
+            }
+        }
+
+        function centerWindow(win) {
+            const rect = win.getBoundingClientRect();
+            const w = rect.width,
+                h = rect.height;
+            const left = (window.innerWidth - w) / 2;
+            const top = (window.innerHeight - h) / 2 - 20;
+            win.style.left = clamp(left, 8, window.innerWidth - w - 8) + 'px';
+            win.style.top = clamp(top, 8, window.innerHeight - h - 60) + 'px';
+        }
+
+        function getIconById(id) {
+            return iconData.find(i => i.id === id);
+        }
+
+        // ===================================================================
+        //  缩放手柄
+        // ===================================================================
+
+        function addResizeHandle(win) {
+            const handle = document.createElement('div');
+            handle.className = 'win-resize';
+            win.appendChild(handle);
+
+            handle.addEventListener('mousedown', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                startResize(e, win);
+            });
+            handle.addEventListener('touchstart', (e) => {
+                e.stopPropagation();
+                if (e.touches.length === 1) {
+                    e.preventDefault();
+                    startResize(e, win);
+                }
+            }, { passive: false });
+        }
+
+        function startResize(e, win) {
+            const isTouch = e.type === 'touchstart';
+            const clientX = isTouch ? e.touches[0].clientX : e.clientX;
+            const clientY = isTouch ? e.touches[0].clientY : e.clientY;
+
+            const rect = win.getBoundingClientRect();
+            resizeData = {
+                win: win,
+                startX: clientX,
+                startY: clientY,
+                startWidth: rect.width,
+                startHeight: rect.height,
+                isTouch: isTouch,
+            };
+
+            if (isTouch) {
+                document.addEventListener('touchmove', onResizeMoveTouch, { passive: false });
+                document.addEventListener('touchend', onResizeEndTouch, { passive: false });
+                document.addEventListener('touchcancel', onResizeEndTouch, { passive: false });
+            } else {
+                document.addEventListener('mousemove', onResizeMoveMouse);
+                document.addEventListener('mouseup', onResizeEndMouse);
+            }
+        }
+
+        function onResizeMoveTouch(e) {
+            if (!resizeData || !resizeData.isTouch) return;
+            const touch = e.touches[0];
+            resizeWindow(touch.clientX, touch.clientY);
+            e.preventDefault();
+        }
+
+        function onResizeEndTouch(e) {
+            if (resizeData && resizeData.isTouch) { resizeData = null; }
+            document.removeEventListener('touchmove', onResizeMoveTouch);
+            document.removeEventListener('touchend', onResizeEndTouch);
+            document.removeEventListener('touchcancel', onResizeEndTouch);
+        }
+
+        function onResizeMoveMouse(e) {
+            if (!resizeData || resizeData.isTouch) return;
+            resizeWindow(e.clientX, e.clientY);
+        }
+
+        function onResizeEndMouse(e) {
+            if (resizeData && !resizeData.isTouch) { resizeData = null; }
+            document.removeEventListener('mousemove', onResizeMoveMouse);
+            document.removeEventListener('mouseup', onResizeEndMouse);
+        }
+
+        function resizeWindow(clientX, clientY) {
+            if (!resizeData) return;
+            const { win, startX, startY, startWidth, startHeight } = resizeData;
+            const dx = clientX - startX;
+            const dy = clientY - startY;
+
+            let newWidth = Math.max(300, startWidth + dx);
+            let newHeight = Math.max(200, startHeight + dy);
+
+            const rect = win.getBoundingClientRect();
+            const maxW = window.innerWidth - rect.left - 8;
+            const maxH = window.innerHeight - rect.top - 60;
+            newWidth = Math.min(newWidth, maxW);
+            newHeight = Math.min(newHeight, maxH);
+
+            win.style.width = newWidth + 'px';
+            win.style.height = newHeight + 'px';
+        }
+
+        // ===================================================================
+        //  拖动
+        // ===================================================================
+
+        function startDrag(e, win) {
+            if (resizeData) return;
+            const isTouch = e.type === 'touchstart';
+            const clientX = isTouch ? e.touches[0].clientX : e.clientX;
+            const clientY = isTouch ? e.touches[0].clientY : e.clientY;
+            const rect = win.getBoundingClientRect();
+            dragData = {
+                win: win,
+                offsetX: clientX - rect.left,
+                offsetY: clientY - rect.top,
+                isTouch: isTouch
+            };
+            if (isTouch) {
+                document.addEventListener('touchmove', onDragMoveTouch, { passive: false });
+                document.addEventListener('touchend', onDragEndTouch, { passive: false });
+                document.addEventListener('touchcancel', onDragEndTouch, { passive: false });
+                e.preventDefault();
+            } else {
+                document.addEventListener('mousemove', onDragMoveMouse);
+                document.addEventListener('mouseup', onDragEndMouse);
+                e.preventDefault();
+            }
+        }
+
+        function onDragMoveTouch(e) {
+            if (!dragData || !dragData.isTouch) return;
+            const touch = e.touches[0];
+            moveDrag(touch.clientX, touch.clientY);
+            e.preventDefault();
+        }
+
+        function onDragEndTouch(e) {
+            if (dragData && dragData.isTouch) { dragData = null; }
+            document.removeEventListener('touchmove', onDragMoveTouch);
+            document.removeEventListener('touchend', onDragEndTouch);
+            document.removeEventListener('touchcancel', onDragEndTouch);
+        }
+
+        function onDragMoveMouse(e) {
+            if (!dragData || dragData.isTouch) return;
+            moveDrag(e.clientX, e.clientY);
+        }
+
+        function onDragEndMouse(e) {
+            if (dragData && !dragData.isTouch) { dragData = null; }
+            document.removeEventListener('mousemove', onDragMoveMouse);
+            document.removeEventListener('mouseup', onDragEndMouse);
+        }
+
+        function moveDrag(clientX, clientY) {
+            if (!dragData) return;
+            const { win, offsetX, offsetY } = dragData;
+            let left = clientX - offsetX;
+            let top = clientY - offsetY;
+            const maxX = window.innerWidth - win.offsetWidth - 4;
+            const maxY = window.innerHeight - win.offsetHeight - 60;
+            win.style.left = clamp(left, 4, maxX) + 'px';
+            win.style.top = clamp(top, 4, maxY) + 'px';
+        }
+
+        // ===================================================================
+        //  任务栏更新
+        // ===================================================================
+
+        function updateTaskbar() {
+            tbItems.innerHTML = '';
+            openWindows.forEach(winData => {
+                const btn = document.createElement('button');
+                btn.className = 'tb-btn';
+                if (winData.minimized) btn.style.opacity = '0.5';
+                btn.dataset.winId = winData.id;
+                btn.innerHTML = `<span class="tb-icon">${winData.icon}</span> ${winData.title}`;
+                btn.addEventListener('click', () => {
+                    if (winData.minimized) {
+                        winData.element.style.display = 'flex';
+                        winData.minimized = false;
+                        updateTaskbar();
+                    }
+                    focusWindow(winData.element);
+                });
+                tbItems.appendChild(btn);
+            });
+            const activeWin = document.querySelector('.window.active');
+            if (activeWin) {
+                const id = activeWin.dataset.winId;
+                $$('.tb-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.winId === id);
+                });
+            }
+        }
+
+        // ===================================================================
+        //  桌面大图标点击事件
+        // ===================================================================
+
+        document.getElementById('myComputerDesktop').addEventListener('click', () => {
+            openWindow('computer');
+        });
+
+        // ===================================================================
+        //  窗口自适应
+        // ===================================================================
+
+        window.addEventListener('resize', () => {
+            openWindows.forEach(winData => {
+                const win = winData.element;
+                if (winData.minimized || winData.isFullscreen) return;
+                const rect = win.getBoundingClientRect();
+                const maxX = window.innerWidth - 8;
+                const maxY = window.innerHeight - 60;
+                if (rect.left > maxX || rect.top > maxY) {
+                    win.style.left = clamp(rect.left, 4, maxX - rect.width) + 'px';
+                    win.style.top = clamp(rect.top, 4, maxY - rect.height) + 'px';
+                }
+                const maxW = window.innerWidth - rect.left - 8;
+                const maxH = window.innerHeight - rect.top - 60;
+                const curW = parseFloat(win.style.width) || rect.width;
+                const curH = parseFloat(win.style.height) || rect.height;
+                if (curW > maxW) win.style.width = maxW + 'px';
+                if (curH > maxH) win.style.height = maxH + 'px';
+            });
+        });
+
+        // ===================================================================
+        //  ESC 关闭窗口 / ESC 退出全屏
+        // ===================================================================
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                // 先尝试退出全屏
+                if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                    const fullWin = document.querySelector('.window.fullscreen');
+                    if (fullWin) {
+                        const wData = openWindows.find(w => w.element === fullWin);
+                        if (wData) {
+                            wData.isFullscreen = false;
+                            fullWin.classList.remove('fullscreen');
+                            const cfg = getWindowConfig(fullWin.dataset.winId) || { width: 700, height: 500 };
+                            fullWin.style.width = cfg.width + 'px';
+                            fullWin.style.height = cfg.height + 'px';
+                            centerWindow(fullWin);
+                            const btn = fullWin.querySelector('.btn-fullscreen');
+                            if (btn) { btn.textContent = '⛶';
+                                btn.title = '全屏'; }
+                        }
+                    }
+                    return;
+                }
+                const active = document.querySelector('.window.active');
+                if (active) {
+                    const id = active.dataset.winId;
+                    const idx = openWindows.findIndex(w => w.element === active);
+                    if (idx !== -1) {
+                        const winData = openWindows[idx];
+                        if (winData.id.startsWith('link_')) {
+                            openWindows.splice(idx, 1);
+                            active.remove();
+                            updateTaskbar();
+                            if (openWindows.length > 0) {
+                                focusWindow(openWindows[openWindows.length - 1].element);
+                            }
+                        } else {
+                            closeWindow(winData.id);
+                        }
+                    }
+                }
+            }
+        });
+
+        // 监听全屏变化
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement) {
+                const fullWin = document.querySelector('.window.fullscreen');
+                if (fullWin) {
+                    const wData = openWindows.find(w => w.element === fullWin);
+                    if (wData) {
+                        wData.isFullscreen = false;
+                        fullWin.classList.remove('fullscreen');
+                        const cfg = getWindowConfig(fullWin.dataset.winId) || { width: 700, height: 500 };
+                        fullWin.style.width = cfg.width + 'px';
+                        fullWin.style.height = cfg.height + 'px';
+                        centerWindow(fullWin);
+                        const btn = fullWin.querySelector('.btn-fullscreen');
+                        if (btn) { btn.textContent = '⛶';
+                            btn.title = '全屏'; }
+                    }
+                }
+            }
+        });
+
+        // ===================================================================
+        //  初始化
+        // ===================================================================
+
+        setTimeout(() => {
+            openWindow('computer');
+        }, 300);
+
+        console.log('✨ 小窗口已支持全屏和最小化到任务栏');
+        console.log(`📁 共 ${Object.keys(CATEGORIES).length} 个分类，${LINK_DATA.length} 个链接`);
     </script>
 </body>
 </html>
