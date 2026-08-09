@@ -178,8 +178,15 @@
             font-weight: 600;
             letter-spacing: 0.3px;
             color: rgba(255,255,255,0.88);
+            flex: 1;
+            min-width: 0;
         }
-        .win-title .win-icon { font-size: 18px; opacity: 0.8; }
+        .win-title .win-icon { font-size: 18px; opacity: 0.8; flex-shrink: 0; }
+        .win-title .win-title-text {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .win-controls {
             display: flex;
             gap: 6px;
@@ -235,12 +242,68 @@
         .win-body.iframe-body {
             padding: 0;
             overflow: hidden;
+            position: relative;
         }
         .win-body.iframe-body iframe {
             width: 100%;
             height: 100%;
             border: none;
             display: block;
+        }
+        /* 错误提示覆盖层（短暂显示后自动跳转） */
+        .win-body .iframe-error {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            color: rgba(255,255,255,0.6);
+            gap: 12px;
+            padding: 20px;
+            text-align: center;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .win-body .iframe-error .error-icon {
+            font-size: 48px;
+        }
+        .win-body .iframe-error .error-title {
+            font-size: 18px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.8);
+        }
+        .win-body .iframe-error .error-desc {
+            font-size: 13px;
+            color: rgba(255,255,255,0.4);
+            max-width: 400px;
+        }
+        .win-body .iframe-error .error-timer {
+            font-size: 14px;
+            color: rgba(255,255,255,0.5);
+            margin-top: 4px;
+        }
+        .win-body .iframe-error .error-btn {
+            margin-top: 8px;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.20);
+            border-radius: 8px;
+            padding: 10px 28px;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            font-family: inherit;
+            touch-action: manipulation;
+            font-weight: 500;
+        }
+        .win-body .iframe-error .error-btn:hover {
+            background: rgba(255,255,255,0.22);
+        }
+        .win-body .iframe-error .error-btn:active {
+            transform: scale(0.96);
         }
 
         /* ===== 缩放手柄 ===== */
@@ -949,7 +1012,7 @@
             titlebar.innerHTML = `
             <div class="win-title">
               <span class="win-icon">${cfg.title.match(/^.{1,2}/)?.[0] || '📄'}</span>
-              <span>${titleText}</span>
+              <span class="win-title-text">${titleText}</span>
             </div>
             <div class="win-controls">
               <button class="btn-min" title="最小化">─</button>
@@ -957,17 +1020,14 @@
               <button class="btn-close" title="关闭">✕</button>
             </div>
           `;
-            // 关闭
             titlebar.querySelector('.btn-close').addEventListener('click', (e) => {
                 e.stopPropagation();
                 closeWindow(iconId);
             });
-            // 最小化（缩小到任务栏）
             titlebar.querySelector('.btn-min').addEventListener('click', (e) => {
                 e.stopPropagation();
                 minimizeWindow(iconId);
             });
-            // 全屏
             titlebar.querySelector('.btn-fullscreen').addEventListener('click', (e) => {
                 e.stopPropagation();
                 toggleFullscreen(win);
@@ -996,41 +1056,29 @@
             return win;
         }
 
-        // ---- 全屏切换 ----
         function toggleFullscreen(win) {
             const winData = openWindows.find(w => w.element === win);
             if (!winData) return;
             winData.isFullscreen = !winData.isFullscreen;
             if (winData.isFullscreen) {
                 win.classList.add('fullscreen');
-                // 如果有iframe，确保iframe也全屏
                 const iframe = win.querySelector('iframe');
                 if (iframe) {
-                    try {
-                        if (iframe.requestFullscreen) {
-                            iframe.requestFullscreen();
-                        }
-                    } catch (e) {}
+                    try { iframe.requestFullscreen(); } catch (e) {}
                 }
             } else {
                 win.classList.remove('fullscreen');
-                // 恢复窗口大小
                 const cfg = getWindowConfig(win.dataset.winId);
                 if (cfg) {
                     win.style.width = cfg.width + 'px';
                     win.style.height = cfg.height + 'px';
                 }
                 centerWindow(win);
-                try {
-                    if (document.fullscreenElement) {
-                        document.exitFullscreen();
-                    }
-                } catch (e) {}
+                try { if (document.fullscreenElement) document.exitFullscreen(); } catch (e) {}
             }
-            // 更新按钮文字
             const btn = win.querySelector('.btn-fullscreen');
             if (btn) {
-                btn.textContent = winData.isFullscreen ? '⛶' : '⛶';
+                btn.textContent = '⛶';
                 btn.title = winData.isFullscreen ? '退出全屏' : '全屏';
             }
         }
@@ -1099,8 +1147,9 @@
                 html += `<div style="grid-column:1/-1;text-align:center;color:rgba(255,255,255,0.3);padding:40px 0;">此分类暂无链接</div>`;
             } else {
                 links.forEach(item => {
+                    const data = encodeURIComponent(JSON.stringify(item));
                     html += `
-                        <div class="link-item" onclick="window.openLink('${item.url}')">
+                        <div class="link-item" onclick="window.openLinkData('${data}')">
                             <div class="link-emoji">${item.emoji}</div>
                             <div class="link-label">${item.name}</div>
                         </div>
@@ -1135,8 +1184,19 @@
             }
         };
 
-        window.openLink = function(url) {
-            // 以弹窗方式打开链接
+        window.openLinkData = function(encodedData) {
+            let item;
+            try {
+                item = JSON.parse(decodeURIComponent(encodedData));
+            } catch (e) {
+                return;
+            }
+            if (!item || !item.url) return;
+            openLinkWindow(item);
+        };
+
+        // ===== 核心：检测到 SecurityError 立即跳转 =====
+        function openLinkWindow(item) {
             const winId = 'link_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
             const win = document.createElement('div');
             win.className = 'window';
@@ -1153,8 +1213,8 @@
             titlebar.className = 'win-titlebar';
             titlebar.innerHTML = `
                 <div class="win-title">
-                    <span class="win-icon">🌐</span>
-                    <span>网页</span>
+                    <span class="win-icon">${item.emoji || '🌐'}</span>
+                    <span class="win-title-text">${item.name || '网页'}</span>
                 </div>
                 <div class="win-controls">
                     <button class="btn-min" title="最小化">─</button>
@@ -1198,9 +1258,7 @@
                     if (wData.isFullscreen) {
                         win.classList.add('fullscreen');
                         const iframe = win.querySelector('iframe');
-                        if (iframe) {
-                            try { iframe.requestFullscreen(); } catch (e) {}
-                        }
+                        if (iframe) { try { iframe.requestFullscreen(); } catch (e) {} }
                     } else {
                         win.classList.remove('fullscreen');
                         win.style.width = w + 'px';
@@ -1210,7 +1268,7 @@
                     }
                     const btn = win.querySelector('.btn-fullscreen');
                     if (btn) {
-                        btn.textContent = wData.isFullscreen ? '⛶' : '⛶';
+                        btn.textContent = '⛶';
                         btn.title = wData.isFullscreen ? '退出全屏' : '全屏';
                     }
                 }
@@ -1230,33 +1288,85 @@
 
             const body = document.createElement('div');
             body.className = 'win-body iframe-body';
+
             const iframe = document.createElement('iframe');
-            iframe.src = url;
+            iframe.src = item.url;
             iframe.sandbox = 'allow-scripts allow-same-origin allow-forms allow-popups';
             iframe.loading = 'eager';
             iframe.style.width = '100%';
             iframe.style.height = '100%';
             iframe.style.border = 'none';
-            iframe.onerror = () => {
+
+            let loadSucceeded = false;
+            let loadFailed = false;
+            let timeoutId = null;
+
+            // load 事件触发后检测是否可访问内容
+            iframe.addEventListener('load', function() {
+                if (loadFailed) return;
+                clearTimeout(timeoutId);
+                // 尝试访问 contentDocument
+                try {
+                    var doc = iframe.contentDocument || iframe.contentWindow.document;
+                    // 如果能访问，说明同源且内容已加载，保留窗口
+                    loadSucceeded = true;
+                } catch (e) {
+                    // SecurityError 表示跨域或禁止嵌入，直接跳转
+                    if (e.name === 'SecurityError') {
+                        showErrorAndRedirect('🚫', '无法嵌入', '该网站禁止在框架中显示，将自动在新标签页打开', item.url, win, winId);
+                    } else {
+                        // 其他错误，可能加载失败
+                        showErrorAndRedirect('⚠️', '加载异常', '发生未知错误，将自动在新标签页打开', item.url, win, winId);
+                    }
+                }
+            });
+
+            // onerror 处理网络错误
+            iframe.onerror = function() {
+                if (loadFailed || loadSucceeded) return;
+                clearTimeout(timeoutId);
+                showErrorAndRedirect('⚠️', '加载失败', '网络错误或地址无效，将自动在新标签页打开', item.url, win, winId);
+            };
+
+            // 超时后备（5秒后若仍未检测到加载成功，则跳转）
+            timeoutId = setTimeout(() => {
+                if (loadFailed || loadSucceeded) return;
+                showErrorAndRedirect('⏱️', '加载超时', '网站响应过慢，将自动在新标签页打开', item.url, win, winId);
+            }, 5000);
+
+            body.appendChild(iframe);
+            win.appendChild(body);
+
+            function showErrorAndRedirect(icon, title, desc, url, winElement, winId) {
+                if (loadFailed) return;
+                loadFailed = true;
+
                 body.innerHTML = `
-                    <div style="display:flex;justify-content:center;align-items:center;height:100%;color:rgba(255,255,255,0.6);flex-direction:column;gap:8px;">
-                        <span style="font-size:48px;">⚠️</span>
-                        <span>无法加载该网页（可能禁止嵌入）</span>
-                        <span style="font-size:12px;opacity:0.5;">${url}</span>
+                    <div class="iframe-error">
+                        <div class="error-icon">${icon}</div>
+                        <div class="error-title">${title}</div>
+                        <div class="error-desc">${desc}</div>
+                        <div style="font-size:12px;color:rgba(255,255,255,0.3);word-break:break-all;max-width:400px;">${url}</div>
+                        <div class="error-timer">⏳ 即将跳转...</div>
+                        <button class="error-btn" onclick="window.open('${url}','_blank'); window.closeWindowById('${winId}')">📂 立即在新标签页打开</button>
                     </div>
                 `;
                 body.className = 'win-body';
-            };
-            body.appendChild(iframe);
-            win.appendChild(body);
+
+                // 1秒后自动跳转并关闭窗口
+                setTimeout(() => {
+                    window.open(url, '_blank');
+                    window.closeWindowById(winId);
+                }, 1000);
+            }
 
             windowsContainer.appendChild(win);
 
             const winData = {
                 id: winId,
                 element: win,
-                title: '网页',
-                icon: '🌐',
+                title: item.name || '网页',
+                icon: item.emoji || '🌐',
                 minimized: false,
                 isFullscreen: false
             };
@@ -1265,6 +1375,29 @@
             focusWindow(win);
             centerWindow(win);
             addResizeHandle(win);
+        }
+
+        // 辅助：通过窗口ID关闭窗口
+        window.closeWindowById = function(winId) {
+            const idx = openWindows.findIndex(w => w.id === winId);
+            if (idx !== -1) {
+                const winData = openWindows[idx];
+                winData.element.remove();
+                openWindows.splice(idx, 1);
+                updateTaskbar();
+                if (openWindows.length > 0) {
+                    focusWindow(openWindows[openWindows.length - 1].element);
+                }
+            }
+        };
+
+        window.openLink = function(url) {
+            const item = LINK_DATA.find(l => l.url === url);
+            if (item) {
+                openLinkWindow(item);
+            } else {
+                openLinkWindow({ name: '网页', emoji: '🌐', url: url });
+            }
         };
 
         window.addCustomLink = function() {
@@ -1346,8 +1479,7 @@
 
         function centerWindow(win) {
             const rect = win.getBoundingClientRect();
-            const w = rect.width,
-                h = rect.height;
+            const w = rect.width, h = rect.height;
             const left = (window.innerWidth - w) / 2;
             const top = (window.innerHeight - h) / 2 - 20;
             win.style.left = clamp(left, 8, window.innerWidth - w - 8) + 'px';
@@ -1525,7 +1657,8 @@
                 btn.className = 'tb-btn';
                 if (winData.minimized) btn.style.opacity = '0.5';
                 btn.dataset.winId = winData.id;
-                btn.innerHTML = `<span class="tb-icon">${winData.icon}</span> ${winData.title}`;
+                const icon = winData.icon || '🌐';
+                btn.innerHTML = `<span class="tb-icon">${icon}</span> ${winData.title}`;
                 btn.addEventListener('click', () => {
                     if (winData.minimized) {
                         winData.element.style.display = 'flex';
@@ -1583,7 +1716,6 @@
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                // 先尝试退出全屏
                 if (document.fullscreenElement) {
                     document.exitFullscreen();
                     const fullWin = document.querySelector('.window.fullscreen');
@@ -1597,8 +1729,7 @@
                             fullWin.style.height = cfg.height + 'px';
                             centerWindow(fullWin);
                             const btn = fullWin.querySelector('.btn-fullscreen');
-                            if (btn) { btn.textContent = '⛶';
-                                btn.title = '全屏'; }
+                            if (btn) { btn.textContent = '⛶'; btn.title = '全屏'; }
                         }
                     }
                     return;
@@ -1624,7 +1755,6 @@
             }
         });
 
-        // 监听全屏变化
         document.addEventListener('fullscreenchange', () => {
             if (!document.fullscreenElement) {
                 const fullWin = document.querySelector('.window.fullscreen');
@@ -1638,8 +1768,7 @@
                         fullWin.style.height = cfg.height + 'px';
                         centerWindow(fullWin);
                         const btn = fullWin.querySelector('.btn-fullscreen');
-                        if (btn) { btn.textContent = '⛶';
-                            btn.title = '全屏'; }
+                        if (btn) { btn.textContent = '⛶'; btn.title = '全屏'; }
                     }
                 }
             }
@@ -1653,7 +1782,7 @@
             openWindow('computer');
         }, 300);
 
-        console.log('✨ 小窗口已支持全屏和最小化到任务栏');
+        console.log('✨ 修复：检测到跨域禁止嵌入（SecurityError）时立即自动跳转，正常同源网站保留在窗口中');
         console.log(`📁 共 ${Object.keys(CATEGORIES).length} 个分类，${LINK_DATA.length} 个链接`);
     </script>
 </body>
