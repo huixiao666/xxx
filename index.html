@@ -2,678 +2,288 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>✨ 我的电脑 · 分类管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>✨ 我的电脑 · 工具箱</title>
     <style>
-        /* ===== 全局重置 ===== */
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            user-select: none;
+            margin: 0; padding: 0; box-sizing: border-box; user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
         body {
             font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
-            overflow: hidden;
-            height: 100vh;
-            width: 100vw;
-            background: #0b0e1a;
-            color: #fff;
-            touch-action: none;
+            overflow: hidden; height: 100vh; width: 100vw;
+            background: #0b0e1a; color: #fff; touch-action: none;
         }
-
-        /* ===== 桌面背景 ===== */
         #desktop {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
+            position: relative; width: 100vw; height: 100vh;
             background: radial-gradient(ellipse at 30% 40%, #1a1f3a, #0b0e1a 70%);
-            overflow: hidden;
-            touch-action: none;
+            overflow: hidden; touch-action: none;
         }
         .star {
-            position: absolute;
-            border-radius: 50%;
-            background: #fff;
+            position: absolute; border-radius: 50%; background: #fff;
             animation: twinkle var(--dur) ease-in-out infinite alternate;
         }
         @keyframes twinkle {
             0% { opacity: 0.15; transform: scale(0.7); }
             100% { opacity: 1; transform: scale(1.3); }
         }
-
-        /* ===== 桌面上的“我的电脑”大图标 (左上角) ===== */
-        #myComputerDesktop {
-            position: absolute;
-            left: 36px;
-            top: 36px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: transform 0.2s, background 0.2s;
-            touch-action: manipulation;
-            padding: 16px 12px 12px;
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            width: 130px;
-            height: 130px;
+        .desktop-icon {
+            position: absolute; display: flex; flex-direction: column; align-items: center;
+            justify-content: center; cursor: pointer; transition: transform 0.2s, background 0.2s;
+            touch-action: manipulation; padding: 16px 12px 12px; border-radius: 16px;
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.04);
+            width: 130px; height: 130px;
         }
-        #myComputerDesktop:hover {
-            background: rgba(255, 255, 255, 0.08);
-            transform: scale(1.04);
-        }
-        #myComputerDesktop:active {
-            transform: scale(0.94);
-        }
-        #myComputerDesktop .big-icon {
-            font-size: 72px;
-            line-height: 1;
-            filter: drop-shadow(0 8px 24px rgba(0,0,0,0.6));
+        .desktop-icon:hover { background: rgba(255, 255, 255, 0.08); transform: scale(1.04); }
+        .desktop-icon:active { transform: scale(0.94); }
+        .desktop-icon .big-icon {
+            font-size: 72px; line-height: 1; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.6));
             margin-bottom: 8px;
         }
-        #myComputerDesktop .big-label {
-            font-size: 18px;
-            font-weight: 500;
-            text-shadow: 0 2px 12px rgba(0,0,0,0.8);
-            letter-spacing: 0.5px;
-            background: rgba(0,0,0,0.30);
-            padding: 2px 16px;
-            border-radius: 40px;
-            backdrop-filter: blur(4px);
+        .desktop-icon .big-label {
+            font-size: 18px; font-weight: 500; text-shadow: 0 2px 12px rgba(0,0,0,0.8);
+            letter-spacing: 0.5px; background: rgba(0,0,0,0.30); padding: 2px 16px;
+            border-radius: 40px; backdrop-filter: blur(4px);
         }
+        #myComputerDesktop { left: 36px; top: 36px; }
+        #toolboxDesktop { left: 180px; top: 36px; }
         @media (max-width: 768px) {
-            #myComputerDesktop {
-                left: 20px;
-                top: 20px;
-                width: 100px;
-                height: 100px;
-                padding: 12px 10px 10px;
-            }
-            #myComputerDesktop .big-icon { font-size: 52px; }
-            #myComputerDesktop .big-label { font-size: 15px; padding: 2px 12px; }
+            .desktop-icon { width: 100px; height: 100px; padding: 12px 10px 10px; }
+            .desktop-icon .big-icon { font-size: 52px; }
+            .desktop-icon .big-label { font-size: 15px; padding: 2px 12px; }
+            #myComputerDesktop { left: 20px; top: 20px; }
+            #toolboxDesktop { left: 130px; top: 20px; }
         }
         @media (max-width: 480px) {
-            #myComputerDesktop {
-                left: 14px;
-                top: 14px;
-                width: 80px;
-                height: 80px;
-                padding: 8px 6px 6px;
-                border-radius: 12px;
-            }
-            #myComputerDesktop .big-icon { font-size: 40px; }
-            #myComputerDesktop .big-label { font-size: 12px; padding: 1px 10px; }
+            .desktop-icon { width: 80px; height: 80px; padding: 8px 6px 6px; border-radius: 12px; }
+            .desktop-icon .big-icon { font-size: 40px; }
+            .desktop-icon .big-label { font-size: 12px; padding: 1px 10px; }
+            #myComputerDesktop { left: 14px; top: 14px; }
+            #toolboxDesktop { left: 100px; top: 14px; }
         }
-
-        /* ===== 窗口容器 ===== */
         #windows {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: calc(100% - 52px);
-            pointer-events: none;
-            z-index: 100;
+            position: fixed; top: 0; left: 0; width: 100%; height: calc(100% - 52px);
+            pointer-events: none; z-index: 100;
         }
         #windows>* { pointer-events: auto; }
-
         .window {
-            position: absolute;
-            min-width: 300px;
-            min-height: 200px;
-            max-width: 92vw;
-            max-height: 85vh;
-            background: rgba(22, 28, 50, 0.78);
-            backdrop-filter: blur(24px) saturate(1.2);
-            border: 1px solid rgba(255,255,255,0.13);
-            border-radius: 16px;
+            position: absolute; min-width: 300px; min-height: 200px;
+            max-width: 92vw; max-height: 85vh;
+            background: rgba(22, 28, 50, 0.82); backdrop-filter: blur(24px) saturate(1.2);
+            border: 1px solid rgba(255,255,255,0.15); border-radius: 16px;
             box-shadow: 0 24px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04) inset;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
+            display: flex; flex-direction: column; overflow: hidden;
             animation: windowIn 0.26s cubic-bezier(0.34, 1.56, 0.64, 1);
-            transition: box-shadow 0.25s;
             touch-action: none;
         }
         .window.active {
             box-shadow: 0 28px 96px rgba(0,0,0,0.85), 0 0 0 1px rgba(255,255,255,0.10) inset;
         }
-        .window.fullscreen {
-            width: 100% !important;
-            height: 100% !important;
-            max-width: 100% !important;
-            max-height: 100% !important;
-            top: 0 !important;
-            left: 0 !important;
-            border-radius: 0;
-            z-index: 9999 !important;
+        .window.maximized {
+            width: 100% !important; height: calc(100% - 52px) !important;
+            max-width: 100% !important; max-height: calc(100% - 52px) !important;
+            top: 0 !important; left: 0 !important; border-radius: 0;
         }
         @keyframes windowIn {
             0% { opacity: 0; transform: scale(0.92) translateY(18px); }
             100% { opacity: 1; transform: scale(1) translateY(0); }
         }
-
         .win-titlebar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 14px 8px 18px;
-            background: rgba(255,255,255,0.04);
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-            flex-shrink: 0;
-            cursor: grab;
-            min-height: 44px;
-            touch-action: none;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 10px 14px 8px 18px; background: rgba(255,255,255,0.04);
+            border-bottom: 1px solid rgba(255,255,255,0.06); cursor: grab;
+            min-height: 44px; touch-action: none;
         }
         .win-titlebar:active { cursor: grabbing; }
         .win-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 0.3px;
-            color: rgba(255,255,255,0.88);
-            flex: 1;
-            min-width: 0;
+            display: flex; align-items: center; gap: 10px; font-size: 14px;
+            font-weight: 600; color: rgba(255,255,255,0.88); flex: 1; min-width: 0;
         }
-        .win-title .win-icon { font-size: 18px; opacity: 0.8; flex-shrink: 0; }
-        .win-title .win-title-text {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .win-controls {
-            display: flex;
-            gap: 6px;
-            flex-shrink: 0;
-        }
+        .win-title .win-icon { font-size: 18px; opacity: 0.8; }
+        .win-title .win-title-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .win-controls { display: flex; gap: 6px; flex-shrink: 0; }
         .win-controls button {
-            width: 30px;
-            height: 30px;
-            border: none;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.06);
-            color: rgba(255,255,255,0.7);
-            font-size: 14px;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.15s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            line-height: 1;
+            width: 30px; height: 30px; border: none; border-radius: 50%;
+            background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.7);
+            font-size: 14px; cursor: pointer; transition: background 0.2s, transform 0.15s;
+            display: flex; align-items: center; justify-content: center; line-height: 1;
             touch-action: manipulation;
         }
-        .win-controls button:hover {
-            background: rgba(255,255,255,0.14);
-            color: #fff;
-        }
-        .win-controls .btn-fullscreen:hover {
-            background: rgba(76, 201, 240, 0.3);
-            color: #4cc9f0;
-        }
-        .win-controls .btn-close:hover {
-            background: #e74c3c;
-            color: #fff;
-            transform: scale(1.08);
-        }
-        .win-controls .btn-min:hover {
-            background: rgba(255,255,255,0.18);
-        }
-
+        .win-controls button:hover { background: rgba(255,255,255,0.14); color: #fff; }
+        .win-controls .btn-maximize:hover { background: rgba(76, 201, 240, 0.3); color: #4cc9f0; }
+        .win-controls .btn-close:hover { background: #e74c3c; color: #fff; transform: scale(1.08); }
         .win-body {
-            flex: 1;
-            padding: 16px 20px 20px;
-            overflow-y: auto;
-            color: rgba(255,255,255,0.92);
-            font-size: 14px;
-            line-height: 1.6;
+            flex: 1; padding: 16px 20px 20px; overflow-y: auto;
+            color: rgba(255,255,255,0.92); font-size: 14px; line-height: 1.6;
             -webkit-overflow-scrolling: touch;
         }
         .win-body::-webkit-scrollbar { width: 4px; }
-        .win-body::-webkit-scrollbar-thumb {
-            background: rgba(255,255,255,0.20);
-            border-radius: 8px;
-        }
-        .win-body.iframe-body {
-            padding: 0;
-            overflow: hidden;
-            position: relative;
-        }
-        .win-body.iframe-body iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: block;
-        }
-        /* 错误提示覆盖层（短暂显示后自动跳转） */
+        .win-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.20); border-radius: 8px; }
+        .win-body.iframe-body { padding: 0; overflow: hidden; position: relative; }
+        .win-body.iframe-body iframe { width: 100%; height: 100%; border: none; display: block; }
         .win-body .iframe-error {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            color: rgba(255,255,255,0.6);
-            gap: 12px;
-            padding: 20px;
-            text-align: center;
-            animation: fadeIn 0.3s ease;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            height: 100%; color: rgba(255,255,255,0.6); gap: 12px; padding: 20px;
+            text-align: center; animation: fadeIn 0.3s ease;
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: scale(0.95); }
             to { opacity: 1; transform: scale(1); }
         }
-        .win-body .iframe-error .error-icon {
-            font-size: 48px;
-        }
-        .win-body .iframe-error .error-title {
-            font-size: 18px;
-            font-weight: 500;
-            color: rgba(255,255,255,0.8);
-        }
-        .win-body .iframe-error .error-desc {
-            font-size: 13px;
-            color: rgba(255,255,255,0.4);
-            max-width: 400px;
-        }
-        .win-body .iframe-error .error-timer {
-            font-size: 14px;
-            color: rgba(255,255,255,0.5);
-            margin-top: 4px;
-        }
+        .win-body .iframe-error .error-icon { font-size: 48px; }
+        .win-body .iframe-error .error-title { font-size: 18px; font-weight: 500; color: rgba(255,255,255,0.8); }
+        .win-body .iframe-error .error-desc { font-size: 13px; color: rgba(255,255,255,0.4); max-width: 400px; }
+        .win-body .iframe-error .error-timer { font-size: 14px; color: rgba(255,255,255,0.5); margin-top: 4px; }
         .win-body .iframe-error .error-btn {
-            margin-top: 8px;
-            background: rgba(255,255,255,0.12);
-            border: 1px solid rgba(255,255,255,0.20);
-            border-radius: 8px;
-            padding: 10px 28px;
-            color: #fff;
-            font-size: 14px;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.1s;
-            font-family: inherit;
-            touch-action: manipulation;
-            font-weight: 500;
+            margin-top: 8px; background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.20); border-radius: 8px;
+            padding: 10px 28px; color: #fff; font-size: 14px; cursor: pointer;
+            transition: background 0.2s, transform 0.1s; font-family: inherit;
+            touch-action: manipulation; font-weight: 500;
         }
-        .win-body .iframe-error .error-btn:hover {
-            background: rgba(255,255,255,0.22);
-        }
-        .win-body .iframe-error .error-btn:active {
-            transform: scale(0.96);
-        }
-
-        /* ===== 缩放手柄 ===== */
+        .win-body .iframe-error .error-btn:hover { background: rgba(255,255,255,0.22); }
+        .win-body .iframe-error .error-btn:active { transform: scale(0.96); }
         .win-resize {
-            position: absolute;
-            bottom: 4px;
-            right: 4px;
-            width: 18px;
-            height: 18px;
-            cursor: nwse-resize;
-            background: transparent;
-            z-index: 10;
-            touch-action: none;
+            position: absolute; bottom: 4px; right: 4px; width: 18px; height: 18px;
+            cursor: nwse-resize; background: transparent; z-index: 10; touch-action: none;
         }
         .win-resize::after {
-            content: "";
-            position: absolute;
-            bottom: 2px;
-            right: 2px;
-            width: 12px;
-            height: 12px;
-            border-right: 2px solid rgba(255,255,255,0.25);
-            border-bottom: 2px solid rgba(255,255,255,0.25);
-            border-radius: 0 0 4px 0;
+            content: ""; position: absolute; bottom: 2px; right: 2px;
+            width: 12px; height: 12px; border-right: 2px solid rgba(255,255,255,0.3);
+            border-bottom: 2px solid rgba(255,255,255,0.3); border-radius: 0 0 4px 0;
             transition: border-color 0.2s;
         }
-        .win-resize:hover::after,
-        .win-resize:active::after {
-            border-color: rgba(255,255,255,0.6);
+        .win-resize:hover::after, .win-resize:active::after { border-color: rgba(255,255,255,0.7); }
+        .mycomputer-container { display: flex; flex-direction: column; gap: 16px; height: 100%; }
+        .toolbar { display: flex; justify-content: flex-end; gap: 10px; flex-wrap: wrap; }
+        .add-btn {
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px; padding: 8px 18px; color: #fff; font-size: 14px;
+            cursor: pointer; transition: background 0.2s; touch-action: manipulation;
         }
-
-        /* ===== “我的电脑”窗口内容样式 ===== */
-        .mycomputer-container {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            height: 100%;
-        }
-        .mycomputer-container .toolbar {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            flex-shrink: 0;
-            flex-wrap: wrap;
-        }
-        .mycomputer-container .add-btn {
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 8px;
-            padding: 8px 18px;
-            color: #fff;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.15s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            touch-action: manipulation;
-        }
-        .mycomputer-container .add-btn:hover {
-            background: rgba(255,255,255,0.16);
-        }
-        .mycomputer-container .add-btn:active {
-            transform: scale(0.96);
-        }
-
-        /* ===== 文件夹网格 ===== */
-        .folder-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            gap: 12px;
-            flex: 1;
-            align-content: start;
-        }
+        .add-btn:hover { background: rgba(255,255,255,0.16); }
+        .folder-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; }
         .folder-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 16px 8px 12px;
-            border-radius: 12px;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.06);
-            cursor: pointer;
-            transition: background 0.2s, border-color 0.2s, transform 0.15s;
-            touch-action: manipulation;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 16px 8px 12px; border-radius: 12px; background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06); cursor: pointer;
+            transition: background 0.2s, border-color 0.2s, transform 0.15s; touch-action: manipulation;
         }
-        .folder-item:hover {
-            background: rgba(255,255,255,0.08);
-            border-color: rgba(255,255,255,0.15);
+        .folder-item:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); }
+        .folder-item:active { transform: scale(0.94); }
+        .folder-emoji { font-size: 42px; }
+        .folder-name { font-size: 13px; margin-top: 6px; text-align: center; color: rgba(255,255,255,0.85); }
+        .folder-count { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 2px; }
+        .category-view { display: none; flex-direction: column; gap: 12px; height: 100%; }
+        .category-view.active { display: flex; }
+        .back-btn {
+            background: rgba(255,255,255,0.06); border: none; color: rgba(255,255,255,0.7);
+            padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 13px;
+            align-self: flex-start; touch-action: manipulation;
         }
-        .folder-item:active {
-            transform: scale(0.94);
+        .back-btn:hover { background: rgba(255,255,255,0.12); }
+        .cat-title { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+        .link-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 12px; }
+        .link-item {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 10px 4px 8px; border-radius: 10px; background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.04); cursor: pointer;
+            transition: background 0.2s, border-color 0.2s, transform 0.15s; touch-action: manipulation;
         }
-        .folder-item .folder-emoji {
-            font-size: 42px;
-            line-height: 1.2;
-            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+        .link-item:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.10); }
+        .link-item:active { transform: scale(0.94); }
+        .link-emoji { font-size: 28px; }
+        .link-label { font-size: 11px; margin-top: 4px; color: rgba(255,255,255,0.85); }
+        .calc-display {
+            background: rgba(0,0,0,0.3); border-radius: 8px; padding: 12px;
+            text-align: right; font-size: 24px; margin-bottom: 12px; min-height: 50px;
+            word-break: break-all;
         }
-        .folder-item .folder-name {
-            font-size: 13px;
-            font-weight: 500;
-            margin-top: 6px;
-            text-align: center;
-            color: rgba(255,255,255,0.85);
-        }
-        .folder-item .folder-count {
-            font-size: 11px;
-            color: rgba(255,255,255,0.35);
-            margin-top: 2px;
-        }
-
-        /* ===== 分类视图 ===== */
-        .category-view {
-            display: none;
-            flex-direction: column;
-            gap: 12px;
-            height: 100%;
-        }
-        .category-view.active {
-            display: flex;
-        }
-        .category-view .back-btn {
-            background: rgba(255,255,255,0.06);
-            border: none;
-            color: rgba(255,255,255,0.7);
-            padding: 6px 14px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 13px;
-            font-family: inherit;
+        .calc-buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+        .calc-buttons button {
+            padding: 14px 0; font-size: 20px; border-radius: 8px; border: none;
+            background: rgba(255,255,255,0.08); color: #fff; cursor: pointer;
             transition: background 0.2s;
-            align-self: flex-start;
-            touch-action: manipulation;
         }
-        .category-view .back-btn:hover {
-            background: rgba(255,255,255,0.12);
+        .calc-buttons button:hover { background: rgba(255,255,255,0.16); }
+        .calc-buttons button.operator { background: rgba(76, 201, 240, 0.2); color: #4cc9f0; }
+        .calc-buttons button.equals { background: #4cc9f0; color: #000; }
+        .timer-display { font-size: 48px; text-align: center; margin: 20px 0; font-weight: bold; }
+        .timer-controls { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .timer-controls input {
+            width: 60px; padding: 8px; background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 8px;
+            color: #fff; text-align: center; font-size: 16px;
         }
-        .category-view .cat-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 4px;
+        .timer-controls button {
+            padding: 8px 18px; border-radius: 8px; border: none;
+            background: rgba(255,255,255,0.12); color: #fff; cursor: pointer;
+            font-size: 14px; transition: background 0.2s;
         }
-        .category-view .link-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-            gap: 12px;
-            flex: 1;
-            align-content: start;
+        .timer-controls button:hover { background: rgba(255,255,255,0.22); }
+        .calendar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
+        .calendar .day-header { padding: 8px 0; font-weight: bold; color: rgba(255,255,255,0.7); font-size: 12px; }
+        .calendar .day { padding: 10px 0; border-radius: 6px; background: rgba(255,255,255,0.05); font-size: 14px; }
+        .calendar .day.today { background: #4cc9f0; color: #000; font-weight: bold; }
+        .calendar .day.empty { background: transparent; }
+        .calendar-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .calendar-nav button {
+            background: rgba(255,255,255,0.1); border: none; color: #fff;
+            padding: 6px 14px; border-radius: 6px; cursor: pointer;
         }
-        .category-view .link-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 10px 4px 8px;
-            border-radius: 10px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.04);
-            cursor: pointer;
-            transition: background 0.2s, border-color 0.2s, transform 0.15s;
-            touch-action: manipulation;
+        .color-picker-container { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+        .color-preview { width: 120px; height: 120px; border-radius: 12px; border: 2px solid rgba(255,255,255,0.3); }
+        .color-value { font-size: 18px; font-family: monospace; }
+        .random-container { display: flex; flex-direction: column; gap: 16px; align-items: center; }
+        .random-container input {
+            width: 100px; padding: 8px; background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 8px;
+            color: #fff; text-align: center; font-size: 16px;
         }
-        .category-view .link-item:hover {
-            background: rgba(255,255,255,0.08);
-            border-color: rgba(255,255,255,0.10);
-        }
-        .category-view .link-item:active {
-            transform: scale(0.94);
-        }
-        .category-view .link-item .link-emoji {
-            font-size: 28px;
-            line-height: 1.2;
-            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
-        }
-        .category-view .link-item .link-label {
-            font-size: 11px;
-            font-weight: 500;
-            text-align: center;
-            margin-top: 4px;
-            max-width: 100%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            color: rgba(255,255,255,0.85);
-        }
-
-        /* ===== 底部任务栏 ===== */
+        .random-result { font-size: 36px; font-weight: bold; margin: 10px 0; }
         #taskbar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 52px;
-            background: rgba(11,14,26,0.75);
-            backdrop-filter: blur(20px) saturate(1.4);
-            border-top: 1px solid rgba(255,255,255,0.06);
-            display: flex;
-            align-items: center;
-            padding: 0 12px;
-            z-index: 999;
-            gap: 6px;
-            touch-action: manipulation;
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 52px;
+            background: rgba(11,14,26,0.75); backdrop-filter: blur(20px) saturate(1.4);
+            border-top: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center;
+            padding: 0 12px; z-index: 999; gap: 6px; touch-action: manipulation;
         }
-        #taskbar .tb-items {
-            display: flex;
-            gap: 4px;
-            flex: 1;
-            overflow-x: auto;
-            padding: 0 4px;
-            -webkit-overflow-scrolling: touch;
-        }
-        #taskbar .tb-items::-webkit-scrollbar { height: 0; }
+        .tb-items { display: flex; gap: 4px; flex: 1; overflow-x: auto; padding: 0 4px; -webkit-overflow-scrolling: touch; }
+        .tb-items::-webkit-scrollbar { height: 0; }
         .tb-btn {
-            padding: 4px 14px;
-            border: none;
-            border-radius: 8px;
-            background: rgba(255,255,255,0.06);
-            color: rgba(255,255,255,0.75);
-            font-size: 13px;
-            cursor: pointer;
-            transition: background 0.2s, color 0.2s;
-            white-space: nowrap;
-            font-family: inherit;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            touch-action: manipulation;
+            padding: 4px 14px; border: none; border-radius: 8px;
+            background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.75);
+            font-size: 13px; cursor: pointer; white-space: nowrap; font-family: inherit;
+            display: flex; align-items: center; gap: 6px; transition: background 0.2s;
         }
-        .tb-btn:hover {
-            background: rgba(255,255,255,0.14);
-            color: #fff;
-        }
-        .tb-btn.active {
-            background: rgba(255,255,255,0.16);
-            color: #fff;
-        }
-        #taskbar .tb-time {
-            font-size: 13px;
-            color: rgba(255,255,255,0.65);
-            padding: 0 6px;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
-
-        /* ===== 右键菜单 ===== */
-        #ctxMenu {
-            display: none;
-            position: fixed;
-            z-index: 9999;
-            background: rgba(22,28,50,0.92);
-            backdrop-filter: blur(20px) saturate(1.6);
-            border-radius: 12px;
-            padding: 6px 0;
-            min-width: 180px;
-            border: 1px solid rgba(255,255,255,0.10);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.7);
-            animation: menuIn 0.15s ease;
-            touch-action: manipulation;
-        }
-        @keyframes menuIn {
-            0% { opacity: 0; transform: scale(0.96) translateY(-4px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
-        }
-        #ctxMenu .ctx-item {
-            padding: 10px 20px;
-            font-size: 14px;
-            color: rgba(255,255,255,0.85);
-            cursor: pointer;
-            transition: background 0.15s;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border: none;
-            background: transparent;
-            width: 100%;
-            text-align: left;
-            font-family: inherit;
-            touch-action: manipulation;
-        }
-        #ctxMenu .ctx-item:hover {
-            background: rgba(255,255,255,0.08);
-        }
-        #ctxMenu .ctx-item.danger:hover {
-            background: rgba(231,76,60,0.25);
-            color: #ff7a6b;
-        }
-        #ctxMenu .ctx-divider {
-            height: 1px;
-            background: rgba(255,255,255,0.06);
-            margin: 4px 12px;
-        }
-
-        @media (max-width: 768px) {
-            #taskbar { height: 48px; }
-            #windows { height: calc(100% - 48px); }
-            .window { min-width: 260px; min-height: 160px; max-width: 94vw; max-height: 78vh; }
-            .win-title { font-size: 13px; }
-            .win-controls button { width: 28px; height: 28px; font-size: 13px; }
-            .tb-btn { font-size: 12px; padding: 3px 10px; }
-            #taskbar .tb-time { font-size: 12px; }
-            .win-resize { width: 16px; height: 16px; bottom: 3px; right: 3px; }
-            .win-resize::after { width: 10px; height: 10px; bottom: 1px; right: 1px; }
-            .folder-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
-            .category-view .link-grid { grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); }
-        }
+        .tb-btn:hover { background: rgba(255,255,255,0.14); color: #fff; }
+        .tb-btn.active { background: rgba(255,255,255,0.16); color: #fff; }
+        #taskbar .tb-time { font-size: 13px; color: rgba(255,255,255,0.65); padding: 0 6px; white-space: nowrap; }
         @media (max-width: 480px) {
-            #taskbar { height: 44px; padding: 0 4px; gap: 4px; }
+            #taskbar { height: 44px; padding: 0 4px; }
             #windows { height: calc(100% - 44px); }
-            .window { min-width: 200px; min-height: 140px; max-width: 96vw; max-height: 70vh; }
-            .win-title { font-size: 12px; }
-            .win-controls button { width: 24px; height: 24px; font-size: 11px; }
-            .win-body { padding: 12px 14px 16px; font-size: 13px; }
-            #taskbar .tb-time { font-size: 11px; padding: 0 4px; }
-            .tb-btn { padding: 2px 8px; font-size: 11px; }
-            .win-resize { width: 14px; height: 14px; bottom: 2px; right: 2px; }
-            .win-resize::after { width: 8px; height: 8px; bottom: 1px; right: 1px; }
-            .folder-grid { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
-            .category-view .link-grid { grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); }
-            .mycomputer-container .add-btn { padding: 6px 14px; font-size: 13px; }
-            .folder-item .folder-emoji { font-size: 32px; }
-            .folder-item .folder-name { font-size: 11px; }
-        }
-        @media (hover: none) {
-            .folder-item:hover { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.06); }
-            .folder-item:active { transform: scale(0.94); }
-            .category-view .link-item:hover { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.04); }
-            .category-view .link-item:active { transform: scale(0.94); }
-            .tb-btn:hover { background: rgba(255,255,255,0.06); }
-            .win-controls button:hover { background: rgba(255,255,255,0.06); }
-            .win-resize:hover::after { border-color: rgba(255,255,255,0.25); }
-            #myComputerDesktop:hover { background: rgba(255,255,255,0.03); transform: scale(1); }
-            #myComputerDesktop:active { transform: scale(0.94); }
+            .window.maximized { height: calc(100% - 44px) !important; }
         }
     </style>
 </head>
 <body>
-
-    <!-- ===== 桌面 ===== -->
     <div id="desktop">
-        <div id="myComputerDesktop" title="打开我的电脑">
+        <div class="desktop-icon" id="myComputerDesktop" title="打开我的电脑">
             <div class="big-icon">💻</div>
             <div class="big-label">我的电脑</div>
         </div>
+        <div class="desktop-icon" id="toolboxDesktop" title="打开工具箱">
+            <div class="big-icon">🧰</div>
+            <div class="big-label">工具箱</div>
+        </div>
     </div>
-
-    <!-- ===== 窗口容器 ===== -->
     <div id="windows"></div>
-
-    <!-- ===== 底部任务栏 ===== -->
     <div id="taskbar">
         <div class="tb-items" id="tbItems"></div>
         <div class="tb-time" id="tbTime">--:--:--</div>
     </div>
 
-    <!-- ===== 右键菜单 ===== -->
-    <div id="ctxMenu">
-        <button class="ctx-item" data-action="open">📂 打开</button>
-        <button class="ctx-item" data-action="rename">✏️ 重命名</button>
-        <button class="ctx-item danger" data-action="delete">🗑️ 删除</button>
-        <div class="ctx-divider"></div>
-        <button class="ctx-item" data-action="newLink">🔗 新建快捷方式</button>
-    </div>
-
     <script>
-        // ===================================================================
-        //  数据：从网站大全转换过来的链接，按分类组织
-        // ===================================================================
-
+        // ========== 数据 ==========
         const CATEGORIES = {
             'AI': { emoji: '🤖', label: 'AI工具' },
             '视频': { emoji: '🎬', label: '视频平台' },
@@ -689,9 +299,10 @@
             '群友': { emoji: '👥', label: '皮卡群组' },
             '皮卡': { emoji: '⚡', label: '皮卡资源' }
         };
+        // 需要直接跳转新标签页的分类（通常因为 X-Frame-Options 限制）
+        const NO_IFRAME_CATEGORIES = ['AI', '小说', '海外'];
 
         const LINK_DATA = [
-            // AI工具
             { name: "ChatGPT", emoji: "🤖", url: "https://chat.openai.com", category: "AI" },
             { name: "Gemini", emoji: "💎", url: "https://gemini.google.com", category: "AI" },
             { name: "DeepSeek", emoji: "🧠", url: "https://deepseek.com", category: "AI" },
@@ -716,7 +327,6 @@
             { name: "Sudowrite", emoji: "🪶", url: "https://www.sudowrite.com/", category: "AI" },
             { name: "Copy AI", emoji: "📋", url: "https://www.copy.ai/", category: "AI" },
             { name: "Canva", emoji: "🖌️", url: "https://www.canva.com/", category: "AI" },
-            // 视频平台
             { name: "抖音", emoji: "🎵", url: "https://www.douyin.com/", category: "视频" },
             { name: "哔哩哔哩", emoji: "📺", url: "https://www.bilibili.com/", category: "视频" },
             { name: "腾讯视频", emoji: "🎬", url: "https://v.qq.com/", category: "视频" },
@@ -725,7 +335,6 @@
             { name: "红果免费短剧", emoji: "🍎", url: "https://www.hongguoduanju.com/", category: "视频" },
             { name: "优酷视频", emoji: "▶️", url: "https://www.youku.com/", category: "视频" },
             { name: "西瓜视频", emoji: "🍉", url: "https://ixigua.com/", category: "视频" },
-            // 动漫漫画
             { name: "樱花动漫", emoji: "🌸", url: "https://www.yinhuadm.one/", category: "动漫" },
             { name: "AGE动漫", emoji: "🎞️", url: "https://www.agedm.io/", category: "动漫" },
             { name: "Anime1", emoji: "📺", url: "https://anime1.me", category: "动漫" },
@@ -752,7 +361,6 @@
             { name: "刺猬猫", emoji: "🐱", url: "https://www.ciweimao.com", category: "动漫" },
             { name: "漫画人", emoji: "👤", url: "https://www.manhuaren.com", category: "动漫" },
             { name: "源仓库", emoji: "📁", url: "https://www.yckceo.com/", category: "动漫" },
-            // 小说阅读
             { name: "起点读书", emoji: "📚", url: "https://www.qidian.com/", category: "小说" },
             { name: "微信读书", emoji: "📖", url: "https://weread.qq.com/", category: "小说" },
             { name: "番茄小说", emoji: "🍅", url: "https://fanqienovel.com/", category: "小说" },
@@ -764,7 +372,6 @@
             { name: "七猫免费小说", emoji: "🐱", url: "https://www.qimao.com/", category: "小说" },
             { name: "掌阅", emoji: "📗", url: "https://www.zhangyue.com/", category: "小说" },
             { name: "17K小说网", emoji: "⌨️", url: "https://www.17k.com/", category: "小说" },
-            // 社交社区
             { name: "微信", emoji: "💬", url: "https://weixin.qq.com/", category: "社交" },
             { name: "微博", emoji: "📱", url: "https://weibo.com/", category: "社交" },
             { name: "小红书", emoji: "❤️", url: "https://www.xiaohongshu.com/", category: "社交" },
@@ -774,7 +381,6 @@
             { name: "网易LOFTER", emoji: "❤️", url: "https://www.lofter.com/", category: "社交" },
             { name: "虎扑", emoji: "🏀", url: "https://www.hupu.com/", category: "社交" },
             { name: "汽车之家", emoji: "🚗", url: "https://club.autohome.com.cn/", category: "社交" },
-            // 热门游戏
             { name: "王者荣耀", emoji: "👑", url: "https://pvp.qq.com/", category: "游戏" },
             { name: "和平精英", emoji: "🎯", url: "https://gp.qq.com/", category: "游戏" },
             { name: "原神", emoji: "⭐", url: "https://ys.mihoyo.com/", category: "游戏" },
@@ -805,7 +411,6 @@
             { name: "迷你世界", emoji: "😊", url: "https://www.mini1.cn/", category: "游戏" },
             { name: "球球大作战", emoji: "⚪", url: "https://www.battleofballs.com/", category: "游戏" },
             { name: "无尽的拉格朗日", emoji: "🚀", url: "https://www.neteasegames.com/lglr/", category: "游戏" },
-            // 购物电商
             { name: "淘宝", emoji: "🏪", url: "https://www.taobao.com/", category: "购物" },
             { name: "京东", emoji: "📦", url: "https://www.jd.com/", category: "购物" },
             { name: "拼多多", emoji: "🛍️", url: "https://www.pinduoduo.com/", category: "购物" },
@@ -819,7 +424,6 @@
             { name: "蘑菇街", emoji: "👕", url: "https://www.mogujie.com/", category: "购物" },
             { name: "什么值得买", emoji: "👍", url: "https://www.smzdm.com/", category: "购物" },
             { name: "考拉海购", emoji: "🌏", url: "https://www.kaola.com/", category: "购物" },
-            // 实用工具
             { name: "Chrome", emoji: "🌐", url: "https://www.google.com/chrome/", category: "工具" },
             { name: "剪映", emoji: "✂️", url: "https://www.capcut.com/", category: "工具" },
             { name: "百度网盘", emoji: "☁️", url: "https://pan.baidu.com/", category: "工具" },
@@ -842,7 +446,6 @@
             { name: "OpenAnolis龙蜥", emoji: "🦎", url: "https://openanolis.cn", category: "工具" },
             { name: "openEuler欧拉", emoji: "⚙️", url: "https://www.openeuler.org", category: "工具" },
             { name: "OpenKylin开放麒麟", emoji: "💻", url: "https://www.openkylin.org", category: "工具" },
-            // 识图搜索
             { name: "专搜3D图片", emoji: "🧊", url: "http://3d.iqdb.org/", category: "搜图" },
             { name: "IQDB搜图", emoji: "🔍", url: "http://iqdb.org/", category: "搜图" },
             { name: "Ascii2D", emoji: "👤", url: "https://ascii2d.net/", category: "搜图" },
@@ -859,7 +462,6 @@
             { name: "百度识图", emoji: "☁️", url: "https://graph.baidu.com/pcpage/index?tpl_from=pc/", category: "搜图" },
             { name: "360识图", emoji: "🖼️", url: "https://m.image.so.com/", category: "搜图" },
             { name: "搜狗识图", emoji: "🖼️", url: "https://pic.sogou.com/pic/index.jsp?v=5/", category: "搜图" },
-            // 海外流媒体
             { name: "Netflix", emoji: "▶️", url: "https://www.netflix.com", category: "海外" },
             { name: "Disney+", emoji: "⭐", url: "https://www.disneyplus.com", category: "海外" },
             { name: "Amazon Prime Video", emoji: "🛒", url: "https://primevideo.com", category: "海外" },
@@ -871,19 +473,16 @@
             { name: "Tubi", emoji: "🎬", url: "https://tubitv.com", category: "海外" },
             { name: "BBC iPlayer", emoji: "📡", url: "https://www.bbc.co.uk/iplayer", category: "海外" },
             { name: "Vimeo", emoji: "🎥", url: "https://vimeo.com", category: "海外" },
-            // 影视资源
             { name: "芒果TV", emoji: "🥭", url: "https://www.mgtv.com", category: "影视" },
             { name: "1905电影网", emoji: "🎬", url: "https://www.1905.com", category: "影视" },
             { name: "咪咕视频", emoji: "📶", url: "https://www.miguvideo.com", category: "影视" },
             { name: "央视网", emoji: "📡", url: "https://tv.cctv.com", category: "影视" },
             { name: "学习强国", emoji: "📖", url: "https://www.xuexi.cn", category: "影视" },
-            // 皮卡群组
             { name: "皮卡备用群", emoji: "💬", url: "https://qun.qq.com/universal-share/share?ac=1&authKey=Xld9l791HF7rsivEh%2FQHOCq3T%2FkUGp84QYDKZOliUcQUAlBccjL4VOJ98PRana%2F3&busi_data=eyJncm91cENvZGUiOiIxMDQ5NTUwOTI1IiwidG9rZW4iOiJvOUdkcDZ1OFRua3Z4Wmg5WVkzRjRoTURjcHR3ZldsRm85QzJRYXdxWjIrNTRUUGpvbzRyaGw2OXlCRWRXNnFRIiwidWluIjoiMTk2NjMzMDMxOSJ9&data=NlQKjt4AzXJQU8zoFaDXBWB-L-26e5lVnjpw_c0e-FGQDu1oMf4Yv0HMaXn3yVX-0w6KMFZXo_NSCsZILOMHwg&svctype=4&tempid=h5_group_info", category: "群友" },
             { name: "皮卡翻车群", emoji: "💬", url: "https://qun.qq.com/universal-share/share?ac=1&authKey=1H7F1EMVtmdMrv1CzYxKwFEJpRQEtXWYo5NymTsfD60RgqfmcLAqYx2kJUBpVeta&busi_data=eyJncm91cENvZGUiOiI1Njg4NzE0MjYiLCJ0b2tlbiI6Im1YMjg3YnBncU9ibEx0cktmTHdMNGY5OE5nMWVjTDRsZkpMdTZwM2N5cElFdExEa3I5MUROSVZsTjJQTEl1SVkiLCJ1aW4iOiIxOTY2MzMwMzE5In0%3D&data=2kh6zsaP4Doa-Jl-KccfFc19LCpsFI1NTPlynFYqUPLj3RgonL8BEg2mEtGGU7CzqwSN6bdHq_SWD9hijXZ9dQ&svctype=4&tempid=h5_group_info", category: "群友" },
             { name: "皮卡禁言群", emoji: "👥", url: "https://qun.qq.com/universal-share/share?ac=1&authKey=CfKOKp6Sc7CP%2BH6hZZ9PpeveC%2FNcfE7iSGwVsMSpfhCGCWOuPjeswNS7Cv5vtCGA&busi_data=eyJncm91cENvZGUiOiIxMDQxMjQ0MjI5IiwidG9rZW4iOiJYb2lqRHQrQ2Y4L2xyMEt5Z2dFNkphT3BONHhPLy92bUNJYjBLeWFNMjJ5WmNlSFU2ZFJ6YkpxLy9nSHg4b0poIiwidWluIjoiMTk2NjMzMDMxOSJ9&data=1UsMWD3H0fkwy-X2lVTwriyc_Va_4M76mJvFSw2HfpmpjSdtsGEybhi3JGw7tTopgZYXPVcyes6wiUHd1eznSw&svctype=4&tempid=h5_group_info", category: "群友" },
             { name: "皮卡电报群", emoji: "📨", url: "https://t.me/+qiezQCcGXswzYTM1", category: "群友" },
             { name: "无语群", emoji: "💬", url: "https://qun.qq.com/universal-share/share?ac=1&authKey=1MapCqFxxqy%2BOOXbkM6%2Fz3ZC3G%2BIe%2BOHkXURAf8Zy3yRH8MzazejEb3mGPY7C64m&busi_data=eyJncm91cENvZGUiOiI2MDQ1NzQyMzciLCJ0b2tlbiI6InFyMHVScWw3QzlCbzVNM1VHaEVyVDlQNDRiMThUVVJIcWtJalprOTh3Zjc3S015czdOYTVjK2k4WjhobG91T3AiLCJ1aW4iOiIxMDA1Mzg0NDE4In0%3D&data=mkN0qLE6LehMHkAdQSgjzbHFi20B9fGIKuy2jhRKEIOUD5XFikhrZwZ4UNK-PB-uCwiQicXzFFbTVn8tYHkCLg&svctype=4&tempid=h5_group_info", category: "群友" },
-            // 皮卡资源
             { name: "文件仓库", emoji: "☁️", url: "https://zzz.372164885.xyz/", category: "皮卡" },
             { name: "IT-tools", emoji: "🔧", url: "https://sss.372164885.xyz", category: "皮卡" },
             { name: "搜索引擎🔍", emoji: "🔎", url: "https://aaa.372164885.xyz", category: "皮卡" },
@@ -896,894 +495,477 @@
             { name: "临时聊天", emoji: "💬", url: "https://chat123.372164885.xyz/", category: "皮卡" }
         ];
 
-        let iconData = [
-            { id: 'computer', emoji: '💻', label: '我的电脑', type: 'app', url: null }
+        const iconData = [
+            { id: 'computer', emoji: '💻', label: '我的电脑', type: 'app' },
+            { id: 'toolbox', emoji: '🧰', label: '工具箱', type: 'app' }
         ];
-
-        // ===================================================================
-        //  状态
-        // ===================================================================
 
         let winZIndex = 100;
         const openWindows = [];
-        let dragData = null;
-        let resizeData = null;
-        let contextTargetId = null;
-        let longPressTimer = null;
-        let isLongPress = false;
-        let currentCategory = null;
-
-        // ===================================================================
-        //  工具
-        // ===================================================================
+        let dragData = null, resizeData = null, currentCategory = null;
 
         function $(sel, ctx = document) { return ctx.querySelector(sel); }
         function $$(sel, ctx = document) { return [...ctx.querySelectorAll(sel)]; }
         function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
-        function random(min, max) { return Math.random() * (max - min) + min; }
 
-        // ===================================================================
-        //  星星
-        // ===================================================================
-
-        function createStars() {
+        (function createStars() {
             const desktop = document.getElementById('desktop');
-            for (let i = 0; i < 100; i++) {
+            for (let i = 0; i < 80; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
-                const size = random(0.6, 2.6);
-                star.style.width = size + 'px';
-                star.style.height = size + 'px';
-                star.style.left = random(0, 100) + '%';
-                star.style.top = random(0, 100) + '%';
-                star.style.setProperty('--dur', random(2, 6) + 's');
-                star.style.animationDelay = random(0, 5) + 's';
-                star.style.opacity = random(0.2, 0.9);
+                const size = Math.random() * 2 + 0.5;
+                star.style.width = size + 'px'; star.style.height = size + 'px';
+                star.style.left = Math.random() * 100 + '%'; star.style.top = Math.random() * 100 + '%';
+                star.style.setProperty('--dur', Math.random() * 4 + 2 + 's');
+                star.style.animationDelay = Math.random() * 5 + 's';
+                star.style.opacity = Math.random() * 0.7 + 0.3;
                 desktop.appendChild(star);
             }
-        }
-        createStars();
+        })();
 
-        // ===================================================================
-        //  时钟
-        // ===================================================================
-
-        function updateClock() {
-            const now = new Date();
-            document.getElementById('tbTime').textContent = now.toTimeString().slice(0, 8);
-        }
-        updateClock();
-        setInterval(updateClock, 1000);
-
-        // ===================================================================
-        //  窗口系统
-        // ===================================================================
+        function updateClock() { document.getElementById('tbTime').textContent = new Date().toTimeString().slice(0, 8); }
+        updateClock(); setInterval(updateClock, 1000);
 
         const windowsContainer = document.getElementById('windows');
         const tbItems = document.getElementById('tbItems');
 
         function openWindow(iconId) {
-            const icon = getIconById(iconId);
+            const icon = iconData.find(i => i.id === iconId);
             if (!icon || icon.type !== 'app') return;
-
             const existing = openWindows.find(w => w.id === iconId);
             if (existing) {
+                if (existing.minimized) { existing.element.style.display = 'flex'; existing.minimized = false; updateTaskbar(); }
                 focusWindow(existing.element);
                 return;
             }
-
-            const winCfg = getWindowConfig(iconId);
-            if (!winCfg) return;
-            const win = createAppWindow(iconId, winCfg);
+            const cfg = getWindowConfig(iconId);
+            if (!cfg) return;
+            const win = createWindow(iconId, cfg);
             windowsContainer.appendChild(win);
-
-            const winData = {
-                id: iconId,
-                element: win,
-                title: winCfg.title,
-                icon: icon.emoji,
-                minimized: false,
-                isFullscreen: false
-            };
-            openWindows.push(winData);
-            updateTaskbar();
-            focusWindow(win);
-            centerWindow(win);
-            addResizeHandle(win);
+            openWindows.push({ id: iconId, element: win, title: cfg.title, icon: icon.emoji, minimized: false, maximized: false, prevState: null });
+            updateTaskbar(); focusWindow(win); centerWindow(win); addResizeHandle(win);
         }
 
         function getWindowConfig(iconId) {
-            const map = {
-                computer: { title: '💻 我的电脑', width: 700, height: 500, content: 'mycomputer' }
-            };
-            return map[iconId] || null;
+            if (iconId === 'computer') return { title: '💻 我的电脑', width: 700, height: 500, content: 'mycomputer' };
+            if (iconId === 'toolbox') return { title: '🧰 工具箱', width: 500, height: 400, content: 'toolbox' };
+            return null;
         }
 
-        function createAppWindow(iconId, cfg) {
+        function createWindow(iconId, cfg) {
             const win = document.createElement('div');
             win.className = 'window';
-            win.style.width = cfg.width + 'px';
-            win.style.height = cfg.height + 'px';
+            win.style.width = cfg.width + 'px'; win.style.height = cfg.height + 'px';
             win.dataset.winId = iconId;
-
             const titlebar = document.createElement('div');
             titlebar.className = 'win-titlebar';
+            const iconEmoji = cfg.title.match(/^.{1,2}/)?.[0] || '📄';
             const titleText = cfg.title.replace(/^.{1,2}\s/, '');
             titlebar.innerHTML = `
-            <div class="win-title">
-              <span class="win-icon">${cfg.title.match(/^.{1,2}/)?.[0] || '📄'}</span>
-              <span class="win-title-text">${titleText}</span>
-            </div>
-            <div class="win-controls">
-              <button class="btn-min" title="最小化">─</button>
-              <button class="btn-fullscreen" title="全屏">⛶</button>
-              <button class="btn-close" title="关闭">✕</button>
-            </div>
-          `;
-            titlebar.querySelector('.btn-close').addEventListener('click', (e) => {
-                e.stopPropagation();
-                closeWindow(iconId);
-            });
-            titlebar.querySelector('.btn-min').addEventListener('click', (e) => {
-                e.stopPropagation();
-                minimizeWindow(iconId);
-            });
-            titlebar.querySelector('.btn-fullscreen').addEventListener('click', (e) => {
-                e.stopPropagation();
-                toggleFullscreen(win);
-            });
-            titlebar.addEventListener('mousedown', (e) => {
-                if (e.target.closest('.win-controls')) return;
-                startDrag(e, win);
-            });
-            titlebar.addEventListener('touchstart', (e) => {
-                if (e.target.closest('.win-controls')) return;
-                if (e.touches.length === 1) {
-                    startDrag(e, win);
-                }
-            }, { passive: false });
-
+                <div class="win-title"><span class="win-icon">${iconEmoji}</span><span class="win-title-text">${titleText}</span></div>
+                <div class="win-controls">
+                    <button class="btn-min" title="最小化">─</button>
+                    <button class="btn-maximize" title="最大化">□</button>
+                    <button class="btn-close" title="关闭">✕</button>
+                </div>`;
+            titlebar.querySelector('.btn-close').addEventListener('click', (e) => { e.stopPropagation(); closeWindow(iconId); });
+            titlebar.querySelector('.btn-min').addEventListener('click', (e) => { e.stopPropagation(); minimizeWindow(iconId); });
+            titlebar.querySelector('.btn-maximize').addEventListener('click', (e) => { e.stopPropagation(); toggleMaximize(win); });
+            titlebar.addEventListener('mousedown', (e) => { if (!e.target.closest('.win-controls')) startDrag(e, win); });
+            titlebar.addEventListener('touchstart', (e) => { if (!e.target.closest('.win-controls') && e.touches.length === 1) startDrag(e, win); }, { passive: false });
             win.appendChild(titlebar);
-
             const body = document.createElement('div');
             body.className = 'win-body';
-            body.innerHTML = renderAppContent(cfg.content, iconId);
+            body.innerHTML = renderContent(cfg.content, iconId);
             win.appendChild(body);
-
             win.addEventListener('mousedown', () => focusWindow(win));
             win.addEventListener('touchstart', () => focusWindow(win), { passive: true });
-
+            if (cfg.content === 'calculator') bindCalculator(body);
+            if (cfg.content === 'timer') bindTimer(body);
+            if (cfg.content === 'calendar') bindCalendar(body);
+            if (cfg.content === 'colorpicker') bindColorPicker(body);
+            if (cfg.content === 'random') bindRandom(body);
             return win;
         }
 
-        function toggleFullscreen(win) {
-            const winData = openWindows.find(w => w.element === win);
-            if (!winData) return;
-            winData.isFullscreen = !winData.isFullscreen;
-            if (winData.isFullscreen) {
-                win.classList.add('fullscreen');
-                const iframe = win.querySelector('iframe');
-                if (iframe) {
-                    try { iframe.requestFullscreen(); } catch (e) {}
-                }
-            } else {
-                win.classList.remove('fullscreen');
-                const cfg = getWindowConfig(win.dataset.winId);
-                if (cfg) {
-                    win.style.width = cfg.width + 'px';
-                    win.style.height = cfg.height + 'px';
-                }
-                centerWindow(win);
-                try { if (document.fullscreenElement) document.exitFullscreen(); } catch (e) {}
+        function renderContent(type, iconId) {
+            if (type === 'mycomputer') return renderFolderView();
+            if (type === 'toolbox') return renderToolboxView();
+            if (type === 'calculator') {
+                return `<div class="calc-display">0</div><div class="calc-buttons">
+                    <button>7</button><button>8</button><button>9</button><button class="operator">/</button>
+                    <button>4</button><button>5</button><button>6</button><button class="operator">*</button>
+                    <button>1</button><button>2</button><button>3</button><button class="operator">-</button>
+                    <button>0</button><button>.</button><button class="operator">C</button><button class="operator">+</button>
+                    <button class="equals" style="grid-column:span 4;">=</button></div>`;
             }
-            const btn = win.querySelector('.btn-fullscreen');
-            if (btn) {
-                btn.textContent = '⛶';
-                btn.title = winData.isFullscreen ? '退出全屏' : '全屏';
+            if (type === 'notepad') return `<textarea style="width:100%;height:100%;background:rgba(0,0,0,0.2);border:none;color:#fff;padding:12px;resize:none;font-size:14px;" placeholder="在这里输入文本..."></textarea>`;
+            if (type === 'timer') {
+                return `<div class="timer-display">00:00</div>
+                    <div class="timer-controls">
+                        <input type="number" id="timerMinutes" placeholder="分" min="0" value="1"> :
+                        <input type="number" id="timerSeconds" placeholder="秒" min="0" value="0">
+                        <button id="timerStart">开始</button>
+                        <button id="timerPause">暂停</button>
+                        <button id="timerReset">重置</button>
+                    </div>`;
             }
-        }
-
-        // ---- 渲染内容 ----
-        function renderAppContent(type, iconId) {
-            if (type === 'mycomputer') {
-                return renderFolderView();
+            if (type === 'calendar') {
+                const now = new Date();
+                return `<div class="calendar-nav">
+                    <button class="cal-prev">◀</button>
+                    <span class="cal-month-year">${now.getFullYear()}年 ${now.getMonth()+1}月</span>
+                    <button class="cal-next">▶</button>
+                </div><div class="calendar" id="calendarGrid"></div>`;
             }
-            return '<p>内容不可用</p>';
+            if (type === 'colorpicker') {
+                return `<div class="color-picker-container">
+                    <input type="color" id="colorInput" value="#4cc9f0">
+                    <div class="color-preview" id="colorPreview" style="background:#4cc9f0;"></div>
+                    <div class="color-value" id="colorValue">#4cc9f0</div>
+                </div>`;
+            }
+            if (type === 'random') {
+                return `<div class="random-container">
+                    <div style="display:flex; gap:8px; align-items:center;">
+                        <input type="number" id="randMin" placeholder="最小值" value="1">
+                        <span>~</span>
+                        <input type="number" id="randMax" placeholder="最大值" value="100">
+                    </div>
+                    <button id="randGenerate" style="padding:8px 24px; border-radius:8px; border:none; background:#4cc9f0; color:#000; font-size:16px; cursor:pointer;">生成</button>
+                    <div class="random-result" id="randResult">?</div>
+                </div>`;
+            }
+            return '';
         }
 
         function renderFolderView() {
-            const catKeys = Object.keys(CATEGORIES);
-            let html = `
-                <div class="mycomputer-container">
-                    <div class="toolbar">
-                        <button class="add-btn" onclick="window.addCustomLink()">➕ 添加快捷方式</button>
-                    </div>
-                    <div class="folder-grid">
-            `;
-            catKeys.forEach(key => {
+            let html = `<div class="mycomputer-container"><div class="toolbar"><button class="add-btn" onclick="window.addCustomLink()">➕ 添加快捷方式</button></div><div class="folder-grid">`;
+            Object.keys(CATEGORIES).forEach(key => {
                 const cat = CATEGORIES[key];
-                const count = LINK_DATA.filter(item => item.category === key).length;
-                html += `
-                    <div class="folder-item" onclick="window.openCategory('${key}')">
-                        <div class="folder-emoji">📁</div>
-                        <div class="folder-name">${cat.emoji} ${cat.label}</div>
-                        <div class="folder-count">${count} 个链接</div>
-                    </div>
-                `;
+                const count = LINK_DATA.filter(i => i.category === key).length;
+                html += `<div class="folder-item" onclick="window.openCategory('${key}')"><div class="folder-emoji">📁</div><div class="folder-name">${cat.emoji} ${cat.label}</div><div class="folder-count">${count} 个链接</div></div>`;
             });
-            html += `
-                    <div class="folder-item" onclick="window.openCategory('all')">
-                        <div class="folder-emoji">📂</div>
-                        <div class="folder-name">🌟 全部链接</div>
-                        <div class="folder-count">${LINK_DATA.length} 个链接</div>
-                    </div>
-            `;
-            html += `
-                    </div>
-                </div>
-            `;
+            html += `<div class="folder-item" onclick="window.openCategory('all')"><div class="folder-emoji">📂</div><div class="folder-name">🌟 全部链接</div><div class="folder-count">${LINK_DATA.length} 个链接</div></div></div></div>`;
             return html;
         }
 
         function renderCategoryView(categoryKey) {
-            let links;
-            let title;
-            if (categoryKey === 'all') {
-                links = LINK_DATA;
-                title = '🌟 全部链接';
-            } else {
-                links = LINK_DATA.filter(item => item.category === categoryKey);
-                const cat = CATEGORIES[categoryKey];
-                title = cat ? `${cat.emoji} ${cat.label}` : categoryKey;
-            }
-
-            let html = `
-                <div class="category-view active">
-                    <button class="back-btn" onclick="window.backToFolders()">← 返回</button>
-                    <div class="cat-title">${title}</div>
-                    <div class="link-grid">
-            `;
-            if (links.length === 0) {
-                html += `<div style="grid-column:1/-1;text-align:center;color:rgba(255,255,255,0.3);padding:40px 0;">此分类暂无链接</div>`;
-            } else {
-                links.forEach(item => {
-                    const data = encodeURIComponent(JSON.stringify(item));
-                    html += `
-                        <div class="link-item" onclick="window.openLinkData('${data}')">
-                            <div class="link-emoji">${item.emoji}</div>
-                            <div class="link-label">${item.name}</div>
-                        </div>
-                    `;
-                });
-            }
-            html += `
-                    </div>
-                </div>
-            `;
+            let links = categoryKey === 'all' ? LINK_DATA : LINK_DATA.filter(i => i.category === categoryKey);
+            let title = categoryKey === 'all' ? '🌟 全部链接' : (CATEGORIES[categoryKey] ? `${CATEGORIES[categoryKey].emoji} ${CATEGORIES[categoryKey].label}` : categoryKey);
+            let html = `<div class="category-view active"><button class="back-btn" onclick="window.backToFolders()">← 返回</button><div class="cat-title">${title}</div><div class="link-grid">`;
+            if (links.length === 0) html += `<div style="grid-column:1/-1;text-align:center;color:rgba(255,255,255,0.3);padding:40px 0;">此分类暂无链接</div>`;
+            else links.forEach(item => { const data = encodeURIComponent(JSON.stringify(item)); html += `<div class="link-item" onclick="window.openLinkData('${data}')"><div class="link-emoji">${item.emoji}</div><div class="link-label">${item.name}</div></div>`; });
+            html += `</div></div>`;
             return html;
         }
 
-        // ---- 全局函数 ----
+        function renderToolboxView() {
+            return `<div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(100px,1fr)); gap:16px; padding:10px;">
+                <div class="folder-item" onclick="openTool('calculator')"><div class="folder-emoji">🔢</div><div class="folder-name">计算器</div></div>
+                <div class="folder-item" onclick="openTool('notepad')"><div class="folder-emoji">📝</div><div class="folder-name">记事本</div></div>
+                <div class="folder-item" onclick="openTool('timer')"><div class="folder-emoji">⏱️</div><div class="folder-name">计时器</div></div>
+                <div class="folder-item" onclick="openTool('calendar')"><div class="folder-emoji">📅</div><div class="folder-name">日历</div></div>
+                <div class="folder-item" onclick="openTool('colorpicker')"><div class="folder-emoji">🎨</div><div class="folder-name">颜色选择器</div></div>
+                <div class="folder-item" onclick="openTool('random')"><div class="folder-emoji">🎲</div><div class="folder-name">随机数</div></div>
+            </div>`;
+        }
+
+        function openTool(toolId) {
+            const id = 'tool_' + toolId + '_' + Date.now();
+            const cfg = {
+                calculator: { title: '🔢 计算器', width: 320, height: 420, content: 'calculator' },
+                notepad: { title: '📝 记事本', width: 400, height: 350, content: 'notepad' },
+                timer: { title: '⏱️ 计时器', width: 320, height: 280, content: 'timer' },
+                calendar: { title: '📅 日历', width: 350, height: 380, content: 'calendar' },
+                colorpicker: { title: '🎨 颜色选择器', width: 300, height: 300, content: 'colorpicker' },
+                random: { title: '🎲 随机数', width: 300, height: 250, content: 'random' }
+            }[toolId];
+            if (!cfg) return;
+            const win = createWindow(id, cfg);
+            windowsContainer.appendChild(win);
+            openWindows.push({ id: id, element: win, title: cfg.title, icon: cfg.title.match(/^.{1,2}/)?.[0] || '📄', minimized: false, maximized: false, prevState: null });
+            updateTaskbar(); focusWindow(win); centerWindow(win); addResizeHandle(win);
+        }
+
+        function bindCalculator(body) {
+            const display = body.querySelector('.calc-display');
+            const buttons = body.querySelectorAll('.calc-buttons button');
+            let expression = '';
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const val = btn.textContent;
+                    if (val === 'C') { expression = ''; display.textContent = '0'; }
+                    else if (val === '=') {
+                        try { expression = eval(expression).toString(); display.textContent = expression; } catch (e) { display.textContent = '错误'; expression = ''; }
+                    } else {
+                        if (expression === '0' && val !== '.') expression = '';
+                        expression += val;
+                        display.textContent = expression;
+                    }
+                });
+            });
+        }
+
+        function bindTimer(body) {
+            const display = body.querySelector('.timer-display');
+            const minInput = body.querySelector('#timerMinutes');
+            const secInput = body.querySelector('#timerSeconds');
+            const startBtn = body.querySelector('#timerStart');
+            const pauseBtn = body.querySelector('#timerPause');
+            const resetBtn = body.querySelector('#timerReset');
+            let totalSeconds = 0, interval = null;
+            function updateDisplay() {
+                const m = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+                const s = (totalSeconds % 60).toString().padStart(2, '0');
+                display.textContent = m + ':' + s;
+            }
+            function resetTimer() {
+                clearInterval(interval);
+                interval = null;
+                const min = parseInt(minInput.value) || 0;
+                const sec = parseInt(secInput.value) || 0;
+                totalSeconds = min * 60 + sec;
+                updateDisplay();
+            }
+            startBtn.addEventListener('click', () => {
+                if (interval) return;
+                if (totalSeconds <= 0) resetTimer();
+                interval = setInterval(() => {
+                    if (totalSeconds <= 0) { clearInterval(interval); interval = null; return; }
+                    totalSeconds--;
+                    updateDisplay();
+                }, 1000);
+            });
+            pauseBtn.addEventListener('click', () => { clearInterval(interval); interval = null; });
+            resetBtn.addEventListener('click', resetTimer);
+            resetTimer();
+        }
+
+        function bindCalendar(body) {
+            const grid = body.querySelector('#calendarGrid');
+            const prevBtn = body.querySelector('.cal-prev');
+            const nextBtn = body.querySelector('.cal-next');
+            const monthYearSpan = body.querySelector('.cal-month-year');
+            let currentDate = new Date();
+            function render() {
+                const year = currentDate.getFullYear();
+                const month = currentDate.getMonth();
+                monthYearSpan.textContent = `${year}年 ${month+1}月`;
+                const firstDay = new Date(year, month, 1).getDay();
+                const daysInMonth = new Date(year, month+1, 0).getDate();
+                let html = `<div class="day-header">日</div><div class="day-header">一</div><div class="day-header">二</div><div class="day-header">三</div><div class="day-header">四</div><div class="day-header">五</div><div class="day-header">六</div>`;
+                for (let i = 0; i < firstDay; i++) html += `<div class="day empty"></div>`;
+                const today = new Date();
+                for (let d = 1; d <= daysInMonth; d++) {
+                    const isToday = (year === today.getFullYear() && month === today.getMonth() && d === today.getDate());
+                    html += `<div class="day${isToday ? ' today' : ''}">${d}</div>`;
+                }
+                grid.innerHTML = html;
+            }
+            prevBtn.addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth()-1); render(); });
+            nextBtn.addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth()+1); render(); });
+            render();
+        }
+
+        function bindColorPicker(body) {
+            const input = body.querySelector('#colorInput');
+            const preview = body.querySelector('#colorPreview');
+            const valueSpan = body.querySelector('#colorValue');
+            input.addEventListener('input', () => {
+                preview.style.background = input.value;
+                valueSpan.textContent = input.value;
+            });
+        }
+
+        function bindRandom(body) {
+            const minInput = body.querySelector('#randMin');
+            const maxInput = body.querySelector('#randMax');
+            const generateBtn = body.querySelector('#randGenerate');
+            const resultDiv = body.querySelector('#randResult');
+            generateBtn.addEventListener('click', () => {
+                const min = parseInt(minInput.value) || 0;
+                const max = parseInt(maxInput.value) || 100;
+                const result = Math.floor(Math.random() * (max - min + 1)) + min;
+                resultDiv.textContent = result;
+            });
+        }
+
         window.openCategory = function(key) {
             currentCategory = key;
             const winData = openWindows.find(w => w.id === 'computer');
-            if (!winData) return;
-            const body = winData.element.querySelector('.win-body');
-            if (body) {
-                body.innerHTML = renderCategoryView(key);
-            }
+            if (winData) { const body = winData.element.querySelector('.win-body'); if (body) body.innerHTML = renderCategoryView(key); }
         };
-
         window.backToFolders = function() {
             currentCategory = null;
             const winData = openWindows.find(w => w.id === 'computer');
-            if (!winData) return;
-            const body = winData.element.querySelector('.win-body');
-            if (body) {
-                body.innerHTML = renderFolderView();
-            }
+            if (winData) { const body = winData.element.querySelector('.win-body'); if (body) body.innerHTML = renderFolderView(); }
         };
 
+        // 核心：根据分类决定打开方式
         window.openLinkData = function(encodedData) {
             let item;
-            try {
-                item = JSON.parse(decodeURIComponent(encodedData));
-            } catch (e) {
-                return;
-            }
+            try { item = JSON.parse(decodeURIComponent(encodedData)); } catch (e) { return; }
             if (!item || !item.url) return;
-            openLinkWindow(item);
+            if (NO_IFRAME_CATEGORIES.includes(item.category)) {
+                window.open(item.url, '_blank');
+            } else {
+                openLinkInWindow(item);
+            }
         };
 
-        // ===== 核心：检测到 SecurityError 立即跳转 =====
-        function openLinkWindow(item) {
+        function openLinkInWindow(item) {
+            const url = item.url;
             const winId = 'link_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
             const win = document.createElement('div');
             win.className = 'window';
             win.dataset.winId = winId;
-
-            const maxW = window.innerWidth * 0.88;
-            const maxH = window.innerHeight * 0.80;
-            const w = Math.min(800, maxW);
-            const h = Math.min(600, maxH);
-            win.style.width = w + 'px';
-            win.style.height = h + 'px';
-
+            const maxW = window.innerWidth * 0.88, maxH = window.innerHeight * 0.80;
+            const w = Math.min(800, maxW), h = Math.min(600, maxH);
+            win.style.width = w + 'px'; win.style.height = h + 'px';
             const titlebar = document.createElement('div');
             titlebar.className = 'win-titlebar';
             titlebar.innerHTML = `
-                <div class="win-title">
-                    <span class="win-icon">${item.emoji || '🌐'}</span>
-                    <span class="win-title-text">${item.name || '网页'}</span>
-                </div>
-                <div class="win-controls">
-                    <button class="btn-min" title="最小化">─</button>
-                    <button class="btn-fullscreen" title="全屏">⛶</button>
-                    <button class="btn-close" title="关闭">✕</button>
-                </div>
-            `;
-            titlebar.querySelector('.btn-close').addEventListener('click', (e) => {
-                e.stopPropagation();
-                const idx = openWindows.findIndex(w => w.element === win);
-                if (idx !== -1) openWindows.splice(idx, 1);
-                win.remove();
-                updateTaskbar();
-                if (openWindows.length > 0) {
-                    focusWindow(openWindows[openWindows.length - 1].element);
-                }
-            });
-            titlebar.querySelector('.btn-min').addEventListener('click', (e) => {
-                e.stopPropagation();
-                const wData = openWindows.find(w => w.element === win);
-                if (wData) {
-                    if (wData.minimized) {
-                        win.style.display = 'flex';
-                        wData.minimized = false;
-                    } else {
-                        win.style.display = 'none';
-                        wData.minimized = true;
-                    }
-                    updateTaskbar();
-                    if (wData.minimized && win.classList.contains('active')) {
-                        const others = openWindows.filter(w => w.id !== winId && !w.minimized);
-                        if (others.length > 0) focusWindow(others[others.length - 1].element);
-                    }
-                }
-            });
-            titlebar.querySelector('.btn-fullscreen').addEventListener('click', (e) => {
-                e.stopPropagation();
-                const wData = openWindows.find(w => w.element === win);
-                if (wData) {
-                    wData.isFullscreen = !wData.isFullscreen;
-                    if (wData.isFullscreen) {
-                        win.classList.add('fullscreen');
-                        const iframe = win.querySelector('iframe');
-                        if (iframe) { try { iframe.requestFullscreen(); } catch (e) {} }
-                    } else {
-                        win.classList.remove('fullscreen');
-                        win.style.width = w + 'px';
-                        win.style.height = h + 'px';
-                        centerWindow(win);
-                        try { if (document.fullscreenElement) document.exitFullscreen(); } catch (e) {}
-                    }
-                    const btn = win.querySelector('.btn-fullscreen');
-                    if (btn) {
-                        btn.textContent = '⛶';
-                        btn.title = wData.isFullscreen ? '退出全屏' : '全屏';
-                    }
-                }
-            });
-            titlebar.addEventListener('mousedown', (e) => {
-                if (e.target.closest('.win-controls')) return;
-                startDrag(e, win);
-            });
-            titlebar.addEventListener('touchstart', (e) => {
-                if (e.target.closest('.win-controls')) return;
-                if (e.touches.length === 1) {
-                    startDrag(e, win);
-                }
-            }, { passive: false });
-
+                <div class="win-title"><span class="win-icon">${item.emoji || '🌐'}</span><span class="win-title-text">${item.name || '网页'}</span></div>
+                <div class="win-controls"><button class="btn-min" title="最小化">─</button><button class="btn-maximize" title="最大化">□</button><button class="btn-close" title="关闭">✕</button></div>`;
+            titlebar.querySelector('.btn-close').addEventListener('click', (e) => { e.stopPropagation(); closeWindowById(winId); });
+            titlebar.querySelector('.btn-min').addEventListener('click', (e) => { e.stopPropagation(); minimizeWindow(winId); });
+            titlebar.querySelector('.btn-maximize').addEventListener('click', (e) => { e.stopPropagation(); toggleMaximize(win); });
+            titlebar.addEventListener('mousedown', (e) => { if (!e.target.closest('.win-controls')) startDrag(e, win); });
+            titlebar.addEventListener('touchstart', (e) => { if (!e.target.closest('.win-controls') && e.touches.length === 1) startDrag(e, win); }, { passive: false });
             win.appendChild(titlebar);
-
             const body = document.createElement('div');
-            body.className = 'win-body iframe-body';
+            body.className = 'win-body';
+            body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:rgba(255,255,255,0.5);">⏳ 正在加载...</div>';
+            win.appendChild(body);
+            windowsContainer.appendChild(win);
+            const winData = { id: winId, element: win, title: item.name || '网页', icon: item.emoji || '🌐', minimized: false, maximized: false, prevState: null };
+            openWindows.push(winData);
+            updateTaskbar(); focusWindow(win); centerWindow(win); addResizeHandle(win);
 
+            // 使用 fetch 预检网络连通性，避免长时间挂起
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 3000);
+            fetch(url, { method: 'HEAD', mode: 'no-cors', signal: controller.signal })
+                .then(() => {
+                    clearTimeout(timeout);
+                    setupIframe(win, body, item, winId);
+                })
+                .catch(() => {
+                    clearTimeout(timeout);
+                    window.open(url, '_blank');
+                    closeWindowById(winId);
+                });
+        }
+
+        function setupIframe(win, body, item, winId) {
+            body.className = 'win-body iframe-body';
+            body.innerHTML = '';
             const iframe = document.createElement('iframe');
             iframe.src = item.url;
             iframe.sandbox = 'allow-scripts allow-same-origin allow-forms allow-popups';
-            iframe.loading = 'eager';
-            iframe.style.width = '100%';
-            iframe.style.height = '100%';
-            iframe.style.border = 'none';
+            iframe.style.width = '100%'; iframe.style.height = '100%'; iframe.style.border = 'none';
+            let loadFinished = false, loadFailed = false, timeoutId = null;
 
-            let loadSucceeded = false;
-            let loadFailed = false;
-            let timeoutId = null;
-
-            // load 事件触发后检测是否可访问内容
             iframe.addEventListener('load', function() {
-                if (loadFailed) return;
+                if (loadFailed || loadFinished) return;
                 clearTimeout(timeoutId);
-                // 尝试访问 contentDocument
+                loadFinished = true;
                 try {
-                    var doc = iframe.contentDocument || iframe.contentWindow.document;
-                    // 如果能访问，说明同源且内容已加载，保留窗口
-                    loadSucceeded = true;
-                } catch (e) {
-                    // SecurityError 表示跨域或禁止嵌入，直接跳转
-                    if (e.name === 'SecurityError') {
-                        showErrorAndRedirect('🚫', '无法嵌入', '该网站禁止在框架中显示，将自动在新标签页打开', item.url, win, winId);
-                    } else {
-                        // 其他错误，可能加载失败
-                        showErrorAndRedirect('⚠️', '加载异常', '发生未知错误，将自动在新标签页打开', item.url, win, winId);
+                    const loc = iframe.contentWindow.location.href;
+                    if (loc === 'about:blank') {
+                        showErrorAndRedirect('🚫', '无法嵌入', '该网站禁止在框架中显示，将自动在新标签页打开', item.url, win, winId, body);
                     }
-                }
+                } catch (e) { /* 跨域加载成功 */ }
             });
 
-            // onerror 处理网络错误
             iframe.onerror = function() {
-                if (loadFailed || loadSucceeded) return;
+                if (loadFailed || loadFinished) return;
                 clearTimeout(timeoutId);
-                showErrorAndRedirect('⚠️', '加载失败', '网络错误或地址无效，将自动在新标签页打开', item.url, win, winId);
+                loadFailed = true;
+                showErrorAndRedirect('⚠️', '加载失败', '网络错误，将自动在新标签页打开', item.url, win, winId, body);
             };
 
-            // 超时后备（5秒后若仍未检测到加载成功，则跳转）
             timeoutId = setTimeout(() => {
-                if (loadFailed || loadSucceeded) return;
-                showErrorAndRedirect('⏱️', '加载超时', '网站响应过慢，将自动在新标签页打开', item.url, win, winId);
+                if (loadFailed || loadFinished) return;
+                loadFailed = true;
+                showErrorAndRedirect('⏱️', '连接超时', '网站响应超时，将自动在新标签页打开', item.url, win, winId, body);
             }, 5000);
 
             body.appendChild(iframe);
-            win.appendChild(body);
 
-            function showErrorAndRedirect(icon, title, desc, url, winElement, winId) {
-                if (loadFailed) return;
+            function showErrorAndRedirect(icon, title, desc, url, winElement, winId, bodyEl) {
+                if (loadFailed && bodyEl.querySelector('.iframe-error')) return;
                 loadFailed = true;
-
-                body.innerHTML = `
+                bodyEl.innerHTML = `
                     <div class="iframe-error">
-                        <div class="error-icon">${icon}</div>
-                        <div class="error-title">${title}</div>
-                        <div class="error-desc">${desc}</div>
+                        <div class="error-icon">${icon}</div><div class="error-title">${title}</div><div class="error-desc">${desc}</div>
                         <div style="font-size:12px;color:rgba(255,255,255,0.3);word-break:break-all;max-width:400px;">${url}</div>
                         <div class="error-timer">⏳ 即将跳转...</div>
                         <button class="error-btn" onclick="window.open('${url}','_blank'); window.closeWindowById('${winId}')">📂 立即在新标签页打开</button>
-                    </div>
-                `;
-                body.className = 'win-body';
-
-                // 1秒后自动跳转并关闭窗口
-                setTimeout(() => {
-                    window.open(url, '_blank');
-                    window.closeWindowById(winId);
-                }, 1000);
+                    </div>`;
+                bodyEl.className = 'win-body';
+                setTimeout(() => { window.open(url, '_blank'); window.closeWindowById(winId); }, 1000);
             }
-
-            windowsContainer.appendChild(win);
-
-            const winData = {
-                id: winId,
-                element: win,
-                title: item.name || '网页',
-                icon: item.emoji || '🌐',
-                minimized: false,
-                isFullscreen: false
-            };
-            openWindows.push(winData);
-            updateTaskbar();
-            focusWindow(win);
-            centerWindow(win);
-            addResizeHandle(win);
         }
 
-        // 辅助：通过窗口ID关闭窗口
         window.closeWindowById = function(winId) {
             const idx = openWindows.findIndex(w => w.id === winId);
             if (idx !== -1) {
-                const winData = openWindows[idx];
-                winData.element.remove();
+                openWindows[idx].element.remove();
                 openWindows.splice(idx, 1);
                 updateTaskbar();
-                if (openWindows.length > 0) {
-                    focusWindow(openWindows[openWindows.length - 1].element);
-                }
-            }
-        };
-
-        window.openLink = function(url) {
-            const item = LINK_DATA.find(l => l.url === url);
-            if (item) {
-                openLinkWindow(item);
-            } else {
-                openLinkWindow({ name: '网页', emoji: '🌐', url: url });
+                if (openWindows.length > 0) focusWindow(openWindows[openWindows.length - 1].element);
             }
         };
 
         window.addCustomLink = function() {
             const name = prompt('请输入链接名称：', '我的网站');
-            if (name && name.trim() !== '') {
-                const url = prompt('请输入网址 (包含 http:// 或 https://)：', 'https://example.com');
-                if (url && url.trim() !== '') {
-                    let finalUrl = url.trim();
-                    if (!finalUrl.startsWith('http://') && !finalUrl.startsWith('https://')) {
-                        finalUrl = 'https://' + finalUrl;
-                    }
-                    const emoji = prompt('请输入图标表情符号（如 🌐）：', '🌐') || '🌐';
-                    const category = prompt('请输入分类（AI/视频/动漫/小说/社交/游戏/购物/工具/搜图/海外/影视/群友/皮卡）：', '工具');
-                    const validCategories = Object.keys(CATEGORIES);
-                    const finalCategory = validCategories.includes(category) ? category : '工具';
-                    LINK_DATA.push({
-                        name: name.trim(),
-                        emoji: emoji,
-                        url: finalUrl,
-                        category: finalCategory
-                    });
-                    if (currentCategory) {
-                        const winData = openWindows.find(w => w.id === 'computer');
-                        if (winData) {
-                            const body = winData.element.querySelector('.win-body');
-                            if (body) body.innerHTML = renderCategoryView(currentCategory);
-                        }
-                    } else {
-                        const winData = openWindows.find(w => w.id === 'computer');
-                        if (winData) {
-                            const body = winData.element.querySelector('.win-body');
-                            if (body) body.innerHTML = renderFolderView();
-                        }
-                    }
-                }
-            }
+            if (!name || !name.trim()) return;
+            const url = prompt('请输入网址 (包含 http:// 或 https://)：', 'https://example.com');
+            if (!url || !url.trim()) return;
+            let finalUrl = url.trim();
+            if (!finalUrl.startsWith('http://') && !finalUrl.startsWith('https://')) finalUrl = 'https://' + finalUrl;
+            const emoji = prompt('请输入图标表情符号（如 🌐）：', '🌐') || '🌐';
+            const category = prompt('请输入分类（AI/视频/动漫/小说/社交/游戏/购物/工具/搜图/海外/影视/群友/皮卡）：', '工具');
+            const validCategories = Object.keys(CATEGORIES);
+            const finalCategory = validCategories.includes(category) ? category : '工具';
+            LINK_DATA.push({ name: name.trim(), emoji, url: finalUrl, category: finalCategory });
+            const winData = openWindows.find(w => w.id === 'computer');
+            if (winData) { const body = winData.element.querySelector('.win-body'); if (body) body.innerHTML = currentCategory ? renderCategoryView(currentCategory) : renderFolderView(); }
         };
+        window.openTool = openTool;
 
-        // ---- 窗口操作 ----
-        function focusWindow(win) {
-            winZIndex += 1;
-            win.style.zIndex = winZIndex;
-            win.classList.add('active');
-            $$('.window').forEach(w => { if (w !== win) w.classList.remove('active'); });
-            const id = win.dataset.winId;
-            $$('.tb-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.winId === id);
-            });
-        }
-
-        function closeWindow(iconId) {
-            const idx = openWindows.findIndex(w => w.id === iconId);
-            if (idx === -1) return;
-            openWindows[idx].element.remove();
-            openWindows.splice(idx, 1);
-            updateTaskbar();
-            if (openWindows.length > 0) {
-                focusWindow(openWindows[openWindows.length - 1].element);
-            }
-        }
-
-        function minimizeWindow(iconId) {
-            const winData = openWindows.find(w => w.id === iconId);
-            if (!winData) return;
-            const win = winData.element;
-            if (winData.minimized) {
-                win.style.display = 'flex';
-                winData.minimized = false;
+        function focusWindow(win) { winZIndex++; win.style.zIndex = winZIndex; win.classList.add('active'); $$('.window').forEach(w => { if (w !== win) w.classList.remove('active'); }); }
+        function closeWindow(iconId) { const idx = openWindows.findIndex(w => w.id === iconId); if (idx === -1) return; openWindows[idx].element.remove(); openWindows.splice(idx,1); updateTaskbar(); if (openWindows.length>0) focusWindow(openWindows[openWindows.length-1].element); }
+        function minimizeWindow(iconId) { const winData = openWindows.find(w => w.id === iconId); if (!winData) return; winData.element.style.display = winData.minimized ? 'flex' : 'none'; winData.minimized = !winData.minimized; updateTaskbar(); }
+        function toggleMaximize(win) {
+            const winData = openWindows.find(w => w.element === win); if (!winData) return;
+            if (winData.maximized) {
+                win.classList.remove('maximized');
+                if (winData.prevState) { win.style.width = winData.prevState.width; win.style.height = winData.prevState.height; win.style.left = winData.prevState.left; win.style.top = winData.prevState.top; }
+                else centerWindow(win);
+                winData.maximized = false; win.querySelector('.btn-maximize').textContent = '□';
             } else {
-                win.style.display = 'none';
-                winData.minimized = true;
-            }
-            updateTaskbar();
-            if (winData.minimized && win.classList.contains('active')) {
-                const others = openWindows.filter(w => w.id !== iconId && !w.minimized);
-                if (others.length > 0) focusWindow(others[others.length - 1].element);
-            }
-        }
-
-        function centerWindow(win) {
-            const rect = win.getBoundingClientRect();
-            const w = rect.width, h = rect.height;
-            const left = (window.innerWidth - w) / 2;
-            const top = (window.innerHeight - h) / 2 - 20;
-            win.style.left = clamp(left, 8, window.innerWidth - w - 8) + 'px';
-            win.style.top = clamp(top, 8, window.innerHeight - h - 60) + 'px';
-        }
-
-        function getIconById(id) {
-            return iconData.find(i => i.id === id);
-        }
-
-        // ===================================================================
-        //  缩放手柄
-        // ===================================================================
-
-        function addResizeHandle(win) {
-            const handle = document.createElement('div');
-            handle.className = 'win-resize';
-            win.appendChild(handle);
-
-            handle.addEventListener('mousedown', (e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                startResize(e, win);
-            });
-            handle.addEventListener('touchstart', (e) => {
-                e.stopPropagation();
-                if (e.touches.length === 1) {
-                    e.preventDefault();
-                    startResize(e, win);
-                }
-            }, { passive: false });
-        }
-
-        function startResize(e, win) {
-            const isTouch = e.type === 'touchstart';
-            const clientX = isTouch ? e.touches[0].clientX : e.clientX;
-            const clientY = isTouch ? e.touches[0].clientY : e.clientY;
-
-            const rect = win.getBoundingClientRect();
-            resizeData = {
-                win: win,
-                startX: clientX,
-                startY: clientY,
-                startWidth: rect.width,
-                startHeight: rect.height,
-                isTouch: isTouch,
-            };
-
-            if (isTouch) {
-                document.addEventListener('touchmove', onResizeMoveTouch, { passive: false });
-                document.addEventListener('touchend', onResizeEndTouch, { passive: false });
-                document.addEventListener('touchcancel', onResizeEndTouch, { passive: false });
-            } else {
-                document.addEventListener('mousemove', onResizeMoveMouse);
-                document.addEventListener('mouseup', onResizeEndMouse);
-            }
-        }
-
-        function onResizeMoveTouch(e) {
-            if (!resizeData || !resizeData.isTouch) return;
-            const touch = e.touches[0];
-            resizeWindow(touch.clientX, touch.clientY);
-            e.preventDefault();
-        }
-
-        function onResizeEndTouch(e) {
-            if (resizeData && resizeData.isTouch) { resizeData = null; }
-            document.removeEventListener('touchmove', onResizeMoveTouch);
-            document.removeEventListener('touchend', onResizeEndTouch);
-            document.removeEventListener('touchcancel', onResizeEndTouch);
-        }
-
-        function onResizeMoveMouse(e) {
-            if (!resizeData || resizeData.isTouch) return;
-            resizeWindow(e.clientX, e.clientY);
-        }
-
-        function onResizeEndMouse(e) {
-            if (resizeData && !resizeData.isTouch) { resizeData = null; }
-            document.removeEventListener('mousemove', onResizeMoveMouse);
-            document.removeEventListener('mouseup', onResizeEndMouse);
-        }
-
-        function resizeWindow(clientX, clientY) {
-            if (!resizeData) return;
-            const { win, startX, startY, startWidth, startHeight } = resizeData;
-            const dx = clientX - startX;
-            const dy = clientY - startY;
-
-            let newWidth = Math.max(300, startWidth + dx);
-            let newHeight = Math.max(200, startHeight + dy);
-
-            const rect = win.getBoundingClientRect();
-            const maxW = window.innerWidth - rect.left - 8;
-            const maxH = window.innerHeight - rect.top - 60;
-            newWidth = Math.min(newWidth, maxW);
-            newHeight = Math.min(newHeight, maxH);
-
-            win.style.width = newWidth + 'px';
-            win.style.height = newHeight + 'px';
-        }
-
-        // ===================================================================
-        //  拖动
-        // ===================================================================
-
-        function startDrag(e, win) {
-            if (resizeData) return;
-            const isTouch = e.type === 'touchstart';
-            const clientX = isTouch ? e.touches[0].clientX : e.clientX;
-            const clientY = isTouch ? e.touches[0].clientY : e.clientY;
-            const rect = win.getBoundingClientRect();
-            dragData = {
-                win: win,
-                offsetX: clientX - rect.left,
-                offsetY: clientY - rect.top,
-                isTouch: isTouch
-            };
-            if (isTouch) {
-                document.addEventListener('touchmove', onDragMoveTouch, { passive: false });
-                document.addEventListener('touchend', onDragEndTouch, { passive: false });
-                document.addEventListener('touchcancel', onDragEndTouch, { passive: false });
-                e.preventDefault();
-            } else {
-                document.addEventListener('mousemove', onDragMoveMouse);
-                document.addEventListener('mouseup', onDragEndMouse);
-                e.preventDefault();
-            }
-        }
-
-        function onDragMoveTouch(e) {
-            if (!dragData || !dragData.isTouch) return;
-            const touch = e.touches[0];
-            moveDrag(touch.clientX, touch.clientY);
-            e.preventDefault();
-        }
-
-        function onDragEndTouch(e) {
-            if (dragData && dragData.isTouch) { dragData = null; }
-            document.removeEventListener('touchmove', onDragMoveTouch);
-            document.removeEventListener('touchend', onDragEndTouch);
-            document.removeEventListener('touchcancel', onDragEndTouch);
-        }
-
-        function onDragMoveMouse(e) {
-            if (!dragData || dragData.isTouch) return;
-            moveDrag(e.clientX, e.clientY);
-        }
-
-        function onDragEndMouse(e) {
-            if (dragData && !dragData.isTouch) { dragData = null; }
-            document.removeEventListener('mousemove', onDragMoveMouse);
-            document.removeEventListener('mouseup', onDragEndMouse);
-        }
-
-        function moveDrag(clientX, clientY) {
-            if (!dragData) return;
-            const { win, offsetX, offsetY } = dragData;
-            let left = clientX - offsetX;
-            let top = clientY - offsetY;
-            const maxX = window.innerWidth - win.offsetWidth - 4;
-            const maxY = window.innerHeight - win.offsetHeight - 60;
-            win.style.left = clamp(left, 4, maxX) + 'px';
-            win.style.top = clamp(top, 4, maxY) + 'px';
-        }
-
-        // ===================================================================
-        //  任务栏更新
-        // ===================================================================
-
-        function updateTaskbar() {
-            tbItems.innerHTML = '';
-            openWindows.forEach(winData => {
-                const btn = document.createElement('button');
-                btn.className = 'tb-btn';
-                if (winData.minimized) btn.style.opacity = '0.5';
-                btn.dataset.winId = winData.id;
-                const icon = winData.icon || '🌐';
-                btn.innerHTML = `<span class="tb-icon">${icon}</span> ${winData.title}`;
-                btn.addEventListener('click', () => {
-                    if (winData.minimized) {
-                        winData.element.style.display = 'flex';
-                        winData.minimized = false;
-                        updateTaskbar();
-                    }
-                    focusWindow(winData.element);
-                });
-                tbItems.appendChild(btn);
-            });
-            const activeWin = document.querySelector('.window.active');
-            if (activeWin) {
-                const id = activeWin.dataset.winId;
-                $$('.tb-btn').forEach(btn => {
-                    btn.classList.toggle('active', btn.dataset.winId === id);
-                });
-            }
-        }
-
-        // ===================================================================
-        //  桌面大图标点击事件
-        // ===================================================================
-
-        document.getElementById('myComputerDesktop').addEventListener('click', () => {
-            openWindow('computer');
-        });
-
-        // ===================================================================
-        //  窗口自适应
-        // ===================================================================
-
-        window.addEventListener('resize', () => {
-            openWindows.forEach(winData => {
-                const win = winData.element;
-                if (winData.minimized || winData.isFullscreen) return;
                 const rect = win.getBoundingClientRect();
-                const maxX = window.innerWidth - 8;
-                const maxY = window.innerHeight - 60;
-                if (rect.left > maxX || rect.top > maxY) {
-                    win.style.left = clamp(rect.left, 4, maxX - rect.width) + 'px';
-                    win.style.top = clamp(rect.top, 4, maxY - rect.height) + 'px';
-                }
-                const maxW = window.innerWidth - rect.left - 8;
-                const maxH = window.innerHeight - rect.top - 60;
-                const curW = parseFloat(win.style.width) || rect.width;
-                const curH = parseFloat(win.style.height) || rect.height;
-                if (curW > maxW) win.style.width = maxW + 'px';
-                if (curH > maxH) win.style.height = maxH + 'px';
-            });
-        });
-
-        // ===================================================================
-        //  ESC 关闭窗口 / ESC 退出全屏
-        // ===================================================================
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                if (document.fullscreenElement) {
-                    document.exitFullscreen();
-                    const fullWin = document.querySelector('.window.fullscreen');
-                    if (fullWin) {
-                        const wData = openWindows.find(w => w.element === fullWin);
-                        if (wData) {
-                            wData.isFullscreen = false;
-                            fullWin.classList.remove('fullscreen');
-                            const cfg = getWindowConfig(fullWin.dataset.winId) || { width: 700, height: 500 };
-                            fullWin.style.width = cfg.width + 'px';
-                            fullWin.style.height = cfg.height + 'px';
-                            centerWindow(fullWin);
-                            const btn = fullWin.querySelector('.btn-fullscreen');
-                            if (btn) { btn.textContent = '⛶'; btn.title = '全屏'; }
-                        }
-                    }
-                    return;
-                }
-                const active = document.querySelector('.window.active');
-                if (active) {
-                    const id = active.dataset.winId;
-                    const idx = openWindows.findIndex(w => w.element === active);
-                    if (idx !== -1) {
-                        const winData = openWindows[idx];
-                        if (winData.id.startsWith('link_')) {
-                            openWindows.splice(idx, 1);
-                            active.remove();
-                            updateTaskbar();
-                            if (openWindows.length > 0) {
-                                focusWindow(openWindows[openWindows.length - 1].element);
-                            }
-                        } else {
-                            closeWindow(winData.id);
-                        }
-                    }
-                }
+                winData.prevState = { width: rect.width+'px', height: rect.height+'px', left: win.style.left, top: win.style.top };
+                win.classList.add('maximized'); winData.maximized = true; win.querySelector('.btn-maximize').textContent = '❐';
             }
-        });
+        }
+        function centerWindow(win) { const rect = win.getBoundingClientRect(); win.style.left = clamp((window.innerWidth-rect.width)/2, 8, window.innerWidth-rect.width-8)+'px'; win.style.top = clamp((window.innerHeight-rect.height)/2-20, 8, window.innerHeight-rect.height-60)+'px'; }
+        function addResizeHandle(win) { const handle = document.createElement('div'); handle.className='win-resize'; win.appendChild(handle); handle.addEventListener('mousedown', (e)=>{ e.stopPropagation(); e.preventDefault(); startResize(e,win); }); handle.addEventListener('touchstart', (e)=>{ if(e.touches.length===1){ e.stopPropagation(); e.preventDefault(); startResize(e,win); } },{passive:false}); }
+        function startResize(e,win) { if(win.classList.contains('maximized')) return; const isTouch=e.type==='touchstart'; const clientX=isTouch?e.touches[0].clientX:e.clientX; const clientY=isTouch?e.touches[0].clientY:e.clientY; const rect=win.getBoundingClientRect(); resizeData={win,startX:clientX,startY:clientY,startWidth:rect.width,startHeight:rect.height,isTouch}; if(isTouch){ document.addEventListener('touchmove',onResizeMove,{passive:false}); document.addEventListener('touchend',onResizeEnd); } else { document.addEventListener('mousemove',onResizeMove); document.addEventListener('mouseup',onResizeEnd); } }
+        function onResizeMove(e) { if(!resizeData) return; const clientX=resizeData.isTouch?e.touches[0].clientX:e.clientX; const clientY=resizeData.isTouch?e.touches[0].clientY:e.clientY; const{win,startX,startY,startWidth,startHeight}=resizeData; let w=Math.max(300,startWidth+(clientX-startX)); let h=Math.max(200,startHeight+(clientY-startY)); const rect=win.getBoundingClientRect(); w=Math.min(w,window.innerWidth-rect.left-8); h=Math.min(h,window.innerHeight-rect.top-60); win.style.width=w+'px'; win.style.height=h+'px'; if(resizeData.isTouch) e.preventDefault(); }
+        function onResizeEnd() { resizeData=null; document.removeEventListener('mousemove',onResizeMove); document.removeEventListener('mouseup',onResizeEnd); document.removeEventListener('touchmove',onResizeMove); document.removeEventListener('touchend',onResizeEnd); }
+        function startDrag(e,win) { if(win.classList.contains('maximized')||resizeData) return; const isTouch=e.type==='touchstart'; const clientX=isTouch?e.touches[0].clientX:e.clientX; const clientY=isTouch?e.touches[0].clientY:e.clientY; const rect=win.getBoundingClientRect(); dragData={win,offsetX:clientX-rect.left,offsetY:clientY-rect.top,isTouch}; if(isTouch){ document.addEventListener('touchmove',onDragMove,{passive:false}); document.addEventListener('touchend',onDragEnd); e.preventDefault(); } else { document.addEventListener('mousemove',onDragMove); document.addEventListener('mouseup',onDragEnd); e.preventDefault(); } }
+        function onDragMove(e) { if(!dragData) return; const clientX=dragData.isTouch?e.touches[0].clientX:e.clientX; const clientY=dragData.isTouch?e.touches[0].clientY:e.clientY; const{win,offsetX,offsetY}=dragData; win.style.left=clamp(clientX-offsetX,4,window.innerWidth-win.offsetWidth-4)+'px'; win.style.top=clamp(clientY-offsetY,4,window.innerHeight-win.offsetHeight-60)+'px'; if(dragData.isTouch) e.preventDefault(); }
+        function onDragEnd() { dragData=null; document.removeEventListener('mousemove',onDragMove); document.removeEventListener('mouseup',onDragEnd); document.removeEventListener('touchmove',onDragMove); document.removeEventListener('touchend',onDragEnd); }
+        function updateTaskbar() { tbItems.innerHTML=''; openWindows.forEach(wd=>{ const btn=document.createElement('button'); btn.className='tb-btn'; if(wd.minimized) btn.style.opacity='0.5'; btn.innerHTML=`<span class="tb-icon">${wd.icon||'🌐'}</span> ${wd.title}`; btn.addEventListener('click',()=>{ if(wd.minimized){ wd.element.style.display='flex'; wd.minimized=false; updateTaskbar(); } focusWindow(wd.element); }); tbItems.appendChild(btn); }); }
 
-        document.addEventListener('fullscreenchange', () => {
-            if (!document.fullscreenElement) {
-                const fullWin = document.querySelector('.window.fullscreen');
-                if (fullWin) {
-                    const wData = openWindows.find(w => w.element === fullWin);
-                    if (wData) {
-                        wData.isFullscreen = false;
-                        fullWin.classList.remove('fullscreen');
-                        const cfg = getWindowConfig(fullWin.dataset.winId) || { width: 700, height: 500 };
-                        fullWin.style.width = cfg.width + 'px';
-                        fullWin.style.height = cfg.height + 'px';
-                        centerWindow(fullWin);
-                        const btn = fullWin.querySelector('.btn-fullscreen');
-                        if (btn) { btn.textContent = '⛶'; btn.title = '全屏'; }
-                    }
-                }
-            }
-        });
-
-        // ===================================================================
-        //  初始化
-        // ===================================================================
-
-        setTimeout(() => {
-            openWindow('computer');
-        }, 300);
-
-        console.log('✨ 修复：检测到跨域禁止嵌入（SecurityError）时立即自动跳转，正常同源网站保留在窗口中');
-        console.log(`📁 共 ${Object.keys(CATEGORIES).length} 个分类，${LINK_DATA.length} 个链接`);
+        document.getElementById('myComputerDesktop').addEventListener('click', ()=> openWindow('computer'));
+        document.getElementById('toolboxDesktop').addEventListener('click', ()=> openWindow('toolbox'));
+        document.addEventListener('keydown', (e) => { if(e.key==='Escape'){ const active=document.querySelector('.window.active'); if(active){ const wd=openWindows.find(w=>w.element===active); if(wd&&wd.maximized) toggleMaximize(active); else closeWindow(active.dataset.winId); } } });
+        setTimeout(()=> openWindow('computer'), 200);
     </script>
 </body>
 </html>
